@@ -10,11 +10,18 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+
+    // Subpath imports
+    // https://habr.com/ru/articles/738132/
+    "baseUrl": "./",
+    "paths": {
+      "#*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }

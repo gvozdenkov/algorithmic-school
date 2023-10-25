@@ -2,6 +2,20 @@
   "name": "algorithms-project",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "imports": {
+    "#*": [
+      "./src/*",
+      "./src/*.ts",
+      "./src/*.tsx",
+      "./src/*.js",
+      "./src/*.jsx",
+      "./src/*/index.ts",
+      "./src/*/index.tsx",
+      "./src/*/index.js",
+      "./src/*/index.jsx"
+    ]
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
