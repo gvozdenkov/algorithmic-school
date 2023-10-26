@@ -1,5 +1,1 @@
-export enum ElementStates {
-  Default = "default",
-  Changing = "changing",
-  Modified = "modified",
-}
+export type ElementStates = 'default' | 'changing' | 'modified';

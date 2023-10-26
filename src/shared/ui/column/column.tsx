@@ -10,7 +10,7 @@ interface ColumnProps {
 
 export const Column: React.FC<ColumnProps> = ({
   index,
-  state = ElementStates.Default,
+  state = 'default',
   extraClass = "",
 }) => (
   <div className={`${styles.content} ${extraClass}`}>

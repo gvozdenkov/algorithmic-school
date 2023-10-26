@@ -14,7 +14,7 @@ interface CircleProps {
 }
 
 export const Circle = ({
-  state = ElementStates.Default,
+  state = 'default',
   letter,
   head,
   index,
