@@ -47,33 +47,31 @@ export const StringComponent = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <div className={s.string}>
-        <form className={s.string__inputContainer} onSubmit={handleSubmit}>
-          <Input
-            value={inputValue}
-            maxLength={11}
-            isLimitText
-            onChange={handleChange}
-            autoComplete="off"
-            disabled={isProcessing}
-          />
-          <Button
-            text="Развернуть"
-            type="submit"
-            isLoader={isProcessing}
-            disabled={isProcessing && !inputValue}
-          />
-        </form>
-        {showResult && (
-          <ul className={clsx(s.result__list, 'mt-50')}>
-            {stringArr.map((letter, i) => (
-              <li className={s.result__listItem} key={i}>
-                <Circle state={setState(startIndex, endIndex, i)} letter={letter} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <Input
+          value={inputValue}
+          maxLength={11}
+          isLimitText
+          onChange={handleChange}
+          autoComplete="off"
+          disabled={isProcessing}
+        />
+        <Button
+          text="Развернуть"
+          type="submit"
+          isLoader={isProcessing}
+          disabled={isProcessing && !inputValue}
+        />
+      </form>
+      {showResult && (
+        <ul className={clsx(s.result__list, 'mt-24')}>
+          {stringArr.map((letter, i) => (
+            <li className={s.result__listItem} key={i}>
+              <Circle state={setState(startIndex, endIndex, i)} letter={letter} />
+            </li>
+          ))}
+        </ul>
+      )}
     </SolutionLayout>
   );
 };

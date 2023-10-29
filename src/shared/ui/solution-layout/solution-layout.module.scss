@@ -44,3 +44,10 @@
 .link {
   text-decoration: none;
 }
+
+.result {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}

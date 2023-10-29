@@ -1,11 +1,4 @@
-.string {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.string__inputContainer {
+.form {
   display: flex;
   gap: 12px;
   max-width: 522px;
