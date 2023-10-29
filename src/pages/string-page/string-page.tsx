@@ -6,34 +6,72 @@ import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
+import { reversArray, setState } from '#shared/lib';
+import { DELAY_IN_MS } from '#shared/constants/delays';
 
 export const StringComponent = () => {
-  const [string, setString] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [stringArr, setStringArr] = useState(['']);
+
   const [showResult, setShowResult] = useState(false);
-  const [isLoader, setIsLoader] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(0);
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    setString(e.currentTarget.value);
+    const char = e.currentTarget.value;
+
+    setInputValue(char);
+    setStringArr(char.split(''));
+    setShowResult(false);
   };
 
-  const handleClick = () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setIsProcessing(true);
     setShowResult(true);
-    setIsLoader(true);
+
+    await reversArray({
+      array: stringArr,
+      setStartIndex,
+      setEndIndex,
+      delay: DELAY_IN_MS,
+    });
+
+    setStartIndex(stringArr.length);
+    setEndIndex(stringArr.length);
+    setIsProcessing(false);
   };
 
   return (
     <SolutionLayout title="Строка">
       <div className={s.string}>
-        <div className={s.string__inputContainer}>
-          <Input maxLength={11} isLimitText onChange={handleChange} value={string} />
-          <Button text="Развернуть" onClick={handleClick} isLoader={isLoader} />
-        </div>
+        <form className={s.string__inputContainer} onSubmit={handleSubmit}>
+          <Input
+            value={inputValue}
+            maxLength={11}
+            isLimitText
+            onChange={handleChange}
+            autoComplete="off"
+            disabled={isProcessing}
+          />
+          <Button
+            text="Развернуть"
+            type="submit"
+            isLoader={isProcessing}
+            disabled={isProcessing && !inputValue}
+          />
+        </form>
         {showResult && (
-          <div className={clsx(s.result, s.string__result)}>
-            {string.split('').map((letter, i) => {
-              return <Circle letter={letter} key={i} />;
-            })}
-          </div>
+          <ul className={clsx(s.result__list, 'mt-50')}>
+            {stringArr.map((letter, i) => (
+              <li className={s.result__listItem} key={i}>
+                <Circle state={setState(startIndex, endIndex, i)} letter={letter} />
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </SolutionLayout>
