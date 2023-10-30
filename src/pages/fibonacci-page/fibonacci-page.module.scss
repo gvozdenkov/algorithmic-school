@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  gap: 12px;
+  max-width: 522px;
+  margin: 0 auto;
+}
+
+.result__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px 16px;
+  padding: 0;
+}
+
+.result__listItem {
+  list-style-type: none;
+}
+
+.circle_invisible {
+  opacity: 0;
+}
