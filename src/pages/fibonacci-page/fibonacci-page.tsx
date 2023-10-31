@@ -19,9 +19,8 @@ export const FibonacciPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    const char = e.currentTarget.value;
-
-    setInputValue(char.replace(/[^\d]/, ''));
+    const char = e.currentTarget.value.replace(/[^\d]/, '');
+    setInputValue(char);
     setShowResult(false);
   };
 
@@ -32,7 +31,7 @@ export const FibonacciPage = () => {
     setShowResult(true);
     setFibArray(getFibonacciArray(+inputValue));
 
-    for (let i = 0; i <= fibArray.length; i++) {
+    for (let i = 0; i <= +inputValue; i++) {
       setVisibleIndex(i);
       await sleep(SHORT_DELAY_IN_MS);
     }
@@ -50,7 +49,7 @@ export const FibonacciPage = () => {
           maxLength={19}
           max={19}
           isLimitText
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
           disabled={isProcessing}
         />
         <Button
