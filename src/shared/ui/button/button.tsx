@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import styles from './button.module.scss';
 import loaderIcon from '../../../images/icons/loader.svg';
 import { AscendingIcon } from '../icons/ascending-icon';
@@ -14,7 +15,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   extraClass?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
   text,
   extraClass = '',
   type = 'button',
@@ -23,20 +24,28 @@ export const Button: React.FC<ButtonProps> = ({
   linkedList,
   disabled,
   ...rest
-}) => {
+}: ButtonProps) => {
   const currentIcon = sorting === 'asc' ? <AscendingIcon /> : <DescendingIcon />;
-  const className = `text text_type_button text_color_primary ${styles.button} ${
-    linkedList && styles[linkedList]
-  } ${isLoader && styles.loader} ${extraClass}`;
 
   return (
-    <button className={className} type={type} disabled={isLoader || disabled} {...rest}>
+    <button
+      className={clsx(
+        'text_type_button text_color_primary',
+        styles.button,
+        { [styles.linkedList]: linkedList },
+        { [styles.loader]: isLoader },
+        { [extraClass]: !!extraClass }
+      )}
+      type={type}
+      disabled={isLoader || disabled}
+      {...rest}
+    >
       {isLoader ? (
         <img className={styles.loader_icon} src={loaderIcon} alt="Загрузка." />
       ) : (
         <>
           {sorting && currentIcon}
-          <p className={`text ${sorting && 'ml-5'}`}>{text}</p>
+          <p className={clsx('text', { 'ml-5': sorting })}>{text}</p>
         </>
       )}
     </button>
