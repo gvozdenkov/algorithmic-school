@@ -1,6 +1,5 @@
-import React from "react";
-import styles from "./column.module.scss";
-import { ElementStates } from "../../../types/element-states";
+import styles from './column.module.scss';
+import { ElementStates } from '../../../types/element-states';
 
 interface ColumnProps {
   index: number;
@@ -8,11 +7,7 @@ interface ColumnProps {
   extraClass?: string;
 }
 
-export const Column: React.FC<ColumnProps> = ({
-  index,
-  state = 'default',
-  extraClass = "",
-}) => (
+export const Column = ({ index, state = 'default', extraClass = '' }: ColumnProps) => (
   <div className={`${styles.content} ${extraClass}`}>
     <div
       className={`${styles.column} ${styles[state]}`}

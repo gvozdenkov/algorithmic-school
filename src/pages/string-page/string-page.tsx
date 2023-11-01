@@ -6,8 +6,9 @@ import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
-import { reversArray, setState } from '#shared/lib';
+import { reversArray } from '#shared/lib';
 import { DELAY_IN_MS } from '#shared/constants/delays';
+import { setState } from './utils';
 
 export const StringComponent = () => {
   const [inputValue, setInputValue] = useState('');
@@ -67,7 +68,7 @@ export const StringComponent = () => {
         <ul className={clsx(s.result__list, 'mt-24')}>
           {stringArr.map((letter, i) => (
             <li className={s.result__listItem} key={i}>
-              <Circle state='default' letter={letter} />
+              <Circle state={setState(startIndex, endIndex, i)} letter={letter} />
             </li>
           ))}
         </ul>

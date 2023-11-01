@@ -82,7 +82,6 @@ export const StackPage = () => {
           text="Очистить"
           type="button"
           onClick={handleClear}
-          isLoader={isProcessing}
           disabled={isProcessing}
           extraClass="ml-auto"
         />
