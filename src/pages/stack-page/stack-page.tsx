@@ -1,57 +1,65 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
+
+import { DataItem } from '#shared/types';
+import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
+import { sleep } from '#shared/lib';
 
 import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
 
+import { StackFactory } from './lib';
 import s from './stack-page.module.scss';
-import { ColorState } from '#types/direction';
-import { sleep } from '#shared/lib';
-
-type Stack = {
-  value: string;
-  state: ColorState;
-};
 
 export const StackPage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [stack, setStack] = useState<Stack[]>([]);
+  const [stack, setStack] = useState<DataItem<string>[]>([]);
 
   const [showResult, setShowResult] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const inputRef = useRef(null);
+  const stackRef = useRef(StackFactory<string>());
+  const Stack = stackRef.current;
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
   };
 
-  const handlePush = async () => {
+  const handlePush = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsProcessing(true);
     setShowResult(true);
-    setStack([...stack, { value: inputValue, state: 'changing' }]);
+
+    Stack.push({ value: inputValue });
+    setStack(Stack.getStack());
+
     setInputValue('');
 
-    await sleep(300);
+    await sleep(SHORT_DELAY_IN_MS);
 
-    setStack([...stack, { value: inputValue, state: 'default' }]);
+    Stack.setState('default');
+    setStack(Stack.getStack());
+
     setIsProcessing(false);
   };
 
   const handlePop = async () => {
     setIsProcessing(true);
-    const lastIndex = stack.length - 1;
-    setStack([...stack.slice(0, lastIndex), { ...stack[lastIndex], state: 'changing' }]);
+    Stack.setState('changing');
+    setStack(Stack.getStack());
 
     await sleep(300);
 
-    const _stack = [...stack];
-    _stack.pop();
-    setStack(_stack);
+    Stack.pop();
+    setStack(Stack.getStack());
     setIsProcessing(false);
   };
 
   const handleClear = () => {
+    Stack.clearStack();
     setStack([]);
   };
 
@@ -59,7 +67,7 @@ export const StackPage = () => {
 
   return (
     <SolutionLayout title="Стек">
-      <form className={s.form}>
+      <form className={s.form} onSubmit={handlePush}>
         <Input
           value={inputValue}
           maxLength={4}
@@ -68,13 +76,13 @@ export const StackPage = () => {
           disabled={isProcessing}
           extraClass={s.form__input}
           autoComplete="off"
+          ref={inputRef}
         />
         <Button
           text="Добавить"
-          onClick={handlePush}
           isLoader={isProcessing}
           disabled={!inputValue}
-          type="button"
+          type="submit"
           extraClass="ml-6"
         />
         <Button text="Удалить" onClick={handlePop} type="button" extraClass="ml-6" />
