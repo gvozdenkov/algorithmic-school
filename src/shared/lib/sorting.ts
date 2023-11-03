@@ -1,4 +1,4 @@
-import { SortDirection } from '#types/direction';
+import { SortDirection } from '#shared/types/types';
 import { Dispatch, SetStateAction } from 'react';
 import { sleep } from '.';
 import { swap } from '.';

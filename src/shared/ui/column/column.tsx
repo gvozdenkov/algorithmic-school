@@ -1,5 +1,5 @@
 import styles from './column.module.scss';
-import { ElementStates } from '../../../types/element-states';
+import { ElementStates } from '../../types/element-states';
 
 interface ColumnProps {
   index: number;

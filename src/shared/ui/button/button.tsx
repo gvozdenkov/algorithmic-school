@@ -1,19 +1,21 @@
-import React from 'react';
+import { HTMLProps } from 'react';
 import clsx from 'clsx';
-import styles from './button.module.scss';
+
 import loaderIcon from '../../../images/icons/loader.svg';
 import { AscendingIcon } from '../icons/ascending-icon';
 import { DescendingIcon } from '../icons/descending-icon';
-import { SortDirection } from '../../../types/direction';
+import { SortDirection } from '#shared/types';
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+import styles from './button.module.scss';
+
+type ButtonProps = HTMLProps<HTMLButtonElement> & {
   text?: string;
   type?: 'button' | 'submit' | 'reset';
   sorting?: SortDirection;
   linkedList?: 'small' | 'big';
   isLoader?: boolean;
   extraClass?: string;
-}
+};
 
 export const Button = ({
   text,

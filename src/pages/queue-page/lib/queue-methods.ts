@@ -1,8 +1,8 @@
-import { ColorState } from '#types/direction';
+import { ElementStates } from '#shared/types';
 
 export type Queue<T> = {
   value: T | undefined;
-  state: ColorState;
+  state: ElementStates;
 };
 
 export function getQueueLength<T>(stack: Queue<T>[]): number {
@@ -13,14 +13,14 @@ export const pushToQueue = <T>(
   stack: Queue<T>[],
   headIndex: number,
   value: T,
-  state: ColorState
+  state: ElementStates
 ) => [...stack.slice(0, headIndex), { value, state }, ...stack.slice(headIndex + 1, stack.length)];
 
 export const popFromQueue = <T>(
   stack: Queue<T>[],
   tailIndex: number,
   value: T,
-  state: ColorState
+  state: ElementStates
 ) => [
   ...stack.slice(0, tailIndex),
   {

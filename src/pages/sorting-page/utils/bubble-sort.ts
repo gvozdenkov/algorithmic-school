@@ -1,5 +1,5 @@
 import { swap } from '#shared/lib';
-import { ColorState, SortDirection } from '#types/direction';
+import { ElementStates, SortDirection } from '#shared/types';
 
 type Sort = {
   array: number[];
@@ -8,7 +8,7 @@ type Sort = {
 
 type ArrayState = {
   value: number;
-  state: ColorState;
+  state: ElementStates;
 };
 
 export const getBubbleSortStates = ({ array, order = 'asc' }: Sort) => {

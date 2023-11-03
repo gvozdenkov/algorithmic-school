@@ -6,7 +6,7 @@ import { Button } from '#shared/ui/button';
 import { RadioInput } from '#shared/ui/radio-input';
 import { Column } from '#shared/ui/column';
 import { bubbleSort, generateRandomArray, randomIntFromInterval, selectionSort } from '#shared/lib';
-import { SortDirection } from '#types/direction';
+import { SortDirection } from '#shared/types/types';
 import { getBubbleSortStates } from './utils';
 
 import s from './sorting-page.module.scss';
