@@ -1,77 +1,88 @@
 import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
+import { DataItem } from '#shared/types';
 import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
 import { sleep } from '#shared/lib';
-import { Queue, getQueueLength, popFromQueue, pushToQueue } from './lib';
 import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
+import { useFocus } from '#shared/hooks';
 
+import { QueueFactory } from './lib';
 import s from './queue-page.module.scss';
 
 const maxQueueLength = 7;
-const initialQueue: Queue<string | undefined>[] = [...Array(maxQueueLength)].map(() => ({
-  value: undefined,
+const initialQueue: DataItem<string>[] = [...Array(maxQueueLength)].map(() => ({
+  value: '',
   state: 'default',
 }));
 
 export const QueuePage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [queue, setQueue] = useState<Queue<string | undefined>[]>(initialQueue);
-
-  const [headIndex, setHeadIndex] = useState(0);
-  const [tailIndex, setTailIndex] = useState(0);
+  const [queue, setQueue] = useState<(DataItem<string> | undefined)[]>(initialQueue);
 
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const ref = useRef<HTMLInputElement>(null);
+  const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
+  const queueRef = useRef(QueueFactory<string>(maxQueueLength));
+  const Queue = queueRef.current;
 
-  const queueLength = getQueueLength(queue);
-
-  const setHead = (i: number) => i === headIndex - 1 && 'head';
-  const setTail = (i: number) => i === tailIndex && 'tail';
+  const queueLength = Queue.getQueueLength();
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
   };
 
   const handleClear = () => {
+    Queue.clearQueue();
     setQueue(initialQueue);
-    setHeadIndex(0);
-    setTailIndex(0);
+    setInputValue('');
+    setInputFocus();
   };
 
   const handlePush = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsProcessing(true);
 
-    setQueue(pushToQueue(queue, headIndex, inputValue, 'changing'));
-    setHeadIndex(headIndex + 1);
+    Queue.enqueue({ value: inputValue });
+    setQueue(Queue.getQueue());
     setInputValue('');
 
     await sleep(SHORT_DELAY_IN_MS);
 
-    setQueue(pushToQueue(queue, headIndex, inputValue, 'default'));
+    Queue.setState('enqueue', 'default');
+    setQueue(Queue.getQueue());
     setIsProcessing(false);
 
-    ref.current?.focus();
+    setInputFocus();
   };
 
   const handlePop = async () => {
     setIsProcessing(true);
-    setQueue(popFromQueue(queue, tailIndex, undefined, 'changing'));
+
+    Queue.setState('dequeue', 'changing');
+    setQueue(Queue.getQueue());
 
     await sleep(SHORT_DELAY_IN_MS);
 
-    setQueue(popFromQueue(queue, tailIndex, undefined, 'default'));
-    setTailIndex(tailIndex + 1);
-    setIsProcessing(false);
+    Queue.dequeue();
+    setQueue(Queue.getQueue());
 
-    if (queueLength === 1) {
-      handleClear();
-    }
+    setIsProcessing(false);
+    setInputFocus();
+  };
+
+  const showHead = (i: number): string | false =>
+    Queue.getQueueLength() > 0 && i === Queue.getHead() && 'head';
+
+  const showTail = (i: number): string | false | undefined => {
+    if (Queue.getQueueLength() > 0 && i === Queue.getTail() - 1) return 'tail';
+
+    // for last position in queue
+    if (Queue.getQueueLength() > 0 && Queue.getTail() === 0 && i === maxQueueLength - 1)
+      return 'tail';
   };
 
   return (
@@ -86,12 +97,12 @@ export const QueuePage = () => {
           extraClass={s.form__input}
           autoComplete="off"
           autoFocus
-          ref={ref}
+          ref={inputRef}
         />
         <Button
           text="Добавить"
           isLoader={isProcessing}
-          disabled={!inputValue || headIndex === maxQueueLength}
+          disabled={!inputValue || queueLength === maxQueueLength}
           type="submit"
           extraClass="ml-6"
         />
@@ -115,11 +126,11 @@ export const QueuePage = () => {
           {queue.map((elem, i) => (
             <li className={s.result__listItem} key={i}>
               <Circle
-                letter={elem.value}
+                letter={elem?.value}
                 index={i}
-                state={elem.state}
-                head={!!headIndex && setHead(i)}
-                tail={!!headIndex && setTail(i)}
+                state={elem?.state}
+                head={showHead(i)}
+                tail={showTail(i)}
               />
             </li>
           ))}

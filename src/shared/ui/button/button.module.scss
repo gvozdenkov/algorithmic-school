@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.button:focus:enabled {
+  background-color: var(--bg-button-active);
+}
+
 .button:active:enabled {
   background-color: var(--bg-button-active);
   color: var(--text-color-secondary);

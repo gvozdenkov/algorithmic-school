@@ -29,11 +29,7 @@ export function StackFactory<T>(): Stack<DataItem<T>> {
       state: item.state || 'changing',
     });
 
-  const pop = () => {
-    if (getSize()) {
-      stack.pop();
-    }
-  };
+  const pop = () => (getSize() ? stack.pop() : undefined);
 
   const peak = () => stack[getSize() - 1] || null;
 

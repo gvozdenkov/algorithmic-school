@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { DataItem } from '#shared/types';
@@ -9,6 +9,7 @@ import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
+import { useFocus } from '#shared/hooks';
 
 import { StackFactory } from './lib';
 import s from './stack-page.module.scss';
@@ -20,7 +21,7 @@ export const StackPage = () => {
   const [showResult, setShowResult] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const inputRef = useRef(null);
+  const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
   const stackRef = useRef(StackFactory<string>());
   const Stack = stackRef.current;
 
@@ -44,6 +45,7 @@ export const StackPage = () => {
     setStack(Stack.getStack());
 
     setIsProcessing(false);
+    setInputFocus();
   };
 
   const handlePop = async () => {
@@ -55,12 +57,15 @@ export const StackPage = () => {
 
     Stack.pop();
     setStack(Stack.getStack());
+
     setIsProcessing(false);
+    setInputFocus();
   };
 
   const handleClear = () => {
     Stack.clearStack();
     setStack([]);
+    setInputFocus();
   };
 
   const head = (i: number) => i === stack.length - 1 && 'head';
