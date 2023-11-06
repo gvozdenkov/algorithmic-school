@@ -1,29 +1,36 @@
 import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { DataItem } from '#shared/types';
 import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
 import { sleep } from '#shared/lib';
-
 import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
 import { useFocus } from '#shared/hooks';
+import { ElementStates } from '#shared/types';
 
 import { StackFactory } from './lib';
 import s from './stack-page.module.scss';
 
+const maxStackSize = 10;
+
 export const StackPage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [stack, setStack] = useState<DataItem<string>[]>([]);
+  const [stack, setStack] = useState<string[]>([]);
+  const [stackState, setStackState] = useState<ElementStates[]>([]);
 
   const [showResult, setShowResult] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
-  const stackRef = useRef(StackFactory<string>());
+  const stackRef = useRef(StackFactory<string>(maxStackSize));
   const Stack = stackRef.current;
+
+  const stackStateRef = useRef(StackFactory<ElementStates>(maxStackSize));
+  const StackState = stackStateRef.current;
+
+  const stackSize = Stack.getStack().length;
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
@@ -34,15 +41,19 @@ export const StackPage = () => {
     setIsProcessing(true);
     setShowResult(true);
 
-    Stack.push({ value: inputValue });
+    Stack.push(inputValue);
+    StackState.push('changing');
     setStack(Stack.getStack());
+    setStackState(StackState.getStack());
 
     setInputValue('');
 
     await sleep(SHORT_DELAY_IN_MS);
 
-    Stack.setState('default');
     setStack(Stack.getStack());
+    StackState.pop();
+    StackState.push('default');
+    setStackState(StackState.getStack());
 
     setIsProcessing(false);
     setInputFocus();
@@ -50,12 +61,16 @@ export const StackPage = () => {
 
   const handlePop = async () => {
     setIsProcessing(true);
-    Stack.setState('changing');
     setStack(Stack.getStack());
+    StackState.pop();
+    StackState.push('changing');
+    setStackState(StackState.getStack());
 
     await sleep(300);
 
     Stack.pop();
+    StackState.pop();
+    setStackState(StackState.getStack());
     setStack(Stack.getStack());
 
     setIsProcessing(false);
@@ -64,11 +79,13 @@ export const StackPage = () => {
 
   const handleClear = () => {
     Stack.clearStack();
+    StackState.clearStack();
     setStack([]);
+    setStackState([]);
     setInputFocus();
   };
 
-  const head = (i: number) => i === stack.length - 1 && 'head';
+  const head = (i: number) => i === stackSize - 1 && 'head';
 
   return (
     <SolutionLayout title="Стек">
@@ -86,16 +103,22 @@ export const StackPage = () => {
         <Button
           text="Добавить"
           isLoader={isProcessing}
-          disabled={!inputValue}
+          disabled={!inputValue || stackSize >= maxStackSize}
           type="submit"
           extraClass="ml-6"
         />
-        <Button text="Удалить" onClick={handlePop} type="button" extraClass="ml-6" />
+        <Button
+          text="Удалить"
+          onClick={handlePop}
+          disabled={isProcessing || stackSize === 0}
+          type="button"
+          extraClass="ml-6"
+        />
         <Button
           text="Очистить"
           type="button"
           onClick={handleClear}
-          disabled={isProcessing}
+          disabled={isProcessing || stackSize === 0}
           extraClass="ml-auto"
         />
       </form>
@@ -103,7 +126,7 @@ export const StackPage = () => {
         <ul className={clsx(s.result__list, 'mt-24')}>
           {stack.map((elem, i) => (
             <li className={s.result__listItem} key={i}>
-              <Circle letter={elem.value} index={i} state={elem.state} head={head(i)} />
+              <Circle letter={elem} index={i} state={stackState[i]} head={head(i)} />
             </li>
           ))}
         </ul>
