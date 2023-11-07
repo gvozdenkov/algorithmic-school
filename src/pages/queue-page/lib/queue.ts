@@ -1,83 +1,49 @@
-import { DataItem, ElementStates } from '#shared/types';
-
-type Queue<T> = {
+export type Queue<T> = {
   enqueue: (item: T) => void;
   dequeue: () => void;
   peak: () => T | undefined;
-  setState: (position: 'enqueue' | 'dequeue', state: ElementStates) => void;
   getQueue: () => (T | undefined)[];
-  getQueueLength: () => number;
+  getLength: () => number;
   getHead: () => number;
   getTail: () => number;
   clearQueue: () => void;
 };
 
-export function QueueFactory<T>(size: number): Queue<DataItem<T>> {
-  const queueSize = size;
-  let queue: (DataItem<T> | undefined)[] = [...Array(size)];
+export function QueueFactory<T>(size: number): Queue<T> {
+  let queue: (T | undefined)[] = [...Array(size)];
   let head = 0;
-  let tail = 0;
+  let tail = -1;
   let length = 0;
 
-  const getQueueLength = () =>
-    queue.reduce((acc, curr) => (curr !== undefined ? (acc += 1) : (acc += 0)), 0);
-  const getHead = (): number => head;
-  const getTail = (): number => tail;
+  const getLength = (): number => length;
+  const getHead = (): number => head % size;
+  const getTail = (): number => (tail === -1 ? 0 : tail % size);
 
-  const isEmpty = (): boolean => getQueueLength() === 0;
+  const isEmpty = (): boolean => getLength() === 0;
 
-  const enqueue = (item: DataItem<T>) => {
-    if (length >= queueSize) {
+  const enqueue = (item: T): void => {
+    if (length >= size) {
       throw new Error('Maximum length exceeded');
     }
 
-    queue[tail] = {
-      value: item.value,
-      state: item.state || 'changing',
-    };
+    tail = tail % size === -1 ? 0 : tail + 1;
+    queue[tail % size] = item;
 
-    tail < queueSize - 1 ? (tail += 1) : (tail = 0);
     length++;
   };
 
-  const dequeue = () => {
+  const dequeue = (): void => {
     if (isEmpty()) {
       throw new Error('No elements in the queue');
     }
 
-    queue[head] = undefined;
-    head < queueSize - 1 ? (head += 1) : (head = 0);
+    queue[head % size] = undefined;
     length--;
-
-    if (isEmpty()) {
-      head = 0;
-      tail = 0;
-      length = 0;
-    }
+    head = !length ? 0 : head + 1;
+    tail = !length ? -1 : tail;
   };
 
-  const getQueue = () => queue;
-
-  const clearQueue = () => {
-    queue = [...Array(size)];
-    head = 0;
-    tail = 0;
-    length = 0;
-  };
-
-  const setState = (position: 'enqueue' | 'dequeue', state: ElementStates) => {
-    if (position === 'enqueue' && tail > 0 && tail < queueSize) {
-      queue[tail - 1]!.state = state;
-    } else if (position === 'enqueue' && tail === 0) {
-      queue[queueSize - 1]!.state = state;
-    }
-
-    if (position === 'dequeue' && !isEmpty()) {
-      queue[head]!.state = state;
-    }
-  };
-
-  const peak = () => {
+  const peak = (): T | undefined => {
     if (isEmpty()) {
       throw new Error('No elements in the queue');
     }
@@ -85,14 +51,22 @@ export function QueueFactory<T>(size: number): Queue<DataItem<T>> {
     return queue[head];
   };
 
+  const getQueue = (): (T | undefined)[] => queue;
+
+  const clearQueue = (): void => {
+    queue = [...Array(size)];
+    head = 0;
+    tail = -1;
+    length = 0;
+  };
+
   return {
     enqueue,
     dequeue,
     peak,
     getQueue,
-    setState,
     clearQueue,
-    getQueueLength,
+    getLength,
     getHead,
     getTail,
   };

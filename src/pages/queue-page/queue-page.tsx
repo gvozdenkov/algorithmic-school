@@ -1,7 +1,6 @@
 import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { DataItem } from '#shared/types';
 import { SolutionLayout } from '#shared/ui/solution-layout';
 import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
@@ -9,27 +8,31 @@ import { Circle } from '#shared/ui/circle';
 import { sleep } from '#shared/lib';
 import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
 import { useFocus } from '#shared/hooks';
+import { AnimationState } from '#shared/types';
 
-import { QueueFactory } from './lib';
+import { QueueFactory, setHead, setState, setTail } from './lib';
 import s from './queue-page.module.scss';
 
-const maxQueueLength = 7;
-const initialQueue: DataItem<string>[] = [...Array(maxQueueLength)].map(() => ({
-  value: '',
-  state: 'default',
-}));
+const maxQueueSize = 4;
+const initialQueue: string[] = [...Array(maxQueueSize)];
 
 export const QueuePage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [queue, setQueue] = useState<(DataItem<string> | undefined)[]>(initialQueue);
+  const [queue, setQueue] = useState<(string | undefined)[]>(initialQueue);
+  const [animationState, setAnimationState] = useState<AnimationState>('idle');
 
   const [isProcessing, setIsProcessing] = useState(false);
 
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
-  const queueRef = useRef(QueueFactory<string>(maxQueueLength));
+
+  const queueRef = useRef(QueueFactory<string>(maxQueueSize));
   const Queue = queueRef.current;
 
-  const queueLength = Queue.getQueueLength();
+  const queueLength = Queue.getLength();
+
+  const setQueueState = setState(Queue);
+  const setQueueHead = setHead(Queue);
+  const setQueueTail = setTail(Queue);
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
@@ -46,43 +49,32 @@ export const QueuePage = () => {
     e.preventDefault();
     setIsProcessing(true);
 
-    Queue.enqueue({ value: inputValue });
+    Queue.enqueue(inputValue);
     setQueue(Queue.getQueue());
+    setAnimationState('add');
     setInputValue('');
 
     await sleep(SHORT_DELAY_IN_MS);
 
-    Queue.setState('enqueue', 'default');
-    setQueue(Queue.getQueue());
+    setAnimationState('idle');
     setIsProcessing(false);
-
     setInputFocus();
   };
 
   const handlePop = async () => {
     setIsProcessing(true);
 
-    Queue.setState('dequeue', 'changing');
     setQueue(Queue.getQueue());
+    setAnimationState('delete');
 
     await sleep(SHORT_DELAY_IN_MS);
 
     Queue.dequeue();
     setQueue(Queue.getQueue());
+    setAnimationState('idle');
 
     setIsProcessing(false);
     setInputFocus();
-  };
-
-  const showHead = (i: number): string | false =>
-    Queue.getQueueLength() > 0 && i === Queue.getHead() && 'head';
-
-  const showTail = (i: number): string | false | undefined => {
-    if (Queue.getQueueLength() > 0 && i === Queue.getTail() - 1) return 'tail';
-
-    // for last position in queue
-    if (Queue.getQueueLength() > 0 && Queue.getTail() === 0 && i === maxQueueLength - 1)
-      return 'tail';
   };
 
   return (
@@ -102,7 +94,7 @@ export const QueuePage = () => {
         <Button
           text="Добавить"
           isLoader={isProcessing}
-          disabled={!inputValue || queueLength === maxQueueLength}
+          disabled={!inputValue || queueLength === maxQueueSize}
           type="submit"
           extraClass="ml-6"
         />
@@ -126,11 +118,11 @@ export const QueuePage = () => {
           {queue.map((elem, i) => (
             <li className={s.result__listItem} key={i}>
               <Circle
-                letter={elem?.value}
+                letter={elem}
                 index={i}
-                state={elem?.state}
-                head={showHead(i)}
-                tail={showTail(i)}
+                state={setQueueState(animationState, i)}
+                head={setQueueHead(i)}
+                tail={setQueueTail(i)}
               />
             </li>
           ))}
