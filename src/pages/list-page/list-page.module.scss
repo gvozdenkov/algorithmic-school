@@ -1,0 +1,46 @@
+.form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 952px;
+  width: 100%;
+
+  &__input {
+    max-width: 204px;
+    width: 100%;
+  }
+
+  &__button {
+    flex: 1 0 auto;
+  }
+}
+
+.circle {
+  margin: 0 16px;
+
+  &_first {
+    margin: 0 16px 0 0;
+  }
+
+  &_last {
+    margin: 0 0 0 16px;
+  }
+}
+
+.resultList {
+  display: flex;
+  justify-content: center;
+  gap: 80px 0;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  margin-top: 90px;
+}
+
+.resultList__item {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}

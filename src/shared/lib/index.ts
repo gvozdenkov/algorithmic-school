@@ -9,3 +9,4 @@ export {
   bubbleSort,
 } from './sorting';
 export { getFibonacciArray, getFibonacciValue } from './fibonacci';
+export { colorSwitch } from './color-switch';

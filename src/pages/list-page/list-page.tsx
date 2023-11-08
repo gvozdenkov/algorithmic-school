@@ -1,11 +1,242 @@
-import React from "react";
-import { SolutionLayout } from "#shared/ui/solution-layout";
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 
+import { SolutionLayout } from '#shared/ui/solution-layout';
+import { Input } from '#shared/ui/input';
+import { Button } from '#shared/ui/button';
+import { Circle } from '#shared/ui/circle';
+import { ArrowIcon } from '#shared/ui/icons';
+import { colorSwitch, sleep } from '#shared/lib';
+import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
+import { useFocus } from '#shared/hooks';
 
-export const ListPage: React.FC = () => {
+import { LinkedList } from './lib';
+import s from './list-page.module.scss';
+
+type ProcessingAction =
+  | 'addToHead'
+  | 'addToTail'
+  | 'addByIndex'
+  | 'removeFromHead'
+  | 'removeFromTail'
+  | 'removeByIndex'
+  | 'idle';
+
+const maxListLength = 8;
+const initialListLength = 4;
+
+const initialLink: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
+
+export const ListPage = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [inputIndex, setInputIndex] = useState<string>('');
+  const [list, setList] = useState<string[]>(['']);
+
+  const [inputValueRef, setInputValueFocus] = useFocus<HTMLInputElement>();
+  const [inputIndexRef, setInputIndexFocus] = useFocus<HTMLInputElement>();
+
+  const [processingAction, setProcessingAction] = useState<ProcessingAction>('idle');
+
+  const linkListRef = useRef(LinkedList<string>());
+  const LinkList = linkListRef.current;
+
+  const listLength = list.length;
+  const isProcessing = processingAction !== 'idle';
+  const addButtonDisabled = !inputValue || listLength >= maxListLength;
+
+  useEffect(() => {
+    initialLink.map((elem) => LinkList.append(elem));
+    setList(LinkList.toArray());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleChangeValue = (e: FormEvent<HTMLInputElement>) =>
+    setInputValue(e.currentTarget.value);
+
+  const handleChangeIndex = (e: FormEvent<HTMLInputElement>) =>
+    e.currentTarget.validity.valid && setInputIndex(e.currentTarget.value);
+
+  const handleAppend = async (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setProcessingAction('addToTail');
+
+    await sleep(200);
+
+    LinkList.append(inputValue);
+    setList(LinkList.toArray());
+
+    setProcessingAction('idle');
+    setInputValueFocus();
+  };
+
+  const handlePrepend = async (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setProcessingAction('addToHead');
+
+    await sleep(200);
+
+    LinkList.prepend(inputValue);
+    setList(LinkList.toArray());
+
+    setProcessingAction('idle');
+    setInputValueFocus();
+  };
+
+  const handleDeleteHead = async () => {
+    setProcessingAction('removeFromHead');
+
+    await sleep(SHORT_DELAY_IN_MS);
+
+    LinkList.deleteHead();
+    setList(LinkList.toArray());
+
+    setProcessingAction('idle');
+  };
+
+  const handleDeleteTail = async () => {
+    setProcessingAction('removeFromTail');
+
+    await sleep(SHORT_DELAY_IN_MS);
+
+    LinkList.deleteTail();
+    setList(LinkList.toArray());
+
+    setProcessingAction('idle');
+  };
+
+  const handleRemoveAt = async () => {
+    setProcessingAction('removeByIndex');
+
+    setInputIndex('');
+
+    await sleep(SHORT_DELAY_IN_MS);
+
+    LinkList.removeAt(+inputIndex);
+    setList(LinkList.toArray());
+
+    setProcessingAction('idle');
+    setInputIndexFocus();
+  };
+
+  const handleInsertAt = async () => {
+    setProcessingAction('addByIndex');
+
+    setInputIndex('');
+
+    await sleep(SHORT_DELAY_IN_MS);
+
+    LinkList.insertAt(+inputIndex, inputValue);
+    setList(LinkList.toArray());
+
+    setProcessingAction('idle');
+    setInputIndexFocus();
+  };
+
   return (
     <SolutionLayout title="Связный список">
+      <form className={s.form}>
+        <Input
+          value={inputValue}
+          maxLength={4}
+          isLimitText
+          onChange={handleChangeValue}
+          disabled={processingAction !== 'idle'}
+          extraClass={s.form__input}
+          autoComplete="off"
+          autoFocus
+          ref={inputValueRef}
+        />
+        <Button
+          text="Добавить в head"
+          isLoader={processingAction === 'addToHead'}
+          disabled={addButtonDisabled}
+          type="submit"
+          onClick={handlePrepend}
+          extraClass={clsx(s.form__button)}
+        />
+        <Button
+          text="Добавить в tail"
+          isLoader={processingAction === 'addToTail'}
+          disabled={addButtonDisabled}
+          onClick={handleAppend}
+          type="submit"
+          extraClass={clsx(s.form__button)}
+        />
+        <Button
+          text="Удалить из head"
+          isLoader={processingAction === 'removeFromHead'}
+          onClick={handleDeleteHead}
+          disabled={isProcessing || !listLength}
+          type="button"
+          extraClass={clsx(s.form__button)}
+        />
+        <Button
+          text="Удалить из tail"
+          isLoader={processingAction === 'removeFromTail'}
+          onClick={handleDeleteTail}
+          disabled={isProcessing || !listLength}
+          type="button"
+          extraClass={clsx(s.form__button)}
+        />
 
+        <Input
+          type="number"
+          placeholder="Введите индекс"
+          value={inputIndex}
+          min={0}
+          maxLength={listLength}
+          pattern="\d+"
+          isLimitText
+          onChange={handleChangeIndex}
+          disabled={processingAction !== 'idle'}
+          extraClass={s.form__input}
+          autoComplete="off"
+          autoFocus
+          ref={inputIndexRef}
+        />
+        <Button
+          text="Добавить по индексу"
+          isLoader={isProcessing}
+          disabled={!inputIndex || addButtonDisabled}
+          onClick={handleInsertAt}
+          type="submit"
+          extraClass={clsx(s.form__button)}
+        />
+        <Button
+          text="Удалить по индексу"
+          isLoader={processingAction === 'removeByIndex'}
+          onClick={handleRemoveAt}
+          disabled={!inputIndex || +inputIndex >= listLength}
+          type="button"
+          extraClass={clsx(s.form__button)}
+        />
+      </form>
+      {
+        <ul className={clsx(s.resultList, 'mt-24')}>
+          {list.map((elem, i, arr) => {
+            const lastIndex = arr.length - 1;
+
+            return (
+              <li className={s.resultList__item} key={i}>
+                <Circle
+                  letter={elem}
+                  index={i}
+                  state={'default'}
+                  head={i === 0 && 'head'}
+                  tail={i === lastIndex && 'tail'}
+                  extraClass={clsx(
+                    s.circle,
+                    { [s.circle_first]: i === 0 },
+                    { [s.circle_last]: i === lastIndex }
+                  )}
+                />
+                {i < lastIndex && <ArrowIcon fill={colorSwitch('default')} />}
+              </li>
+            );
+          })}
+        </ul>
+      }
     </SolutionLayout>
   );
 };
