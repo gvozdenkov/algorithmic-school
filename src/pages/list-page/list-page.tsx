@@ -7,30 +7,32 @@ import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
 import { ArrowIcon } from '#shared/ui/icons';
 import { colorSwitch, sleep } from '#shared/lib';
-import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
+import { DELAY_IN_MS } from '#shared/constants/delays';
 import { useFocus } from '#shared/hooks';
 
-import { LinkedList } from './lib';
+import { LinkedList, getState } from './lib';
 import s from './list-page.module.scss';
 
-type ProcessingAction =
+export type ProcessingAction =
   | 'addToHead'
   | 'addToTail'
   | 'addByIndex'
   | 'removeFromHead'
   | 'removeFromTail'
   | 'removeByIndex'
+  | 'final'
   | 'idle';
 
 const maxListLength = 8;
-const initialListLength = 4;
+const initialListLength = 5;
 
-const initialLink: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
+const initialList: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
 
 export const ListPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [inputIndex, setInputIndex] = useState<string>('');
   const [list, setList] = useState<string[]>(['']);
+  const [actionIndex, setActionIndex] = useState<number | null>(null);
 
   const [inputValueRef, setInputValueFocus] = useFocus<HTMLInputElement>();
   const [inputIndexRef, setInputIndexFocus] = useFocus<HTMLInputElement>();
@@ -45,7 +47,7 @@ export const ListPage = () => {
   const addButtonDisabled = !inputValue || listLength >= maxListLength;
 
   useEffect(() => {
-    initialLink.map((elem) => LinkList.append(elem));
+    initialList.map((elem) => LinkList.append(elem));
     setList(LinkList.toArray());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,7 +63,7 @@ export const ListPage = () => {
     e.preventDefault();
     setProcessingAction('addToTail');
 
-    await sleep(200);
+    await sleep(DELAY_IN_MS);
 
     LinkList.append(inputValue);
     setList(LinkList.toArray());
@@ -74,7 +76,7 @@ export const ListPage = () => {
     e.preventDefault();
     setProcessingAction('addToHead');
 
-    await sleep(200);
+    await sleep(DELAY_IN_MS);
 
     LinkList.prepend(inputValue);
     setList(LinkList.toArray());
@@ -86,7 +88,7 @@ export const ListPage = () => {
   const handleDeleteHead = async () => {
     setProcessingAction('removeFromHead');
 
-    await sleep(SHORT_DELAY_IN_MS);
+    await sleep(DELAY_IN_MS);
 
     LinkList.deleteHead();
     setList(LinkList.toArray());
@@ -97,7 +99,7 @@ export const ListPage = () => {
   const handleDeleteTail = async () => {
     setProcessingAction('removeFromTail');
 
-    await sleep(SHORT_DELAY_IN_MS);
+    await sleep(DELAY_IN_MS);
 
     LinkList.deleteTail();
     setList(LinkList.toArray());
@@ -108,30 +110,51 @@ export const ListPage = () => {
   const handleRemoveAt = async () => {
     setProcessingAction('removeByIndex');
 
-    setInputIndex('');
-
-    await sleep(SHORT_DELAY_IN_MS);
+    for (let i = 0; i <= +inputIndex; i++) {
+      setActionIndex(i);
+      await sleep(DELAY_IN_MS);
+    }
 
     LinkList.removeAt(+inputIndex);
     setList(LinkList.toArray());
 
+    setActionIndex(null);
     setProcessingAction('idle');
+    setInputValue('');
+    setInputIndex('');
     setInputIndexFocus();
   };
 
   const handleInsertAt = async () => {
     setProcessingAction('addByIndex');
 
-    setInputIndex('');
-
-    await sleep(SHORT_DELAY_IN_MS);
+    for (let i = 0; i <= +inputIndex; i++) {
+      setActionIndex(i);
+      await sleep(DELAY_IN_MS);
+    }
 
     LinkList.insertAt(+inputIndex, inputValue);
     setList(LinkList.toArray());
 
+    setProcessingAction('final');
+    await sleep(DELAY_IN_MS);
+
+    setActionIndex(null);
     setProcessingAction('idle');
+    setInputValue('');
+    setInputIndex('');
     setInputIndexFocus();
   };
+
+  const InsertedElement = <Circle letter={inputValue} state="changing" isSmall />;
+
+  const getCircleState = getState({
+    list: LinkList,
+    Element: InsertedElement,
+    initialListLength,
+    action: processingAction,
+    targetIndex: +inputIndex,
+  });
 
   return (
     <SolutionLayout title="Связный список">
@@ -216,14 +239,18 @@ export const ListPage = () => {
         <ul className={clsx(s.resultList, 'mt-24')}>
           {list.map((elem, i, arr) => {
             const lastIndex = arr.length - 1;
+            const { state, insert } = getCircleState({
+              index: i,
+              currentIndex: actionIndex,
+            });
 
             return (
               <li className={s.resultList__item} key={i}>
                 <Circle
                   letter={elem}
                   index={i}
-                  state={'default'}
-                  head={i === 0 && 'head'}
+                  state={state}
+                  head={insert}
                   tail={i === lastIndex && 'tail'}
                   extraClass={clsx(
                     s.circle,
@@ -231,7 +258,7 @@ export const ListPage = () => {
                     { [s.circle_last]: i === lastIndex }
                   )}
                 />
-                {i < lastIndex && <ArrowIcon fill={colorSwitch('default')} />}
+                {i < lastIndex && <ArrowIcon fill={colorSwitch(state)} />}
               </li>
             );
           })}

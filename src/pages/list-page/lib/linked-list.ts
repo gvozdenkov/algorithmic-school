@@ -8,7 +8,7 @@ const CreateNode = <T>({ value, next = null }: Node<T>): Node<T> => ({
   next,
 });
 
-type LinkedListReturn<T> = {
+export type LinkedListReturn<T> = {
   append: (value: T) => void;
   prepend: (value: T) => void;
   insertAt: (index: number, value: T) => void;
@@ -77,7 +77,7 @@ export function LinkedList<T>(): LinkedListReturn<T> {
         currIndex++;
       }
 
-      prevNode!.next = null;
+      prevNode!.next = currNode.next;
     }
 
     size--;
