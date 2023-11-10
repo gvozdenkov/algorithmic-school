@@ -1,11 +1,13 @@
 type Node<T> = {
   value: T;
   next?: Node<T> | null;
+  prev?: Node<T> | null;
 };
 
-const CreateNode = <T>({ value, next = null }: Node<T>): Node<T> => ({
+const CreateNode = <T>({ value, next = null, prev = null }: Node<T>): Node<T> => ({
   value,
   next,
+  prev,
 });
 
 export type LinkedListReturn<T> = {
@@ -21,6 +23,7 @@ export type LinkedListReturn<T> = {
 
 export function LinkedList<T>(): LinkedListReturn<T> {
   let head: Node<T> | null = null;
+  let tail: Node<T> | null = null;
   let size: number = 0;
 
   const isOutOfRangeError = (index: number, error: string): void => {
@@ -84,14 +87,31 @@ export function LinkedList<T>(): LinkedListReturn<T> {
   };
 
   // insertAtHead
-  const prepend = (value: T): void => insertAt(0, value);
+  const prepend = (value: T): void => {
+    const node = CreateNode({ value, next: head });
+
+    if (head) head.prev = node;
+    head = node;
+    size++;
+  };
 
   // insertAtTail
-  const append = (value: T): void => insertAt(size, value);
+  const append = (value: T): void => {
+    const node = CreateNode({ value, prev: tail });
+
+    if (tail) tail.next = node;
+    if (!head) head = node;
+    tail = node;
+    size++;
+  };
 
   const deleteHead = (): void => removeAt(0);
 
-  const deleteTail = (): void => removeAt(size - 1);
+  const deleteTail = (): void => {
+    tail = tail?.prev ?? null;
+    if (tail) tail.next = null;
+    size--;
+  };
 
   const toArray = (): T[] => {
     let curr = head;

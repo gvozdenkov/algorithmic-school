@@ -9,8 +9,9 @@ import { ArrowIcon } from '#shared/ui/icons';
 import { colorSwitch, sleep } from '#shared/lib';
 import { DELAY_IN_MS } from '#shared/constants/delays';
 import { useFocus } from '#shared/hooks';
+import { AnimationState, ElementState } from '#shared/types';
 
-import { LinkedList, getState } from './lib';
+import { LinkedList } from './lib';
 import s from './list-page.module.scss';
 
 export type ProcessingAction =
@@ -24,20 +25,22 @@ export type ProcessingAction =
   | 'idle';
 
 const maxListLength = 8;
-const initialListLength = 3;
+const initialListLength = 5;
 
 const initialList: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
 
 export const ListPage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [inputIndex, setInputIndex] = useState<string>('');
-  const [list, setList] = useState<string[]>(['']);
-  const [actionIndex, setActionIndex] = useState<number | null>(null);
+  const [inputIndexStr, setInputIndex] = useState<string>('');
+  const inputIndex = +inputIndexStr;
+  const [list, setList] = useState(initialList);
+
+  const [processingIndex, setProcessingIndex] = useState<number | null>(null);
+  const [processingAction, setProcessingAction] = useState<ProcessingAction>('idle');
+  const [finalStage, setFinalStage] = useState<ProcessingAction | null>(null);
 
   const [inputValueRef, setInputValueFocus] = useFocus<HTMLInputElement>();
   const [inputIndexRef, setInputIndexFocus] = useFocus<HTMLInputElement>();
-
-  const [processingAction, setProcessingAction] = useState<ProcessingAction>('idle');
 
   const linkListRef = useRef(LinkedList<string>());
   const LinkList = linkListRef.current;
@@ -47,10 +50,34 @@ export const ListPage = () => {
   const isProcessing = processingAction !== 'idle';
 
   const isAddButtonDisabled = !inputValue || isProcessing || listLength >= maxListLength;
-  const isAddByIndexButtonDisabled = isAddButtonDisabled || !inputIndex || +inputIndex > listLength;
+
+  const isAddByIndexButtonDisabled =
+    isAddButtonDisabled || !inputIndexStr || inputIndex > listLength;
   const isRemoveButtonDisabled = isProcessing || !listLength;
   const isRemoveByIndexButtonDisabled =
-    isRemoveButtonDisabled || !inputIndex || +inputIndex >= listLength;
+    isRemoveButtonDisabled || !inputIndexStr || inputIndex >= listLength;
+
+  const setPlayAnimation = async (index?: number): Promise<void> => {
+    const lastIndex = index ? index : inputIndex;
+
+    for (let i = 0; i <= lastIndex; i++) {
+      setProcessingIndex(i);
+      await sleep(DELAY_IN_MS);
+    }
+  };
+
+  const setFinalStageAnimation = async (stage: ProcessingAction | null): Promise<void> => {
+    setProcessingAction('final');
+    setFinalStage(stage);
+  };
+
+  const resetStates = (): void => {
+    setProcessingAction('idle');
+    setProcessingIndex(null);
+    setFinalStage(null);
+    setInputValue('');
+    setInputIndex('');
+  };
 
   useEffect(() => {
     initialList.map((elem) => LinkList.append(elem));
@@ -65,8 +92,8 @@ export const ListPage = () => {
   const handleChangeIndex = (e: FormEvent<HTMLInputElement>) =>
     e.currentTarget.validity.valid && setInputIndex(e.currentTarget.value);
 
-  const handleAppend = async (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  // insertAtTail
+  const handleAppend = async () => {
     setProcessingAction('addToTail');
 
     await sleep(DELAY_IN_MS);
@@ -74,12 +101,15 @@ export const ListPage = () => {
     LinkList.append(inputValue);
     setList(LinkList.toArray());
 
-    setProcessingAction('idle');
-    setInputValueFocus();
+    await setFinalStageAnimation('addToTail');
+    await sleep(DELAY_IN_MS);
+
+    resetStates();
+    setInputIndexFocus();
   };
 
-  const handlePrepend = async (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  // insertAtHead
+  const handlePrepend = async () => {
     setProcessingAction('addToHead');
 
     await sleep(DELAY_IN_MS);
@@ -87,8 +117,11 @@ export const ListPage = () => {
     LinkList.prepend(inputValue);
     setList(LinkList.toArray());
 
-    setProcessingAction('idle');
-    setInputValueFocus();
+    await setFinalStageAnimation('addToHead');
+    await sleep(DELAY_IN_MS);
+
+    resetStates();
+    setInputIndexFocus();
   };
 
   const handleDeleteHead = async () => {
@@ -99,7 +132,9 @@ export const ListPage = () => {
     LinkList.deleteHead();
     setList(LinkList.toArray());
 
-    setProcessingAction('idle');
+    await setFinalStageAnimation('removeFromHead');
+
+    resetStates();
   };
 
   const handleDeleteTail = async () => {
@@ -110,61 +145,142 @@ export const ListPage = () => {
     LinkList.deleteTail();
     setList(LinkList.toArray());
 
-    setProcessingAction('idle');
+    await setFinalStageAnimation('removeFromTail');
+
+    resetStates();
   };
 
   const handleRemoveAt = async () => {
     setProcessingAction('removeByIndex');
 
-    for (let i = 0; i <= +inputIndex; i++) {
-      setActionIndex(i);
-      await sleep(DELAY_IN_MS);
-    }
+    await setPlayAnimation();
 
-    LinkList.removeAt(+inputIndex);
+    LinkList.removeAt(inputIndex);
     setList(LinkList.toArray());
 
-    setActionIndex(null);
-    setProcessingAction('idle');
-    setInputValue('');
-    setInputIndex('');
+    await setFinalStageAnimation('removeByIndex');
+    await sleep(DELAY_IN_MS);
+
+    resetStates();
     setInputIndexFocus();
   };
 
   const handleInsertAt = async () => {
     setProcessingAction('addByIndex');
 
-    for (let i = 0; i <= +inputIndex; i++) {
-      setActionIndex(i);
-      await sleep(DELAY_IN_MS);
-    }
+    await setPlayAnimation();
 
-    LinkList.insertAt(+inputIndex, inputValue);
+    LinkList.insertAt(inputIndex, inputValue);
     setList(LinkList.toArray());
 
-    setProcessingAction('final');
+    await setFinalStageAnimation('addByIndex');
     await sleep(DELAY_IN_MS);
 
-    setProcessingAction('idle');
-    setActionIndex(null);
-    setInputValue('');
-    setInputIndex('');
+    resetStates();
     setInputIndexFocus();
   };
 
-  const InsertedElement = () => {
-    const value = processingAction.includes('add') ? inputValue : list[+inputIndex];
+  const InsertedElement = (value: string) => <Circle letter={value} state="changing" isSmall />;
 
-    return <Circle letter={value} state="changing" isSmall />;
+  const colorState = (i: number): ElementState => {
+    // add to tail
+    if (processingAction === 'addToTail' && i === listLength - 1) return 'changing';
+    if (finalStage === 'addToTail' && processingAction === 'final' && i === listLength - 1)
+      return 'modified';
+
+    // add to head
+    if (processingAction === 'addToHead' && i === 0) return 'changing';
+    if (finalStage === 'addToHead' && processingAction === 'final' && i === 0) return 'modified';
+
+    // remove from tail
+    if (
+      finalStage === 'removeFromTail' &&
+      processingAction === 'removeFromTail' &&
+      i === listLength - 1
+    )
+      return 'changing';
+
+    // insert at index
+    if (
+      processingAction === 'addByIndex' &&
+      i <= inputIndex &&
+      processingIndex !== null &&
+      i < processingIndex
+    )
+      return 'changing';
+    if (finalStage === 'addByIndex' && processingAction === 'final' && i === inputIndex)
+      return 'modified';
+
+    // remove at index
+    if (
+      processingAction === 'removeByIndex' &&
+      i <= inputIndex &&
+      processingIndex !== null &&
+      i <= processingIndex
+    )
+      return 'changing';
+
+    return 'default';
   };
 
-  const getCircleState = getState({
-    list: LinkList,
-    Element: InsertedElement(),
-    initialListLength,
-    action: processingAction,
-    targetIndex: +inputIndex,
-  });
+  const circleState = (i: number): string => {
+    if (processingAction === 'removeFromTail' && i === listLength - 1) return '';
+    if (processingAction === 'removeFromHead' && i === 0) return '';
+    if (
+      processingAction === 'removeByIndex' &&
+      i === inputIndex &&
+      processingIndex !== null &&
+      i === processingIndex
+    )
+      return '';
+
+    return list[i];
+  };
+
+  const tailState = (i: number) => {
+    // remove from tail
+    if (processingAction === 'removeFromTail' && i === listLength - 1)
+      return InsertedElement(list[listLength - 1]);
+
+    // remove from head
+    if (processingAction === 'removeFromHead' && i === 0) return InsertedElement(list[0]);
+
+    // remove at index
+    if (
+      processingAction === 'removeByIndex' &&
+      i === inputIndex &&
+      processingIndex !== null &&
+      i === processingIndex
+    )
+      return InsertedElement(list[inputIndex]);
+
+    if (i === listLength - 1) return 'tail';
+
+    return null;
+  };
+
+  const headState = (i: number) => {
+    // add to tail
+    if (processingAction === 'addToTail' && i === listLength - 1)
+      return InsertedElement(inputValue);
+
+    // add to head
+    if (processingAction === 'addToHead' && i === 0) return InsertedElement(inputValue);
+    if (finalStage === 'addToHead' && processingAction === 'final' && i === 0) return 'head';
+
+    // insert at index
+    if (
+      processingAction === 'addByIndex' &&
+      i <= inputIndex &&
+      processingIndex !== null &&
+      i === processingIndex
+    )
+      return InsertedElement(inputValue);
+
+    if (finalStage === 'addByIndex' && processingAction === 'final' && i !== 0) return '';
+
+    return i === 0 && 'head';
+  };
 
   return (
     <SolutionLayout title="Связный список">
@@ -184,7 +300,7 @@ export const ListPage = () => {
           text="Добавить в head"
           isLoader={processingAction === 'addToHead'}
           disabled={isAddButtonDisabled}
-          type="submit"
+          type="button"
           onClick={handlePrepend}
           extraClass={clsx(s.form__button)}
         />
@@ -193,7 +309,7 @@ export const ListPage = () => {
           isLoader={processingAction === 'addToTail'}
           disabled={isAddButtonDisabled}
           onClick={handleAppend}
-          type="submit"
+          type="button"
           extraClass={clsx(s.form__button)}
         />
         <Button
@@ -216,7 +332,7 @@ export const ListPage = () => {
         <Input
           type="number"
           placeholder="Введите индекс"
-          value={inputIndex}
+          value={inputIndexStr}
           min={0}
           maxLength={listLength}
           pattern="\d+"
@@ -247,40 +363,24 @@ export const ListPage = () => {
       </form>
       {
         <ul className={clsx(s.resultList, 'mt-24')}>
-          {list.map((elem, i, arr) => {
-            const lastIndex = arr.length - 1;
-            const { state, insert } = getCircleState({
-              index: i,
-              currentIndex: actionIndex,
-            });
-
-            const head = () => {
-              if (processingAction.includes('add')) return insert;
-
-              if (i === 0) return 'head';
-            };
-
-            const tail = () => {
-              if (processingAction.includes('remove')) return insert;
-
-              if (i === lastIndex) return 'tail';
-            };
+          {list.map((elem, i) => {
+            const lastIndex = listLength - 1;
 
             return (
               <li className={s.resultList__item} key={i}>
                 <Circle
-                  letter={elem}
+                  letter={circleState(i)}
                   index={i}
-                  state={state}
-                  head={head()}
-                  tail={tail()}
+                  state={colorState(i)}
+                  head={headState(i)}
+                  tail={tailState(i)}
                   extraClass={clsx(
                     s.circle,
                     { [s.circle_first]: i === 0 },
                     { [s.circle_last]: i === lastIndex }
                   )}
                 />
-                {i < lastIndex && <ArrowIcon fill={colorSwitch(state)} />}
+                {i < lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
               </li>
             );
           })}
