@@ -24,7 +24,7 @@ export type ProcessingAction =
   | 'idle';
 
 const maxListLength = 8;
-const initialListLength = 5;
+const initialListLength = 3;
 
 const initialList: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
 
@@ -43,8 +43,14 @@ export const ListPage = () => {
   const LinkList = linkListRef.current;
 
   const listLength = list.length;
+
   const isProcessing = processingAction !== 'idle';
-  const addButtonDisabled = !inputValue || listLength >= maxListLength;
+
+  const isAddButtonDisabled = !inputValue || isProcessing || listLength >= maxListLength;
+  const isAddByIndexButtonDisabled = isAddButtonDisabled || !inputIndex || +inputIndex > listLength;
+  const isRemoveButtonDisabled = isProcessing || !listLength;
+  const isRemoveByIndexButtonDisabled =
+    isRemoveButtonDisabled || !inputIndex || +inputIndex >= listLength;
 
   useEffect(() => {
     initialList.map((elem) => LinkList.append(elem));
@@ -139,18 +145,22 @@ export const ListPage = () => {
     setProcessingAction('final');
     await sleep(DELAY_IN_MS);
 
-    setActionIndex(null);
     setProcessingAction('idle');
+    setActionIndex(null);
     setInputValue('');
     setInputIndex('');
     setInputIndexFocus();
   };
 
-  const InsertedElement = <Circle letter={inputValue} state="changing" isSmall />;
+  const InsertedElement = () => {
+    const value = processingAction.includes('add') ? inputValue : list[+inputIndex];
+
+    return <Circle letter={value} state="changing" isSmall />;
+  };
 
   const getCircleState = getState({
     list: LinkList,
-    Element: InsertedElement,
+    Element: InsertedElement(),
     initialListLength,
     action: processingAction,
     targetIndex: +inputIndex,
@@ -173,7 +183,7 @@ export const ListPage = () => {
         <Button
           text="Добавить в head"
           isLoader={processingAction === 'addToHead'}
-          disabled={addButtonDisabled}
+          disabled={isAddButtonDisabled}
           type="submit"
           onClick={handlePrepend}
           extraClass={clsx(s.form__button)}
@@ -181,7 +191,7 @@ export const ListPage = () => {
         <Button
           text="Добавить в tail"
           isLoader={processingAction === 'addToTail'}
-          disabled={addButtonDisabled}
+          disabled={isAddButtonDisabled}
           onClick={handleAppend}
           type="submit"
           extraClass={clsx(s.form__button)}
@@ -190,7 +200,7 @@ export const ListPage = () => {
           text="Удалить из head"
           isLoader={processingAction === 'removeFromHead'}
           onClick={handleDeleteHead}
-          disabled={isProcessing || !listLength}
+          disabled={isRemoveButtonDisabled}
           type="button"
           extraClass={clsx(s.form__button)}
         />
@@ -198,7 +208,7 @@ export const ListPage = () => {
           text="Удалить из tail"
           isLoader={processingAction === 'removeFromTail'}
           onClick={handleDeleteTail}
-          disabled={isProcessing || !listLength}
+          disabled={isRemoveButtonDisabled}
           type="button"
           extraClass={clsx(s.form__button)}
         />
@@ -220,8 +230,8 @@ export const ListPage = () => {
         />
         <Button
           text="Добавить по индексу"
-          isLoader={isProcessing}
-          disabled={!inputIndex || addButtonDisabled}
+          isLoader={processingAction === 'addByIndex'}
+          disabled={isAddByIndexButtonDisabled}
           onClick={handleInsertAt}
           type="submit"
           extraClass={clsx(s.form__button)}
@@ -230,7 +240,7 @@ export const ListPage = () => {
           text="Удалить по индексу"
           isLoader={processingAction === 'removeByIndex'}
           onClick={handleRemoveAt}
-          disabled={!inputIndex || +inputIndex >= listLength}
+          disabled={isRemoveByIndexButtonDisabled}
           type="button"
           extraClass={clsx(s.form__button)}
         />
@@ -244,14 +254,26 @@ export const ListPage = () => {
               currentIndex: actionIndex,
             });
 
+            const head = () => {
+              if (processingAction.includes('add')) return insert;
+
+              if (i === 0) return 'head';
+            };
+
+            const tail = () => {
+              if (processingAction.includes('remove')) return insert;
+
+              if (i === lastIndex) return 'tail';
+            };
+
             return (
               <li className={s.resultList__item} key={i}>
                 <Circle
                   letter={elem}
                   index={i}
                   state={state}
-                  head={insert}
-                  tail={i === lastIndex && 'tail'}
+                  head={head()}
+                  tail={tail()}
                   extraClass={clsx(
                     s.circle,
                     { [s.circle_first]: i === 0 },
