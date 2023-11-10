@@ -1,9 +1,9 @@
 import styles from './column.module.scss';
-import { ElementStates } from '../../types/element-states';
+import { ElementState } from '../../types/element-states';
 
 interface ColumnProps {
   index: number;
-  state?: ElementStates;
+  state?: ElementState;
   extraClass?: string;
 }
 

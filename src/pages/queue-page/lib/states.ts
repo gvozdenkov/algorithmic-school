@@ -1,9 +1,9 @@
-import { ElementStates, AnimationState } from '#shared/types';
+import { ElementState, AnimationState } from '#shared/types';
 import { Queue as QueueType } from '.';
 
 export const setState =
   <T>(Queue: QueueType<T>) =>
-  (animationState: AnimationState, i: number): ElementStates => {
+  (animationState: AnimationState, i: number): ElementState => {
     if (animationState === 'add' && i === Queue.getTail()) {
       return 'changing';
     }

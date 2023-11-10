@@ -1,6 +1,6 @@
-import { ColorValueHex, ElementStates } from '#shared/types';
+import { ColorValueHex, ElementState } from '#shared/types';
 
-export const colorSwitch = (color: ElementStates): ColorValueHex => {
+export const colorSwitch = (color: ElementState): ColorValueHex => {
   switch (color) {
     case 'default': {
       return '#0032FF';

@@ -8,7 +8,7 @@ import { Input } from '#shared/ui/input';
 import { Button } from '#shared/ui/button';
 import { Circle } from '#shared/ui/circle';
 import { useFocus } from '#shared/hooks';
-import { ElementStates } from '#shared/types';
+import { ElementState } from '#shared/types';
 
 import { StackFactory } from './lib';
 import s from './stack-page.module.scss';
@@ -18,7 +18,7 @@ const maxStackSize = 10;
 export const StackPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [stack, setStack] = useState<string[]>([]);
-  const [stackState, setStackState] = useState<ElementStates[]>([]);
+  const [stackState, setStackState] = useState<ElementState[]>([]);
 
   const [showResult, setShowResult] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -27,7 +27,7 @@ export const StackPage = () => {
   const stackRef = useRef(StackFactory<string>(maxStackSize));
   const Stack = stackRef.current;
 
-  const stackStateRef = useRef(StackFactory<ElementStates>(maxStackSize));
+  const stackStateRef = useRef(StackFactory<ElementState>(maxStackSize));
   const StackState = stackStateRef.current;
 
   const stackSize = Stack.getStack().length;

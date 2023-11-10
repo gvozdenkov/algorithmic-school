@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './circle.module.scss';
-import { ElementStates } from '#shared/types';
+import { ElementState } from '#shared/types';
 
 interface CircleProps {
-  state?: ElementStates;
+  state?: ElementState;
   letter?: string;
   head?: string | React.ReactElement | null | false;
   index?: number;
