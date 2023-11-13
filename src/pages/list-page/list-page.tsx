@@ -9,7 +9,7 @@ import { ArrowIcon } from '#shared/ui/icons';
 import { colorSwitch, sleep } from '#shared/lib';
 import { DELAY_IN_MS } from '#shared/constants/delays';
 import { useFocus } from '#shared/hooks';
-import { AnimationState, ElementState } from '#shared/types';
+import { ElementState } from '#shared/types';
 
 import { LinkedList } from './lib';
 import s from './list-page.module.scss';
@@ -25,7 +25,7 @@ export type ProcessingAction =
   | 'idle';
 
 const maxListLength = 8;
-const initialListLength = 5;
+const initialListLength = 4;
 
 const initialList: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
 
@@ -49,18 +49,16 @@ export const ListPage = () => {
 
   const isProcessing = processingAction !== 'idle';
 
-  const isAddButtonDisabled = !inputValue || isProcessing || listLength >= maxListLength;
-
+  const isAddButtonDisabled = !inputValue || listLength >= maxListLength;
   const isAddByIndexButtonDisabled =
-    isAddButtonDisabled || !inputIndexStr || inputIndex > listLength;
-  const isRemoveButtonDisabled = isProcessing || !listLength;
+    isAddButtonDisabled || !inputIndexStr || inputIndex >= listLength;
+
+  const isRemoveButtonDisabled = !listLength;
   const isRemoveByIndexButtonDisabled =
     isRemoveButtonDisabled || !inputIndexStr || inputIndex >= listLength;
 
-  const setPlayAnimation = async (index?: number): Promise<void> => {
-    const lastIndex = index ? index : inputIndex;
-
-    for (let i = 0; i <= lastIndex; i++) {
+  const setProcessingSteps = async (): Promise<void> => {
+    for (let i = 0; i <= inputIndex; i++) {
       setProcessingIndex(i);
       await sleep(DELAY_IN_MS);
     }
@@ -105,7 +103,7 @@ export const ListPage = () => {
     await sleep(DELAY_IN_MS);
 
     resetStates();
-    setInputIndexFocus();
+    setInputValueFocus();
   };
 
   // insertAtHead
@@ -121,7 +119,7 @@ export const ListPage = () => {
     await sleep(DELAY_IN_MS);
 
     resetStates();
-    setInputIndexFocus();
+    setInputValueFocus();
   };
 
   const handleDeleteHead = async () => {
@@ -129,12 +127,13 @@ export const ListPage = () => {
 
     await sleep(DELAY_IN_MS);
 
-    LinkList.deleteHead();
+    LinkList.removeHead();
     setList(LinkList.toArray());
 
     await setFinalStageAnimation('removeFromHead');
 
     resetStates();
+    setInputIndexFocus();
   };
 
   const handleDeleteTail = async () => {
@@ -142,18 +141,24 @@ export const ListPage = () => {
 
     await sleep(DELAY_IN_MS);
 
-    LinkList.deleteTail();
+    LinkList.removeTail();
     setList(LinkList.toArray());
 
     await setFinalStageAnimation('removeFromTail');
 
     resetStates();
+    setInputIndexFocus();
   };
 
   const handleRemoveAt = async () => {
-    setProcessingAction('removeByIndex');
-
-    await setPlayAnimation();
+    if (inputIndex === listLength - 1) {
+      setProcessingAction('removeFromTail');
+      setProcessingIndex(inputIndex);
+      await sleep(DELAY_IN_MS);
+    } else {
+      setProcessingAction('removeByIndex');
+      await setProcessingSteps();
+    }
 
     LinkList.removeAt(inputIndex);
     setList(LinkList.toArray());
@@ -168,7 +173,7 @@ export const ListPage = () => {
   const handleInsertAt = async () => {
     setProcessingAction('addByIndex');
 
-    await setPlayAnimation();
+    await setProcessingSteps();
 
     LinkList.insertAt(inputIndex, inputValue);
     setList(LinkList.toArray());
@@ -177,7 +182,7 @@ export const ListPage = () => {
     await sleep(DELAY_IN_MS);
 
     resetStates();
-    setInputIndexFocus();
+    setInputValueFocus();
   };
 
   const InsertedElement = (value: string) => <Circle letter={value} state="changing" isSmall />;
@@ -285,81 +290,84 @@ export const ListPage = () => {
   return (
     <SolutionLayout title="Связный список">
       <form className={s.form}>
-        <Input
-          value={inputValue}
-          maxLength={4}
-          isLimitText
-          onChange={handleChangeValue}
-          disabled={processingAction !== 'idle'}
-          extraClass={s.form__input}
-          autoComplete="off"
-          autoFocus
-          ref={inputValueRef}
-        />
-        <Button
-          text="Добавить в head"
-          isLoader={processingAction === 'addToHead'}
-          disabled={isAddButtonDisabled}
-          type="button"
-          onClick={handlePrepend}
-          extraClass={clsx(s.form__button)}
-        />
-        <Button
-          text="Добавить в tail"
-          isLoader={processingAction === 'addToTail'}
-          disabled={isAddButtonDisabled}
-          onClick={handleAppend}
-          type="button"
-          extraClass={clsx(s.form__button)}
-        />
-        <Button
-          text="Удалить из head"
-          isLoader={processingAction === 'removeFromHead'}
-          onClick={handleDeleteHead}
-          disabled={isRemoveButtonDisabled}
-          type="button"
-          extraClass={clsx(s.form__button)}
-        />
-        <Button
-          text="Удалить из tail"
-          isLoader={processingAction === 'removeFromTail'}
-          onClick={handleDeleteTail}
-          disabled={isRemoveButtonDisabled}
-          type="button"
-          extraClass={clsx(s.form__button)}
-        />
-
-        <Input
-          type="number"
-          placeholder="Введите индекс"
-          value={inputIndexStr}
-          min={0}
-          maxLength={listLength}
-          pattern="\d+"
-          isLimitText
-          onChange={handleChangeIndex}
-          disabled={processingAction !== 'idle'}
-          extraClass={s.form__input}
-          autoComplete="off"
-          autoFocus
-          ref={inputIndexRef}
-        />
-        <Button
-          text="Добавить по индексу"
-          isLoader={processingAction === 'addByIndex'}
-          disabled={isAddByIndexButtonDisabled}
-          onClick={handleInsertAt}
-          type="submit"
-          extraClass={clsx(s.form__button)}
-        />
-        <Button
-          text="Удалить по индексу"
-          isLoader={processingAction === 'removeByIndex'}
-          onClick={handleRemoveAt}
-          disabled={isRemoveByIndexButtonDisabled}
-          type="button"
-          extraClass={clsx(s.form__button)}
-        />
+        <fieldset className={s.form__fieldset} disabled={isProcessing}>
+          <Input
+            value={inputValue}
+            maxLength={4}
+            isLimitText
+            onChange={handleChangeValue}
+            disabled={processingAction !== 'idle'}
+            extraClass={s.form__input}
+            autoComplete="off"
+            autoFocus
+            ref={inputValueRef}
+          />
+          <Button
+            text="Добавить в head"
+            isLoader={processingAction === 'addToHead'}
+            disabled={isAddButtonDisabled}
+            type="button"
+            onClick={handlePrepend}
+            extraClass={clsx(s.form__button)}
+          />
+          <Button
+            text="Добавить в tail"
+            isLoader={processingAction === 'addToTail'}
+            disabled={isAddButtonDisabled}
+            onClick={handleAppend}
+            type="button"
+            extraClass={clsx(s.form__button)}
+          />
+          <Button
+            text="Удалить из head"
+            isLoader={processingAction === 'removeFromHead'}
+            onClick={handleDeleteHead}
+            disabled={isRemoveButtonDisabled}
+            type="button"
+            extraClass={clsx(s.form__button)}
+          />
+          <Button
+            text="Удалить из tail"
+            isLoader={processingAction === 'removeFromTail'}
+            onClick={handleDeleteTail}
+            disabled={isRemoveButtonDisabled}
+            type="button"
+            extraClass={clsx(s.form__button)}
+          />
+        </fieldset>
+        <fieldset className={s.form__fieldset} disabled={isProcessing}>
+          <Input
+            type="number"
+            placeholder="Введите индекс"
+            value={inputIndexStr}
+            min={0}
+            maxLength={listLength}
+            pattern="\d+"
+            isLimitText
+            onChange={handleChangeIndex}
+            disabled={processingAction !== 'idle'}
+            extraClass={s.form__input}
+            autoComplete="off"
+            autoFocus
+            ref={inputIndexRef}
+          />
+          <Button
+            text="Добавить по индексу"
+            isLoader={processingAction === 'addByIndex'}
+            disabled={isAddByIndexButtonDisabled}
+            onClick={handleInsertAt}
+            type="submit"
+            extraClass={clsx(s.form__button)}
+          />
+          <Button
+            text="Удалить по индексу"
+            isLoader={processingAction === 'removeByIndex'}
+            onClick={handleRemoveAt}
+            disabled={isRemoveByIndexButtonDisabled}
+            type="button"
+            extraClass={clsx(s.form__button)}
+          />
+        </fieldset>
       </form>
       {
         <ul className={clsx(s.resultList, 'mt-24')}>
