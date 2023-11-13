@@ -1,4 +1,4 @@
-type Node<T> = {
+export type Node<T> = {
   value: T;
   next?: Node<T> | null;
   prev?: Node<T> | null;
@@ -12,7 +12,7 @@ export type LinkedListReturn<T> = {
   removeHead: () => Node<T> | null;
   removeTail: () => Node<T> | null;
   getSize: () => number;
-  toArray: () => T[];
+  toArray: <K>(callback?: (x: Node<T>) => K) => (K | T)[];
 };
 
 export function LinkedList<T>(): LinkedListReturn<T> {
@@ -140,13 +140,25 @@ export function LinkedList<T>(): LinkedListReturn<T> {
 
   const removeTail = (): Node<T> | null => removeAt(size - 1);
 
-  const toArray = (): T[] => {
-    let curr = head;
-    let res: T[] = [];
+  const toArray = <K>(callback?: (x: Node<T>) => K): (K | T)[] => {
+    if (!head || !tail) return [];
 
-    while (curr) {
-      res.push(curr.value);
-      curr = curr.next ?? null;
+    let currNode = head;
+    let value: K | T;
+    let res: (K | T)[] = [];
+
+    if (callback) {
+      while (currNode) {
+        value = callback(currNode);
+        res.push(value);
+        currNode = currNode.next!;
+      }
+    } else {
+      while (currNode) {
+        value = currNode.value;
+        res.push(value);
+        currNode = currNode.next!;
+      }
     }
 
     return res;

@@ -11,7 +11,7 @@ import { DELAY_IN_MS } from '#shared/constants/delays';
 import { useFocus } from '#shared/hooks';
 import { ElementState } from '#shared/types';
 
-import { LinkedList } from './lib';
+import { LinkedList, Node } from './lib';
 import s from './list-page.module.scss';
 
 export type ProcessingAction =
@@ -77,9 +77,11 @@ export const ListPage = () => {
     setInputIndex('');
   };
 
+  const toArrayCallback = (x: Node<string>) => `${x.value}`;
+
   useEffect(() => {
     initialList.map((elem) => LinkList.append(elem));
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -90,14 +92,13 @@ export const ListPage = () => {
   const handleChangeIndex = (e: FormEvent<HTMLInputElement>) =>
     e.currentTarget.validity.valid && setInputIndex(e.currentTarget.value);
 
-  // insertAtTail
   const handleAppend = async () => {
     setProcessingAction('addToTail');
 
     await sleep(DELAY_IN_MS);
 
     LinkList.append(inputValue);
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     await setFinalStageAnimation('addToTail');
     await sleep(DELAY_IN_MS);
@@ -106,14 +107,13 @@ export const ListPage = () => {
     setInputValueFocus();
   };
 
-  // insertAtHead
   const handlePrepend = async () => {
     setProcessingAction('addToHead');
 
     await sleep(DELAY_IN_MS);
 
     LinkList.prepend(inputValue);
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     await setFinalStageAnimation('addToHead');
     await sleep(DELAY_IN_MS);
@@ -128,7 +128,7 @@ export const ListPage = () => {
     await sleep(DELAY_IN_MS);
 
     LinkList.removeHead();
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     await setFinalStageAnimation('removeFromHead');
 
@@ -142,7 +142,7 @@ export const ListPage = () => {
     await sleep(DELAY_IN_MS);
 
     LinkList.removeTail();
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     await setFinalStageAnimation('removeFromTail');
 
@@ -161,7 +161,7 @@ export const ListPage = () => {
     }
 
     LinkList.removeAt(inputIndex);
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     await setFinalStageAnimation('removeByIndex');
     await sleep(DELAY_IN_MS);
@@ -176,7 +176,7 @@ export const ListPage = () => {
     await setProcessingSteps();
 
     LinkList.insertAt(inputIndex, inputValue);
-    setList(LinkList.toArray());
+    setList(LinkList.toArray(toArrayCallback));
 
     await setFinalStageAnimation('addByIndex');
     await sleep(DELAY_IN_MS);
@@ -228,7 +228,7 @@ export const ListPage = () => {
     return 'default';
   };
 
-  const circleState = (i: number): string => {
+  const letterState = (i: number): string => {
     if (processingAction === 'removeFromTail' && i === listLength - 1) return '';
     if (processingAction === 'removeFromHead' && i === 0) return '';
     if (
@@ -341,7 +341,7 @@ export const ListPage = () => {
             placeholder="Введите индекс"
             value={inputIndexStr}
             min={0}
-            maxLength={listLength}
+            maxLength={listLength - 1}
             pattern="\d+"
             isLimitText
             onChange={handleChangeIndex}
@@ -377,7 +377,7 @@ export const ListPage = () => {
             return (
               <li className={s.resultList__item} key={i}>
                 <Circle
-                  letter={circleState(i)}
+                  letter={letterState(i)}
                   index={i}
                   state={colorState(i)}
                   head={headState(i)}
