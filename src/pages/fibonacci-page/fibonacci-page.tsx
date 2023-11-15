@@ -3,15 +3,15 @@ import clsx from 'clsx';
 
 import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
 import { SHORT_DELAY_IN_MS } from '#shared/constants';
-import { getFibonacciArray, sleep } from '#shared/lib';
+import { sleep } from '#shared/lib';
+import { useFocus } from '#shared/hooks';
 
 import s from './fibonacci-page.module.scss';
-import { useFocus } from '#shared/hooks';
+import { fibonacci } from './utils';
 
 export const FibonacciPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [fibArray, setFibArray] = useState<number[]>([]);
-  const [visibleIndex, setVisibleIndex] = useState(0);
 
   const [showResult, setShowResult] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -30,10 +30,11 @@ export const FibonacciPage = () => {
 
     setIsProcessing(true);
     setShowResult(true);
-    setFibArray(getFibonacciArray(+inputValue));
 
-    for (let i = 0; i <= +inputValue; i++) {
-      setVisibleIndex(i);
+    const fibGenerator = fibonacci(+inputValue);
+
+    for (const fib of fibGenerator) {
+      setFibArray(fib);
       await sleep(SHORT_DELAY_IN_MS);
     }
 
@@ -68,12 +69,7 @@ export const FibonacciPage = () => {
         <ul className={clsx(s.resultList, 'mt-24')}>
           {fibArray.map((letter, i) => (
             <li className={s.resultList__item} key={i}>
-              <Circle
-                state='default'
-                letter={letter.toString()}
-                index={i}
-                extraClass={clsx({ [s.circle_invisible]: i > visibleIndex })}
-              />
+              <Circle state='default' letter={letter.toString()} index={i} />
             </li>
           ))}
         </ul>
