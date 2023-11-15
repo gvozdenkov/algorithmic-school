@@ -5,15 +5,17 @@
   margin: 0 auto;
 }
 
-.result__list {
+.resultList {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: center;
   gap: 48px 16px;
   padding: 0;
-}
 
-.result__listItem {
-  list-style-type: none;
+  &__item {
+    list-style-type: none;
+    // flex: 0 0 80px;
+  }
 }
 
 .circle_invisible {

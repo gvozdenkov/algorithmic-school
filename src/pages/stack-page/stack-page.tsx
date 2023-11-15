@@ -1,12 +1,10 @@
 import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
+import { HEAD, SHORT_DELAY_IN_MS } from '#shared/constants';
 import { sleep } from '#shared/lib';
-import { SolutionLayout } from '#shared/ui/solution-layout';
-import { Input } from '#shared/ui/input';
-import { Button } from '#shared/ui/button';
-import { Circle } from '#shared/ui/circle';
+import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
+
 import { useFocus } from '#shared/hooks';
 import { ElementState } from '#shared/types';
 
@@ -85,10 +83,10 @@ export const StackPage = () => {
     setInputFocus();
   };
 
-  const head = (i: number) => i === stackSize - 1 && 'head';
+  const head = (i: number) => i === stackSize - 1 && HEAD;
 
   return (
-    <SolutionLayout title="Стек">
+    <SolutionLayout title='Стек'>
       <form className={s.form} onSubmit={handlePush}>
         <Input
           value={inputValue}
@@ -97,35 +95,36 @@ export const StackPage = () => {
           onChange={handleChange}
           disabled={isProcessing}
           extraClass={s.form__input}
-          autoComplete="off"
+          autoComplete='off'
           ref={inputRef}
+          autoFocus
         />
         <Button
-          text="Добавить"
+          text='Добавить'
           isLoader={isProcessing}
           disabled={!inputValue || stackSize >= maxStackSize}
-          type="submit"
-          extraClass="ml-6"
+          type='submit'
+          extraClass='ml-6'
         />
         <Button
-          text="Удалить"
+          text='Удалить'
           onClick={handlePop}
           disabled={isProcessing || stackSize === 0}
-          type="button"
-          extraClass="ml-6"
+          type='button'
+          extraClass='ml-6'
         />
         <Button
-          text="Очистить"
-          type="button"
+          text='Очистить'
+          type='button'
           onClick={handleClear}
           disabled={isProcessing || stackSize === 0}
-          extraClass="ml-auto"
+          extraClass='ml-auto'
         />
       </form>
       {showResult && (
-        <ul className={clsx(s.result__list, 'mt-24')}>
+        <ul className={clsx(s.resultList, 'mt-24')}>
           {stack.map((elem, i) => (
-            <li className={s.result__listItem} key={i}>
+            <li className={s.resultList__item} key={i}>
               <Circle letter={elem} index={i} state={stackState[i]} head={head(i)} />
             </li>
           ))}

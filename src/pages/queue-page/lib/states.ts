@@ -1,3 +1,4 @@
+import { HEAD, TAIL } from '#shared/constants';
 import { ElementState, AnimationState } from '#shared/types';
 import { Queue as QueueType } from '.';
 
@@ -16,9 +17,9 @@ export const setState =
 export const setTail =
   <T>(Queue: QueueType<T>) =>
   (i: number): string | false =>
-    i === Queue.getTail() && Queue.getLength() > 0 && 'tail';
+    i === Queue.getTail() && Queue.getLength() > 0 && TAIL;
 
 export const setHead =
   <T>(Queue: QueueType<T>) =>
   (i: number): string | false =>
-    i === Queue.getHead() && Queue.getLength() > 0 && 'head';
+    i === Queue.getHead() && Queue.getLength() > 0 && HEAD;

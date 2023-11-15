@@ -1,53 +1,47 @@
-import { swap } from '#shared/lib';
-import { ElementState, SortDirection } from '#shared/types';
+import { getStateArray, swap } from '#shared/lib';
+import { ElementState, StateGenerator } from '#shared/types';
+import { SortProps } from './types';
 
-type Sort = {
-  array: number[];
-  order: SortDirection;
-};
+export function* bubbleSortGen<T>({
+  array,
+  order = 'asc',
+}: SortProps<T>): IterableIterator<StateGenerator<T>> {
+  const arr = [...array];
+  const length = arr.length;
+  let state: ElementState[] = getStateArray(length);
 
-type ArrayState = {
-  value: number;
-  state: ElementState;
-};
+  for (let i = 0; i < length; i++) {
+    state = state.map<ElementState>((_, index) =>
+      i > 0 && index > length - i - 1 ? 'modified' : 'default',
+    );
 
-export const getBubbleSortStates = ({ array, order = 'asc' }: Sort) => {
-  let arrayStates: ArrayState[][] = [];
-  const arrayState: ArrayState[] = array.map((x) => ({
-    value: x,
-    state: 'default',
-  }));
+    yield {
+      arr,
+      state,
+    };
 
-  arrayStates.push([...arrayState]);
+    for (let j = 0; j < length - i - 1; j++) {
+      state = state.map<ElementState>((_, index) =>
+        i > 0 && index > length - i - 1
+          ? 'modified'
+          : index === j || index === j + 1
+          ? 'changing'
+          : 'default',
+      );
 
-  let _arrayState = [...arrayState];
-  console.log('arrayStates', arrayStates);
+      yield {
+        arr,
+        state,
+      };
 
-  for (let i = array.length; i >= 0; i--) {
-    console.log('i', i);
-    for (let j = 0; j < i; j++) {
-      // _arrayState[j] = { value: _arrayState[j].value, state: 'changing' };
-      // _arrayState[j + 1] = { value: _arrayState[j + 1].value, state: 'changing' };
-      // arrayStates.push([..._arrayState]);
-      if (
-        (order === 'asc' && _arrayState[j].value > _arrayState[j + 1].value) ||
-        (order === 'desc' && _arrayState[j].value < _arrayState[j + 1].value)
-      ) {
-        // _arrayState[j] = { value: _arrayState[j].value, state: 'changing' };
-        // _arrayState[j + 1] = { value: _arrayState[j + 1].value, state: 'changing' };
-        const t = swap(_arrayState, j, j + 1);
-        console.log('t', t);
-        arrayStates.push([...t]);
-        console.log('arrayStates', arrayStates);
+      if ((order === 'asc' && arr[j] > arr[j + 1]) || (order === 'desc' && arr[j] < arr[j + 1])) {
+        swap(arr, j, j + 1);
       }
-
-      // _arrayState[j] = { value: _arrayState[j].value, state: 'default' };
-      // _arrayState[j + 1] = { value: _arrayState[j + 1].value, state: 'default' };
-      // arrayStates.push([..._arrayState]);
     }
-    _arrayState[i - 1] = { value: _arrayState[i - 1].value, state: 'modified' };
-    arrayStates.push([..._arrayState]);
   }
 
-  return arrayStates;
-};
+  yield {
+    arr,
+    state: getStateArray(length, 'modified'),
+  };
+}

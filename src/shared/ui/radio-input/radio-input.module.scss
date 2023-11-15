@@ -1,8 +1,11 @@
 .input {
   display: none;
   transition: var(--common-transition);
-}
 
+  &:disabled {
+    cursor: unset;
+  }
+}
 .label {
   position: relative;
   display: flex;
@@ -17,7 +20,7 @@
 
 .label::before,
 .label::after {
-  content: "";
+  content: '';
   position: absolute;
   transition: color, background-color 0.3s linear;
   margin: 0;

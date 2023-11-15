@@ -3,23 +3,23 @@
   margin: 0 auto;
   max-width: 829px;
   width: 100%;
+
+  &__input {
+    max-width: 377px;
+    width: 100%;
+  }
 }
 
-.form__input {
-  max-width: 377px;
-  width: 100%;
-}
-
-.result__list {
+.resultList {
   display: flex;
   align-items: flex-end;
   flex-wrap: wrap;
   gap: 80px 16px;
   padding: 0;
-}
 
-.result__listItem {
-  list-style-type: none;
+  &__item {
+    list-style-type: none;
+  }
 }
 
 .circle_invisible {

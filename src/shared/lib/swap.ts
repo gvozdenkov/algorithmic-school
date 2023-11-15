@@ -10,8 +10,4 @@
  * @param {Number} i
  * @param {Number} j
  */
-export const swap = <T>(arr: T[], i: number, j: number) => {
-  const _arr = [...arr];
-  [_arr[i], _arr[j]] = [_arr[j], _arr[i]];
-  return _arr;
-};
+export const swap = <T>(arr: T[], i: number, j: number) => ([arr[i], arr[j]] = [arr[j], arr[i]]);

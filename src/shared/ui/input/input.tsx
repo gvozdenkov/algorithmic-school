@@ -18,7 +18,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       isLimitText = false,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const limitText =
       type === 'text' ? `Максимум — ${maxLength} символа` : `Максимальное число — ${maxLength}`;
@@ -41,5 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
+
+Input.displayName = 'Input';

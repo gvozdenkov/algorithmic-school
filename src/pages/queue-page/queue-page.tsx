@@ -1,19 +1,17 @@
 import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { SolutionLayout } from '#shared/ui/solution-layout';
-import { Input } from '#shared/ui/input';
-import { Button } from '#shared/ui/button';
-import { Circle } from '#shared/ui/circle';
+import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
+
 import { sleep } from '#shared/lib';
-import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
+import { SHORT_DELAY_IN_MS } from '#shared/constants';
 import { useFocus } from '#shared/hooks';
 import { AnimationState } from '#shared/types';
 
 import { QueueFactory, setHead, setState, setTail } from './lib';
 import s from './queue-page.module.scss';
 
-const maxQueueSize = 4;
+const maxQueueSize = 8;
 const initialQueue: string[] = [...Array(maxQueueSize)];
 
 export const QueuePage = () => {
@@ -78,7 +76,7 @@ export const QueuePage = () => {
   };
 
   return (
-    <SolutionLayout title="Очередь">
+    <SolutionLayout title='Очередь'>
       <form className={s.form} onSubmit={handlePush}>
         <Input
           value={inputValue}
@@ -87,36 +85,36 @@ export const QueuePage = () => {
           onChange={handleChange}
           disabled={isProcessing}
           extraClass={s.form__input}
-          autoComplete="off"
-          autoFocus
+          autoComplete='off'
           ref={inputRef}
+          autoFocus
         />
         <Button
-          text="Добавить"
+          text='Добавить'
           isLoader={isProcessing}
           disabled={!inputValue || queueLength === maxQueueSize}
-          type="submit"
-          extraClass="ml-6"
+          type='submit'
+          extraClass='ml-6'
         />
         <Button
-          text="Удалить"
+          text='Удалить'
           onClick={handlePop}
           disabled={!queueLength}
-          type="button"
-          extraClass="ml-6"
+          type='button'
+          extraClass='ml-6'
         />
         <Button
-          text="Очистить"
-          type="button"
+          text='Очистить'
+          type='button'
           onClick={handleClear}
           disabled={isProcessing || !queueLength}
-          extraClass="ml-auto"
+          extraClass='ml-auto'
         />
       </form>
       {
-        <ul className={clsx(s.result__list, 'mt-24')}>
+        <ul className={clsx(s.resultList, 'mt-24')}>
           {queue.map((elem, i) => (
-            <li className={s.result__listItem} key={i}>
+            <li className={s.resultList__item} key={i}>
               <Circle
                 letter={elem}
                 index={i}

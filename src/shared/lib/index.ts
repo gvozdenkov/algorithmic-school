@@ -1,12 +1,6 @@
-export { binarySearch } from './binary-search';
 export { sleep } from './sleep';
 export { swap } from './swap';
-export {
-  selectionSort,
-  reversArray,
-  generateRandomArray,
-  randomIntFromInterval,
-  bubbleSort,
-} from './sorting';
+export { generateRandomArray, randomIntFromInterval } from './random';
 export { getFibonacciArray, getFibonacciValue } from './fibonacci';
 export { colorSwitch } from './color-switch';
+export { getStateArray } from './get-state-array';

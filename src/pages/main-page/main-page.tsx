@@ -4,9 +4,9 @@ import clsx from 'clsx';
 
 import styles from './main-page.module.scss';
 
-interface MainPageProps {
+type MainPageProps = {
   extraClass?: string;
-}
+};
 
 export const MainPage = ({ extraClass = '' }: MainPageProps) => {
   return (
@@ -18,22 +18,22 @@ export const MainPage = ({ extraClass = '' }: MainPageProps) => {
         </p>
       </div>
       <div className={clsx(styles.cards_box, styles.content__container)}>
-        <Link className={styles.link} to="/recursion">
+        <Link className={styles.link} to='/recursion'>
           <div className={`${styles.card} ${styles.string}`} />
         </Link>
-        <Link className={styles.link} to="/fibonacci">
+        <Link className={styles.link} to='/fibonacci'>
           <div className={`${styles.card} ${styles.fibonacci}`} />
         </Link>
-        <Link className={styles.link} to="/sorting">
+        <Link className={styles.link} to='/sorting'>
           <div className={`${styles.card} ${styles.arr}`} />
         </Link>
-        <Link className={styles.link} to="/stack">
+        <Link className={styles.link} to='/stack'>
           <div className={`${styles.card} ${styles.stack}`} />
         </Link>
-        <Link className={styles.link} to="/queue">
+        <Link className={styles.link} to='/queue'>
           <div className={`${styles.card} ${styles.queue}`} />
         </Link>
-        <Link className={styles.link} to="/list">
+        <Link className={styles.link} to='/list'>
           <div className={`${styles.card} ${styles.list}`} />
         </Link>
       </div>

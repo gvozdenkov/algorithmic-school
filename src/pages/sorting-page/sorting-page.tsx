@@ -1,118 +1,137 @@
-import { FormEvent, MouseEvent, useState } from 'react';
+import { FormEvent, MouseEvent, useEffect, useState } from 'react';
 import clsx from 'clsx';
 
-import { SolutionLayout } from '#shared/ui/solution-layout';
-import { Button } from '#shared/ui/button';
-import { RadioInput } from '#shared/ui/radio-input';
-import { Column } from '#shared/ui/column';
-import { bubbleSort, generateRandomArray, randomIntFromInterval, selectionSort } from '#shared/lib';
-import { SortDirection } from '#shared/types/types';
-import { getBubbleSortStates } from './utils';
+import { Button, Column, RadioInput, SolutionLayout } from '#shared/ui';
+
+import { generateRandomArray, randomIntFromInterval, sleep } from '#shared/lib';
+import { ElementState, SortDirection } from '#shared/types';
+import { SHORT_DELAY_IN_MS } from '#shared/constants';
+import { bubbleSortGen, selectionSortGen } from './utils';
 
 import s from './sorting-page.module.scss';
-import { SHORT_DELAY_IN_MS } from '#shared/constants/delays';
 
-type SortMethod = 'select' | 'bubble';
+type SortMethod = 'selectionSort' | 'bubbleSort';
+type SortingState = 'idle' | 'processing' | 'finished';
+
+const minArrLen = 5;
+const maxArrLen = 17;
+const maxValue = 60;
+
+const randomArr = () => {
+  const arrLength = randomIntFromInterval(minArrLen, maxArrLen);
+  return generateRandomArray(arrLength, maxValue);
+};
 
 export const SortingPage = () => {
   const [array, setArray] = useState<number[]>([]);
-  const [sortMethod, setSortMethod] = useState<SortMethod>('select');
+  const [sortMethod, setSortMethod] = useState<SortMethod>('selectionSort');
+  const [sortDirection, setSortDirection] = useState<SortDirection | undefined>(undefined);
+  const [state, setState] = useState<ElementState[]>([]);
+  const [sortingState, setSortingState] = useState<SortingState>('idle');
 
-  const [showResult, setShowResult] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const isProcessing = sortingState === 'processing';
 
-  const minArrLen = 3;
-  const maxArrLen = 17;
-  const maxValue = 100;
+  useEffect(() => {
+    handleNewRandomArr();
+  }, []);
+
+  const handleNewRandomArr = () => {
+    setArray(randomArr());
+    setState([]);
+  };
+
+  const selectionSort = (order: SortDirection) =>
+    selectionSortGen({
+      array,
+      order,
+    });
+
+  const bubbleSort = (order: SortDirection) =>
+    bubbleSortGen({
+      array,
+      order,
+    });
+
+  const sorter = {
+    selectionSort,
+    bubbleSort,
+  };
 
   const handleSetSortMethod = (e: FormEvent<HTMLInputElement>) =>
     setSortMethod(e.currentTarget.value as SortMethod);
 
-  const randomArr = () => {
-    const arrLength = randomIntFromInterval(minArrLen, maxArrLen);
-    const arr = generateRandomArray(arrLength, maxValue);
-    setArray(arr);
-    setShowResult(true);
-  };
-
   const handleSorting = async (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     const order = e.currentTarget.value as SortDirection;
+    setSortDirection(e.currentTarget.value as SortDirection);
+    setSortingState('processing');
 
-    setIsProcessing(true);
-    setShowResult(true);
+    const sortStateGenerator = sorter[sortMethod](order);
 
-    const arr = [3, 2, 5];
-    console.log(arr);
+    for (const sortState of sortStateGenerator) {
+      setArray(sortState.arr);
+      setState(sortState.state);
+      await sleep(SHORT_DELAY_IN_MS);
+    }
 
-    const sortConfig = {
-      array: arr,
-      order,
-    };
-
-    // getBubbleSortStates(sortConfig);
-    console.log(getBubbleSortStates(sortConfig));
-
-    // if (sortMethod === 'select') {
-    //   await selectionSort(sortConfig);
-    // } else {
-    //   await bubbleSort(sortConfig);
-    // }
-
-    setIsProcessing(false);
+    setSortingState('finished');
+    setSortDirection(undefined);
   };
 
   return (
-    <SolutionLayout title="Сортировка массива">
+    <SolutionLayout title='Сортировка массива'>
       <form className={s.form}>
         <RadioInput
-          label="Выбор"
-          name="sortMethod"
-          value="select"
-          checked={sortMethod === 'select'}
+          label='Выбор'
+          name='sortMethod'
+          value='selectionSort'
+          checked={sortMethod === 'selectionSort'}
           onChange={handleSetSortMethod}
+          disabled={isProcessing}
         />
         <RadioInput
-          label="Пузырёк"
-          name="sortMethod"
-          value="bubble"
-          checked={sortMethod === 'bubble'}
+          label='Пузырёк'
+          name='sortMethod'
+          value='bubbleSort'
+          checked={sortMethod === 'bubbleSort'}
           onChange={handleSetSortMethod}
-          extraClass="ml-20"
-        />
-        <Button
-          text="По возрастанию"
-          sorting="asc"
-          value="asc"
-          onClick={handleSorting}
-          type="button"
-          extraClass="ml-40"
-        />
-        <Button
-          text="По убыванию"
-          sorting="desc"
-          value="desc"
-          onClick={handleSorting}
-          type="button"
-          extraClass="ml-6"
-        />
-        <Button
-          text="Новый массив"
-          type="button"
-          onClick={randomArr}
-          isLoader={isProcessing}
+          extraClass='ml-20'
           disabled={isProcessing}
-          extraClass="ml-40"
+        />
+        <Button
+          text='По возрастанию'
+          sorting='asc'
+          value='asc'
+          onClick={handleSorting}
+          type='button'
+          isLoader={isProcessing && sortDirection === 'asc'}
+          disabled={isProcessing}
+          extraClass={clsx('ml-40', s.form__button)}
+        />
+        <Button
+          text='По убыванию'
+          sorting='desc'
+          value='desc'
+          onClick={handleSorting}
+          type='button'
+          isLoader={isProcessing && sortDirection === 'desc'}
+          disabled={isProcessing}
+          extraClass={clsx('ml-6', s.form__button)}
+        />
+        <Button
+          text='Новый массив'
+          type='button'
+          onClick={handleNewRandomArr}
+          disabled={isProcessing}
+          extraClass={clsx('ml-40', s.form__button)}
         />
       </form>
-      {showResult && (
-        <ul className={clsx(s.result__list, 'mt-24')}>
-          {array.map((elem, i) => (
-            <li className={s.result__listItem} key={i}>
-              <Column index={elem} state={'default'} />
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className={clsx(s.resultList, 'mt-24')}>
+        {array.map((elem, i) => (
+          <li className={s.resultList__item} key={i}>
+            <Column index={elem} state={state[i]} />
+          </li>
+        ))}
+      </ul>
     </SolutionLayout>
   );
 };

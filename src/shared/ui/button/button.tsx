@@ -36,14 +36,13 @@ export const Button = ({
         styles.button,
         { [styles.linkedList]: linkedList },
         { [styles.loader]: isLoader },
-        { [extraClass]: !!extraClass }
+        { [extraClass]: !!extraClass },
       )}
       type={type}
       disabled={isLoader || disabled}
-      {...rest}
-    >
+      {...rest}>
       {isLoader ? (
-        <img className={styles.loader_icon} src={loaderIcon} alt="Загрузка." />
+        <img className={styles.loader_icon} src={loaderIcon} alt='Загрузка.' />
       ) : (
         <>
           {sorting && currentIcon}

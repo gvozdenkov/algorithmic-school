@@ -2,23 +2,23 @@ import { FormEvent, useState } from 'react';
 import clsx from 'clsx';
 import s from './string-page.module.scss';
 
-import { SolutionLayout } from '#shared/ui/solution-layout';
-import { Input } from '#shared/ui/input';
-import { Button } from '#shared/ui/button';
-import { Circle } from '#shared/ui/circle';
-import { reversArray } from '#shared/lib';
-import { DELAY_IN_MS } from '#shared/constants/delays';
-import { setState } from './utils';
+import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
+import { DELAY_IN_MS } from '#shared/constants';
+import { reversArrayGen } from './utils';
+import { ElementState } from '#shared/types';
+import { sleep } from '#shared/lib';
+import { useFocus } from '#shared/hooks';
 
 export const StringComponent = () => {
   const [inputValue, setInputValue] = useState('');
+
   const [stringArr, setStringArr] = useState(['']);
+  const [state, setState] = useState<ElementState[]>([]);
 
   const [showResult, setShowResult] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(0);
+  const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const char = e.currentTarget.value;
@@ -33,33 +33,34 @@ export const StringComponent = () => {
     setIsProcessing(true);
     setShowResult(true);
 
-    await reversArray({
-      array: stringArr,
-      setArray: setStringArr,
-      setStartIndex,
-      setEndIndex,
-      delay: DELAY_IN_MS,
-    });
+    const reverseStateGenerator = reversArrayGen(stringArr);
 
-    setStartIndex(stringArr.length);
-    setEndIndex(stringArr.length);
+    for (const reverseState of reverseStateGenerator) {
+      setStringArr(reverseState.arr);
+      setState(reverseState.state);
+      await sleep(DELAY_IN_MS);
+    }
+
     setIsProcessing(false);
+    setInputFocus();
   };
 
   return (
-    <SolutionLayout title="Строка">
+    <SolutionLayout title='Строка'>
       <form className={s.form} onSubmit={handleSubmit}>
         <Input
           value={inputValue}
           maxLength={11}
           isLimitText
           onChange={handleChange}
-          autoComplete="off"
+          autoComplete='off'
           disabled={isProcessing}
+          autoFocus
+          ref={inputRef}
         />
         <Button
-          text="Развернуть"
-          type="submit"
+          text='Развернуть'
+          type='submit'
           isLoader={isProcessing}
           disabled={isProcessing || !inputValue}
         />
@@ -68,7 +69,7 @@ export const StringComponent = () => {
         <ul className={clsx(s.result__list, 'mt-24')}>
           {stringArr.map((letter, i) => (
             <li className={s.result__listItem} key={i}>
-              <Circle state={setState(startIndex, endIndex, i)} letter={letter} />
+              <Circle state={state[i]} letter={letter} />
             </li>
           ))}
         </ul>

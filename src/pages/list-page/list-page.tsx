@@ -1,13 +1,10 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { SolutionLayout } from '#shared/ui/solution-layout';
-import { Input } from '#shared/ui/input';
-import { Button } from '#shared/ui/button';
-import { Circle } from '#shared/ui/circle';
-import { ArrowIcon } from '#shared/ui/icons';
+import { ArrowIcon, Button, Circle, Input, SolutionLayout } from '#shared/ui';
+
 import { colorSwitch, sleep } from '#shared/lib';
-import { DELAY_IN_MS } from '#shared/constants/delays';
+import { DELAY_IN_MS, HEAD, TAIL } from '#shared/constants';
 import { useFocus } from '#shared/hooks';
 import { ElementState } from '#shared/types';
 
@@ -185,7 +182,7 @@ export const ListPage = () => {
     setInputValueFocus();
   };
 
-  const InsertedElement = (value: string) => <Circle letter={value} state="changing" isSmall />;
+  const InsertedElement = (value: string) => <Circle letter={value} state='changing' isSmall />;
 
   const colorState = (i: number): ElementState => {
     // add to tail
@@ -259,7 +256,7 @@ export const ListPage = () => {
     )
       return InsertedElement(list[inputIndex]);
 
-    if (i === listLength - 1) return 'tail';
+    if (i === listLength - 1) return TAIL;
 
     return null;
   };
@@ -271,7 +268,7 @@ export const ListPage = () => {
 
     // add to head
     if (processingAction === 'addToHead' && i === 0) return InsertedElement(inputValue);
-    if (finalStage === 'addToHead' && processingAction === 'final' && i === 0) return 'head';
+    if (finalStage === 'addToHead' && processingAction === 'final' && i === 0) return HEAD;
 
     // insert at index
     if (
@@ -284,11 +281,11 @@ export const ListPage = () => {
 
     if (finalStage === 'addByIndex' && processingAction === 'final' && i !== 0) return '';
 
-    return i === 0 && 'head';
+    return i === 0 && HEAD;
   };
 
   return (
-    <SolutionLayout title="Связный список">
+    <SolutionLayout title='Связный список'>
       <form className={s.form}>
         <fieldset className={s.form__fieldset} disabled={isProcessing}>
           <Input
@@ -298,80 +295,80 @@ export const ListPage = () => {
             onChange={handleChangeValue}
             disabled={processingAction !== 'idle'}
             extraClass={s.form__input}
-            autoComplete="off"
+            autoComplete='off'
             autoFocus
             ref={inputValueRef}
           />
           <Button
-            text="Добавить в head"
+            text='Добавить в head'
             isLoader={processingAction === 'addToHead'}
             disabled={isAddButtonDisabled}
-            type="button"
+            type='button'
             onClick={handlePrepend}
             extraClass={clsx(s.form__button)}
           />
           <Button
-            text="Добавить в tail"
+            text='Добавить в tail'
             isLoader={processingAction === 'addToTail'}
             disabled={isAddButtonDisabled}
             onClick={handleAppend}
-            type="button"
+            type='button'
             extraClass={clsx(s.form__button)}
           />
           <Button
-            text="Удалить из head"
+            text='Удалить из head'
             isLoader={processingAction === 'removeFromHead'}
             onClick={handleDeleteHead}
             disabled={isRemoveButtonDisabled}
-            type="button"
+            type='button'
             extraClass={clsx(s.form__button)}
           />
           <Button
-            text="Удалить из tail"
+            text='Удалить из tail'
             isLoader={processingAction === 'removeFromTail'}
             onClick={handleDeleteTail}
             disabled={isRemoveButtonDisabled}
-            type="button"
+            type='button'
             extraClass={clsx(s.form__button)}
           />
         </fieldset>
         <fieldset className={s.form__fieldset} disabled={isProcessing}>
           <Input
-            type="number"
-            placeholder="Введите индекс"
+            type='number'
+            placeholder='Введите индекс'
             value={inputIndexStr}
             min={0}
             maxLength={listLength - 1}
-            pattern="\d+"
+            pattern='\d+'
             isLimitText
             onChange={handleChangeIndex}
             disabled={processingAction !== 'idle'}
             extraClass={s.form__input}
-            autoComplete="off"
+            autoComplete='off'
             autoFocus
             ref={inputIndexRef}
           />
           <Button
-            text="Добавить по индексу"
+            text='Добавить по индексу'
             isLoader={processingAction === 'addByIndex'}
             disabled={isAddByIndexButtonDisabled}
             onClick={handleInsertAt}
-            type="submit"
+            type='submit'
             extraClass={clsx(s.form__button)}
           />
           <Button
-            text="Удалить по индексу"
+            text='Удалить по индексу'
             isLoader={processingAction === 'removeByIndex'}
             onClick={handleRemoveAt}
             disabled={isRemoveByIndexButtonDisabled}
-            type="button"
+            type='button'
             extraClass={clsx(s.form__button)}
           />
         </fieldset>
       </form>
       {
         <ul className={clsx(s.resultList, 'mt-24')}>
-          {list.map((elem, i) => {
+          {list.map((_, i) => {
             const lastIndex = listLength - 1;
 
             return (
@@ -385,7 +382,7 @@ export const ListPage = () => {
                   extraClass={clsx(
                     s.circle,
                     { [s.circle_first]: i === 0 },
-                    { [s.circle_last]: i === lastIndex }
+                    { [s.circle_last]: i === lastIndex },
                   )}
                 />
                 {i < lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
