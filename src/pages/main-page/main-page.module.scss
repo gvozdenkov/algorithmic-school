@@ -49,13 +49,23 @@
   margin-left: -6px;
 }
 
+.contentWrapper {
+  grid-area: cards;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
 .cards_box {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 400px));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 400px));
   gap: 20px;
   justify-content: center;
   align-self: center;
   grid-area: cards;
+  max-width: 1240px;
 }
 
 .card {
