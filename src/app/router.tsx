@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 
 import { FibonacciPage } from '#pages/fibonacci-page';
 import { ListPage } from '#pages/list-page';
@@ -9,7 +9,7 @@ import { StackPage } from '#pages/stack-page';
 import { StringPage } from '#pages/string-page';
 import { ROUTE } from '#shared/config';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: ROUTE.HOME,
     element: <MainPage />,
