@@ -1,10 +1,10 @@
-export type Node<T> = {
+type Node<T> = {
   value: T;
   next?: Node<T> | null;
   prev?: Node<T> | null;
 };
 
-export type LinkedListReturn<T> = {
+type LinkedListReturn<T> = {
   append: (value: T) => Node<T>;
   prepend: (value: T) => Node<T>;
   insertAt: (index: number, value: T) => Node<T>;
@@ -145,7 +145,7 @@ export function LinkedList<T>(): LinkedListReturn<T> {
 
     let currNode = head;
     let value: K | T;
-    let res: (K | T)[] = [];
+    const res: (K | T)[] = [];
 
     if (callback) {
       while (currNode) {

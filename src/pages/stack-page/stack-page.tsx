@@ -6,12 +6,14 @@ import { sleep } from '#shared/lib';
 import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
 
 import { useFocus } from '#shared/hooks';
-import { ElementState } from '#shared/types';
+import { ElementState, ProcessingAction } from '#shared/types';
 
-import { StackFactory } from './lib';
+import { Stack as StackClass } from './lib';
 import s from './stack-page.module.scss';
 
 const maxStackSize = 10;
+
+type ProcessingStackAction = Extract<ProcessingAction, 'addToHead' | 'removeFromTail' | 'idle'>;
 
 export const StackPage = () => {
   const [inputValue, setInputValue] = useState('');
@@ -19,16 +21,20 @@ export const StackPage = () => {
   const [stackState, setStackState] = useState<ElementState[]>([]);
 
   const [showResult, setShowResult] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingAction, setProcessingAction] = useState<ProcessingStackAction>('idle');
 
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
-  const stackRef = useRef(StackFactory<string>(maxStackSize));
+  const stackRef = useRef(new StackClass<string>(maxStackSize));
   const Stack = stackRef.current;
 
-  const stackStateRef = useRef(StackFactory<ElementState>(maxStackSize));
+  const stackStateRef = useRef(new StackClass<ElementState>(maxStackSize));
   const StackState = stackStateRef.current;
 
   const stackSize = Stack.getStack().length;
+
+  const isProcessing = processingAction !== 'idle';
+  const isButtonAddDisabled = !inputValue || stackSize >= maxStackSize;
+  const isButtonDeleteDisabled = isProcessing || stackSize === 0;
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
@@ -36,7 +42,7 @@ export const StackPage = () => {
 
   const handlePush = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsProcessing(true);
+    setProcessingAction('addToHead');
     setShowResult(true);
 
     Stack.push(inputValue);
@@ -53,12 +59,12 @@ export const StackPage = () => {
     StackState.push('default');
     setStackState(StackState.getStack());
 
-    setIsProcessing(false);
+    setProcessingAction('idle');
     setInputFocus();
   };
 
   const handlePop = async () => {
-    setIsProcessing(true);
+    setProcessingAction('removeFromTail');
     setStack(Stack.getStack());
     StackState.pop();
     StackState.push('changing');
@@ -71,7 +77,7 @@ export const StackPage = () => {
     setStackState(StackState.getStack());
     setStack(Stack.getStack());
 
-    setIsProcessing(false);
+    setProcessingAction('idle');
     setInputFocus();
   };
 
@@ -101,15 +107,16 @@ export const StackPage = () => {
         />
         <Button
           text='Добавить'
-          isLoader={isProcessing}
-          disabled={!inputValue || stackSize >= maxStackSize}
+          isLoader={processingAction === 'addToHead'}
+          disabled={isButtonAddDisabled}
           type='submit'
           extraClass='ml-6'
         />
         <Button
           text='Удалить'
+          isLoader={processingAction === 'removeFromTail'}
           onClick={handlePop}
-          disabled={isProcessing || stackSize === 0}
+          disabled={isButtonDeleteDisabled}
           type='button'
           extraClass='ml-6'
         />
@@ -117,7 +124,7 @@ export const StackPage = () => {
           text='Очистить'
           type='button'
           onClick={handleClear}
-          disabled={isProcessing || stackSize === 0}
+          disabled={isButtonDeleteDisabled}
           extraClass='ml-auto'
         />
       </form>

@@ -1,2 +1,2 @@
 export { LinkedList } from './linked-list';
-export type { LinkedListReturn, Node } from './linked-list';
+export { LinkedList as LinkedListClass } from './linked-list-class';

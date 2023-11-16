@@ -6,27 +6,35 @@ import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
 import { sleep } from '#shared/lib';
 import { SHORT_DELAY_IN_MS } from '#shared/constants';
 import { useFocus } from '#shared/hooks';
-import { AnimationState } from '#shared/types';
+import { ProcessingAction } from '#shared/types';
 
-import { QueueFactory, setHead, setState, setTail } from './lib';
+import { QueueClass, setHead, setState, setTail } from './lib';
 import s from './queue-page.module.scss';
 
 const maxQueueSize = 8;
 const initialQueue: string[] = [...Array(maxQueueSize)];
 
+export type ProcessingQueueAction = Extract<
+  ProcessingAction,
+  'addToTail' | 'removeFromHead' | 'idle'
+>;
+
 export const QueuePage = () => {
   const [inputValue, setInputValue] = useState('');
   const [queue, setQueue] = useState<(string | undefined)[]>(initialQueue);
-  const [animationState, setAnimationState] = useState<AnimationState>('idle');
 
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingAction, setProcessingAction] = useState<ProcessingQueueAction>('idle');
 
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
 
-  const queueRef = useRef(QueueFactory<string>(maxQueueSize));
+  const queueRef = useRef(new QueueClass<string>(maxQueueSize));
   const Queue = queueRef.current;
 
   const queueLength = Queue.getLength();
+
+  const isProcessing = processingAction !== 'idle';
+  const isButtonAddDisabled = isProcessing || queueLength >= maxQueueSize || !inputValue;
+  const isButtonDeleteDisabled = isProcessing || !queueLength;
 
   const setQueueState = setState(Queue);
   const setQueueHead = setHead(Queue);
@@ -45,33 +53,29 @@ export const QueuePage = () => {
 
   const handlePush = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsProcessing(true);
+    setProcessingAction('addToTail');
 
     Queue.enqueue(inputValue);
     setQueue(Queue.getQueue());
-    setAnimationState('add');
     setInputValue('');
 
     await sleep(SHORT_DELAY_IN_MS);
 
-    setAnimationState('idle');
-    setIsProcessing(false);
+    setProcessingAction('idle');
     setInputFocus();
   };
 
   const handlePop = async () => {
-    setIsProcessing(true);
+    setProcessingAction('removeFromHead');
 
     setQueue(Queue.getQueue());
-    setAnimationState('delete');
 
     await sleep(SHORT_DELAY_IN_MS);
 
     Queue.dequeue();
     setQueue(Queue.getQueue());
-    setAnimationState('idle');
 
-    setIsProcessing(false);
+    setProcessingAction('idle');
     setInputFocus();
   };
 
@@ -91,23 +95,24 @@ export const QueuePage = () => {
         />
         <Button
           text='Добавить'
-          isLoader={isProcessing}
-          disabled={!inputValue || queueLength === maxQueueSize}
+          isLoader={processingAction === 'addToTail'}
+          disabled={isButtonAddDisabled}
           type='submit'
           extraClass='ml-6'
         />
         <Button
           text='Удалить'
           onClick={handlePop}
-          disabled={!queueLength}
+          isLoader={processingAction === 'removeFromHead'}
+          disabled={isButtonDeleteDisabled}
           type='button'
           extraClass='ml-6'
         />
         <Button
           text='Очистить'
-          type='button'
           onClick={handleClear}
-          disabled={isProcessing || !queueLength}
+          disabled={isButtonDeleteDisabled}
+          type='button'
           extraClass='ml-auto'
         />
       </form>
@@ -118,7 +123,7 @@ export const QueuePage = () => {
               <Circle
                 letter={elem}
                 index={i}
-                state={setQueueState(animationState, i)}
+                state={setQueueState(processingAction, i)}
                 head={setQueueHead(i)}
                 tail={setQueueTail(i)}
               />

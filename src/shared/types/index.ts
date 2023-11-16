@@ -8,3 +8,13 @@ export type StateGenerator<T> = {
   arr: T[];
   state: ElementState[];
 };
+
+export type ProcessingAction =
+  | 'addToHead'
+  | 'addToTail'
+  | 'addByIndex'
+  | 'removeFromHead'
+  | 'removeFromTail'
+  | 'removeByIndex'
+  | 'final'
+  | 'idle';

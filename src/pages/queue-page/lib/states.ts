@@ -1,14 +1,15 @@
 import { HEAD, TAIL } from '#shared/constants';
-import { ElementState, AnimationState } from '#shared/types';
+import { ElementState } from '#shared/types';
 import { Queue as QueueType } from '.';
+import { ProcessingQueueAction } from '../queue-page';
 
 export const setState =
   <T>(Queue: QueueType<T>) =>
-  (animationState: AnimationState, i: number): ElementState => {
-    if (animationState === 'add' && i === Queue.getTail()) {
+  (animationState: ProcessingQueueAction, i: number): ElementState => {
+    if (animationState === 'addToTail' && i === Queue.getTail()) {
       return 'changing';
     }
-    if (animationState === 'delete' && i === Queue.getHead()) {
+    if (animationState === 'removeFromHead' && i === Queue.getHead()) {
       return 'changing';
     }
     return 'default';
