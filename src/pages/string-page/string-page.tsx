@@ -4,7 +4,7 @@ import s from './string-page.module.scss';
 
 import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
 import { DELAY_IN_MS } from '#shared/constants';
-import { reversArrayGen } from './utils';
+import { reversArrayGen } from './lib';
 import { ElementState } from '#shared/types';
 import { sleep } from '#shared/lib';
 import { useFocus } from '#shared/hooks';

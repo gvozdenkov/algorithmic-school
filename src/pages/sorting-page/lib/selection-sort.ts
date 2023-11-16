@@ -2,7 +2,7 @@ import { getStateArray, swap } from '#shared/lib';
 import { ElementState, StateGenerator } from '#shared/types';
 import { SortProps } from './types';
 
-export function* selectionSortGen<T>({
+export function* selectionSortGen<T extends string | number>({
   array,
   order = 'desc',
 }: SortProps<T>): IterableIterator<StateGenerator<T>> {
@@ -28,7 +28,6 @@ export function* selectionSortGen<T>({
         state,
       };
 
-      console.log(order);
       compare = order === 'asc' && arr[j] < arr[compare] ? j : compare;
       compare = order === 'desc' && arr[j] > arr[compare] ? j : compare;
     }

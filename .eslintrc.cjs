@@ -57,6 +57,7 @@ module.exports = {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "no-var": "error",
+    "no-console": ["error", { allow: ["warn", "error"] }],
     semi: "error",
     "no-multi-spaces": "error",
     "space-in-parens": "error",
@@ -82,6 +83,7 @@ module.exports = {
       },
     ],
 
+    "import/no-named-as-default": "off",
     // Prevent importing from deep nested subfolders, only top level folder index.ts
     "no-restricted-imports": [
       "error",

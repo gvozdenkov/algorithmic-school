@@ -7,7 +7,7 @@ import { sleep } from '#shared/lib';
 import { useFocus } from '#shared/hooks';
 
 import s from './fibonacci-page.module.scss';
-import { fibonacci } from './utils';
+import { fibonacci } from './lib';
 
 export const FibonacciPage = () => {
   const [inputValue, setInputValue] = useState('');
