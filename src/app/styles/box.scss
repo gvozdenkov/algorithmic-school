@@ -1,0 +1,26 @@
+@use '../../shared/styles/mixins.scss' as *;
+
+$offset-base-size: 2;
+$max-steps: 60;
+
+/* Padding */
+@include style-x('p', 'padding', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('pl', 'padding-left', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('pr', 'padding-right', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('pt', 'padding-top', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('pb', 'padding-bottom', 1, $max-steps, $offset-base-size, 'px');
+
+/* Margin */
+@include style-x('m', 'margin', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('ml', 'margin-left', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('mr', 'margin-right', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('mt', 'margin-top', 1, $max-steps, $offset-base-size, 'px');
+@include style-x('mb', 'margin-bottom', 1, $max-steps, $offset-base-size, 'px');
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}

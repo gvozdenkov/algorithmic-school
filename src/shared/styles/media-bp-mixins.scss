@@ -1,0 +1,22 @@
+@use './variables.scss' as *;
+
+@mixin desktop() {
+  @media (max-width: $bp_xxl) {
+    @content;
+  }
+}
+@mixin laptop() {
+  @media (max-width: $bp_xl) {
+    @content;
+  }
+}
+@mixin tablet() {
+  @media (max-width: $bp_md) {
+    @content;
+  }
+}
+@mixin mobile() {
+  @media (max-width: $bp_sm) {
+    @content;
+  }
+}

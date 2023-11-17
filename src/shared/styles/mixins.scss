@@ -1,0 +1,11 @@
+@mixin style-x($class-name, $attr, $attr-from: 1, $attr-count: 10, $attr-step: 1, $unit: 'px') {
+  $attr-list: null;
+
+  @for $i from $attr-from through $attr-count {
+    $attr-value: $attr-step * $i;
+
+    .#{$class-name}-#{$i} {
+      #{$attr}: #{$attr-value}#{$unit};
+    }
+  }
+}
