@@ -1,10 +1,23 @@
+@use '../../shared/styles/media-bp-mixins.scss' as *;
+
 :root {
+  --color-background: #1c2128;
+  --color-background-card: #22272e;
+  --color-border-default: #444c56;
+
+  --color-text-accent: rgb(95, 47, 207);
+  --color-text-gradient-a: #dfbb71;
+  --color-text-gradient-a: #c37368;
+  --color-text-mute: #768390;
+
+  --color-link: #dfbb71;
+
   --background: #fff;
   --offset-base-size: 2px;
 
   --common-border-radius: 14px;
 
-  --text-color-primary: #292929;
+  --text-color-primary: #cdd9e5;
   --text-color-secondary: #fff;
 
   --text-color-h1: #141414;
@@ -25,11 +38,22 @@
   --modified-color: #7fe051;
 
   --common-transition: all 0.3s ease-in;
+
+  --gutter: 20px;
+  --border-radius: 20px;
 }
 
-@-moz-document url-prefix() {
+@include laptop {
   :root {
-    scrollbar-color: var(--scrollbar-color);
+    --gutter: 15px;
+    --border-radius: 15px;
+  }
+}
+
+@include tablet {
+  :root {
+    --gutter: 10px;
+    --border-radius: 10px;
   }
 }
 
@@ -56,6 +80,10 @@ li {
   list-style-type: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Typography classes */
 
 .text {
@@ -69,6 +97,25 @@ li {
 
 .text_color_secondary {
   color: var(--text-color-secondary);
+}
+
+.text_color_accent {
+  color: var(--color-text-accent);
+}
+
+.text_color_mute {
+  color: var(--color-text-mute);
+}
+
+.text_color_gradient {
+  background-color: #f3ec78;
+  background-image: linear-gradient(45deg, #e0bc72, #af4261);
+  background-size: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 }
 
 .text_color_h1 {
@@ -87,7 +134,15 @@ li {
   color: var(--default-color);
 }
 
-.text_type_h1 {
+.text_type_paragraph {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.text_type_xl {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 900;
@@ -95,15 +150,15 @@ li {
   line-height: 163px;
 }
 
-.text_type_h2 {
+.text_type_md {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-weight: 900;
+  font-weight: 600;
   font-size: 40px;
   line-height: 49px;
 }
 
-.text_type_h3 {
+.text_type_sm {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -155,7 +210,7 @@ li {
 .text_type_column {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
   line-height: 16px;
 }

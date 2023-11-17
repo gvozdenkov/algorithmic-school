@@ -1,13 +1,14 @@
 .button {
   display: flex;
+  gap: 8px;
   align-items: center;
   border: none;
   outline: none;
   background: none;
   transition: var(--common-transition);
   cursor: pointer;
-}
 
-.button:hover {
-  opacity: 0.8;
+  &:hover {
+    opacity: 0.8;
+  }
 }

@@ -12,7 +12,7 @@ export const MainPage = ({ extraClass = '' }: MainPageProps) => {
   return (
     <main className={`${styles.content} ${extraClass}`}>
       <div className={clsx(styles.title_box, styles.content__container)}>
-        <h1 className={`text text_type_h1 text_color_h1 ${styles.title}`}>МБОУ АЛГОСОШ</h1>
+        <h1 className={`text text_type_xl text_color_h1 ${styles.title}`}>МБОУ АЛГОСОШ</h1>
         <p className={`text text_type_fibonacci text_color_secondary ${styles.fibonacci_title}`}>
           им. Фибоначчи
         </p>
