@@ -1,17 +1,32 @@
-import React from 'react';
-import styles from './return-button.module.scss';
+import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
+import clsx from 'clsx';
 import { ReturnIcon } from '../icons/return-icon';
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
-  type?: 'button' | 'submit' | 'reset';
-  extraClass?: string;
-}
+import styles from './return-button.module.scss';
 
-export const ReturnButton: React.FC<ButtonProps> = ({ extraClass = '', ...rest }) => {
+type ButtonProps = PropsWithChildren<ComponentPropsWithoutRef<'button'>> & {
+  htmlType?: 'button' | 'submit' | 'reset';
+  color?: string;
+  extraClass?: string;
+};
+
+export const ReturnButton = ({
+  htmlType = 'button',
+  color = '#cdd9e5',
+  extraClass = '',
+  children,
+  ...rest
+}: ButtonProps) => {
   return (
-    <button className={`${styles.button} ${extraClass}`} type='button' {...rest}>
-      <ReturnIcon />
-      <p className='text text_type_button text_color_link ml-4'>К оглавлению</p>
+    <button
+      className={clsx('text text_type_button text_color_primary', styles.button, {
+        [extraClass]: !!extraClass,
+      })}
+      style={{ color }}
+      type={htmlType}
+      {...rest}>
+      <ReturnIcon color={color} />
+      {children}
     </button>
   );
 };
