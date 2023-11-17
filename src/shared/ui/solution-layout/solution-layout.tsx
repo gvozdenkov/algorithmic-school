@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
-import { ReturnButton } from '../return-button/return-button';
-import styles from './solution-layout.module.scss';
-import logo from '../../../images/logo.svg';
 import clsx from 'clsx';
+import logo from '../../../images/logo.svg';
 import { ROUTE } from '#shared/config';
+import { ReturnButton } from '..';
+
+import styles from './solution-layout.module.scss';
 
 type SolutionLayoutProps = PropsWithChildren & {
   title: string;

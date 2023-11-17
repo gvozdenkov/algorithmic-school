@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import clsx from 'clsx';
-import { ReturnIcon } from '../icons/return-icon';
 
 import styles from './return-button.module.scss';
+import { ReturnIcon } from '..';
 
 type ButtonProps = PropsWithChildren<ComponentPropsWithoutRef<'button'>> & {
   htmlType?: 'button' | 'submit' | 'reset';
