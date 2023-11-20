@@ -18,3 +18,5 @@ export type ProcessingAction =
   | 'removeByIndex'
   | 'final'
   | 'idle';
+
+export type ValueOf<T> = T[keyof T];

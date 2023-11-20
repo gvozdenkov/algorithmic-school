@@ -3,14 +3,16 @@
 :root {
   --color-background: #1c2128;
   --color-background-card: #22272e;
+  --color-background-card-hover: #282e36;
   --color-border-default: #444c56;
+  --color-border-default-hover: #4f5964;
 
   --color-text-accent: rgb(95, 47, 207);
-  --color-text-gradient-a: #dfbb71;
-  --color-text-gradient-a: #c37368;
+  --color-text-gradient-a: #e0bc72;
+  --color-text-gradient-b: #af4261;
   --color-text-mute: #768390;
 
-  --color-link: #dfbb71;
+  --color-link: #e0bc72;
 
   --background: #fff;
   --offset-base-size: 2px;
@@ -37,9 +39,10 @@
   --changing-color: #d252e1;
   --modified-color: #7fe051;
 
-  --common-transition: all 0.3s ease-in;
+  --common-transition: all 0.3s ease-out;
 
   --gutter: 20px;
+
   --border-radius: 20px;
 }
 
@@ -109,7 +112,11 @@ a {
 
 .text_color_gradient {
   background-color: #f3ec78;
-  background-image: linear-gradient(45deg, #e0bc72, #af4261);
+  background-image: linear-gradient(
+    45deg,
+    var(--color-text-gradient-a),
+    var(--color-text-gradient-b)
+  );
   background-size: 100%;
   background-clip: text;
   -webkit-background-clip: text;
@@ -140,6 +147,14 @@ a {
   font-weight: 400;
   font-size: 16px;
   line-height: 16px;
+}
+
+.text_type_paragraph-m {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
 }
 
 .text_type_xl {

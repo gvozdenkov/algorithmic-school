@@ -6,3 +6,5 @@ export { Input } from './input/input';
 export { RadioInput } from './radio-input/radio-input';
 export { ReturnButton } from './return-button/return-button';
 export { SolutionLayout } from './solution-layout/solution-layout';
+export { BaseLayout } from './base-layout/base-layout';
+export { MenuCard } from './menu-card/menu-card';

@@ -1,0 +1,78 @@
+@use '#shared/styles/media-bp-mixins.scss' as *;
+
+$verticalMargin: 36px;
+
+.page {
+  background-color: var(--color-background);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  margin-top: $verticalMargin;
+  margin-bottom: $verticalMargin;
+}
+
+.logo {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+
+  &__image {
+    width: 80px;
+  }
+}
+
+.main {
+  align-items: start;
+}
+
+.footer {
+  display: flex;
+  padding: 36px 0;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+@include tablet() {
+  .logo {
+    &__image {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+    &__title {
+      font-size: 30px;
+    }
+  }
+
+  .footer {
+    justify-content: center;
+  }
+}
+
+@include mobile() {
+  .header {
+    margin-top: calc($verticalMargin / 3);
+    margin-bottom: calc($verticalMargin / 3);
+  }
+
+  .logo {
+    flex-flow: column;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 0;
+
+    &__image {
+      width: 50px;
+      margin-bottom: unset;
+    }
+
+    &__title {
+      font-size: 20px;
+      line-height: 1.4;
+    }
+  }
+}
