@@ -23,7 +23,7 @@ export const menuList: MenuCard[] = [
   {
     image: 'sorting',
     route: '/sorting',
-    title: 'Array sort',
+    title: 'Array sorting',
   },
   {
     image: 'stack',

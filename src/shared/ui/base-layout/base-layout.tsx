@@ -19,7 +19,7 @@ export const BaseLayout = () => {
         <Outlet />
       </main>
       <footer className={s.footer}>
-        <p className={clsx('text text_type_paragraph text_color_mute ml-auto')}>
+        <p className={clsx('text text_type_paragraph text_color_mute', s.footer__copyright)}>
           &copy; Powered by Practicum
         </p>
       </footer>

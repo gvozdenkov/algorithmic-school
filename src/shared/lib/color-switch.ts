@@ -3,15 +3,15 @@ import { ColorValueHex, ElementState } from '#shared/types';
 export const colorSwitch = (color: ElementState): ColorValueHex => {
   switch (color) {
     case 'default': {
-      return '#0032FF';
+      return '#7a7a7a';
     }
 
     case 'changing': {
-      return '#D252E1';
+      return '#e0bc72';
     }
 
     case 'modified': {
-      return '#7FE051';
+      return '#7cbe5d';
     }
   }
 };

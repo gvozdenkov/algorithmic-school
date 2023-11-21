@@ -2,10 +2,40 @@
   display: none;
   transition: var(--common-transition);
 
-  &:disabled {
-    cursor: unset;
+  &:checked + .label::after {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-color-primary);
+    left: -22px;
+  }
+
+  &:hover + .label::before {
+    background-color: var(--bg-input-disabled);
+  }
+
+  &:active + .label::before {
+    border: 2px solid var(--text-input-placeholder);
+  }
+
+  &:active + .label::after {
+    background-color: var(--text-input-placeholder);
+  }
+
+  &:disabled + .label::before {
+    background: var(--bg-input-disabled);
+    border: 2px solid var(--text-input-placeholder);
+  }
+
+  &:disabled + .label::after {
+    background: var(--text-input-placeholder);
+  }
+
+  &:disabled + .label {
+    cursor: not-allowed;
   }
 }
+
 .label {
   position: relative;
   display: flex;
@@ -16,49 +46,20 @@
   cursor: pointer;
   margin-left: 30px;
   transition: var(--common-transition);
-}
 
-.label::before,
-.label::after {
-  content: '';
-  position: absolute;
-  transition: color, background-color 0.3s linear;
-  margin: 0;
-}
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    transition: color, background-color 0.3s linear;
+    margin: 0;
+  }
 
-.label::before {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #000;
-  left: -30px;
-}
-
-input:checked + .label::after {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #000;
-  left: -22px;
-}
-
-.input:hover + .label::before {
-  background-color: var(--bg-input-disabled);
-}
-
-.input:active + .label::before {
-  border: 2px solid var(--text-input-placeholder);
-}
-
-.input:active + .label::after {
-  background-color: var(--text-input-placeholder);
-}
-
-.input:disabled + .label::before {
-  background: var(--bg-input-disabled);
-  border: 2px solid var(--text-input-placeholder);
-}
-
-.input:disabled + .label::after {
-  background: var(--text-input-placeholder);
+  &::before {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--text-color-primary);
+    left: -30px;
+  }
 }

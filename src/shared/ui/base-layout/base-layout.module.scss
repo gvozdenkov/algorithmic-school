@@ -12,8 +12,7 @@ $verticalMargin: 36px;
 
 .header {
   display: flex;
-  margin-top: $verticalMargin;
-  margin-bottom: $verticalMargin;
+  padding-block: max(2vw, 32px);
 }
 
 .logo {
@@ -35,6 +34,10 @@ $verticalMargin: 36px;
   padding: 36px 0;
   box-sizing: border-box;
   align-items: center;
+
+  &__copyright {
+    margin-inline-start: auto;
+  }
 }
 
 @include tablet() {
@@ -49,20 +52,14 @@ $verticalMargin: 36px;
   }
 
   .footer {
-    justify-content: center;
+    &__copyright {
+      margin-inline: auto;
+    }
   }
 }
 
 @include mobile() {
-  .header {
-    margin-top: calc($verticalMargin / 3);
-    margin-bottom: calc($verticalMargin / 3);
-  }
-
   .logo {
-    flex-flow: column;
-    align-items: center;
-    margin: auto;
     margin-bottom: 0;
 
     &__image {

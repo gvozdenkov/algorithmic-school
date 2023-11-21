@@ -14,7 +14,7 @@ export const MenuCard = ({ title = '', image }: MenuCardProps) => {
       <h2 className={clsx('text text_color_primary text_type_paragraph-m', s.menuCard__title)}>
         {title}
       </h2>
-      <img src={`/images/menu/${image}.svg`} className={s.menuCard__image} />
+      <img src={`./images/menu/${image}.svg`} className={s.menuCard__image} />
     </div>
   );
 };

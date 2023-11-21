@@ -27,12 +27,14 @@ export const Button = ({
   disabled,
   ...rest
 }: ButtonProps) => {
-  const currentIcon = sorting === 'asc' ? <AscendingIcon /> : <DescendingIcon />;
+  const fill = isLoader ? 'transparent' : '#e4e4e4';
+  const currentIcon =
+    sorting === 'asc' ? <AscendingIcon fill={fill} /> : <DescendingIcon fill={fill} />;
 
   return (
     <button
       className={clsx(
-        'text_type_button text_color_primary',
+        'text_type_button',
         styles.button,
         { [styles.linkedList]: linkedList },
         { [styles.loader]: isLoader },
@@ -41,13 +43,11 @@ export const Button = ({
       type={type}
       disabled={isLoader || disabled}
       {...rest}>
-      {isLoader ? (
-        <img className={styles.loader_icon} src={loaderIcon} alt='Загрузка.' />
-      ) : (
-        <>
-          {sorting && currentIcon}
-          <p className={clsx('text', { 'ml-5': sorting })}>{text}</p>
-        </>
+      {sorting && currentIcon}
+      <p className={clsx('text', { 'ml-5': sorting }, { [styles.hiddenText]: isLoader })}>{text}</p>
+
+      {isLoader && (
+        <img className={styles.loader_icon} src={loaderIcon} height={'50%'} alt='Загрузка.' />
       )}
     </button>
   );

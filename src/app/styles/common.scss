@@ -12,6 +12,12 @@
   --color-text-gradient-b: #af4261;
   --color-text-mute: #768390;
 
+  --linear-gradient: linear-gradient(
+    45deg,
+    var(--color-text-gradient-a),
+    var(--color-text-gradient-b)
+  );
+
   --color-link: #e0bc72;
 
   --background: #fff;
@@ -19,25 +25,30 @@
 
   --common-border-radius: 14px;
 
-  --text-color-primary: #cdd9e5;
+  --text-color-primary: #e4e4e4;
   --text-color-secondary: #fff;
 
   --text-color-h1: #141414;
   --text-color-black: #000;
-  --text-color-input: #3d3d3d;
+  --text-color-input: #e0e0e0;
   --text-input-placeholder: #7a7a7a;
 
-  --bg-input-hover: #fafafa;
-  --bg-input-disabled: #ebebeb;
+  --bg-input-hover: #fafafa00;
+  --bg-input-disabled: rgb(48, 54, 61);
 
-  --bg-button-default: #85cfff;
-  --bg-button-hover: #5cbfff;
-  --bg-button-active: #1fa7ff;
-  --bg-button-disabled: #e0e0e0;
+  --bg-button-default: #444c56;
+  --bg-button-hover: #555f6b;
+  --bg-button-active: #4a535e;
+  --bg-button-disabled: #1c2128;
+  --color-border-button-default: #555f6b;
+  --color-border-button-hover: #768394;
+  --color-border-button-active: #6d7a8a;
+  --color-border-button-disabled: #2a313b;
+  --color-text-button-disabled: #7a7a7a;
 
-  --default-color: #0032ff;
-  --changing-color: #d252e1;
-  --modified-color: #7fe051;
+  --default-color: #7a7a7a;
+  --changing-color: #e0bc72;
+  --modified-color: #7cbe5d;
 
   --common-transition: all 0.3s ease-out;
 
@@ -112,11 +123,7 @@ a {
 
 .text_color_gradient {
   background-color: #f3ec78;
-  background-image: linear-gradient(
-    45deg,
-    var(--color-text-gradient-a),
-    var(--color-text-gradient-b)
-  );
+  background-image: var(--linear-gradient);
   background-size: 100%;
   background-clip: text;
   -webkit-background-clip: text;

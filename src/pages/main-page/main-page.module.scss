@@ -5,7 +5,7 @@
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   align-content: center;
   align-items: start;
-  gap: 16px;
+  gap: max(1.3vw, 8px);
   width: 100%;
   padding-bottom: 36px;
 
@@ -15,7 +15,7 @@
 }
 
 .ticker {
-  background-color: var(--text-color-h1);
+  background-image: var(--linear-gradient);
   height: 60px;
   overflow: hidden;
   align-self: end;
@@ -35,6 +35,12 @@
 
 @include laptop() {
   .cardList {
-    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+@include mobile() {
+  .cardList {
+    grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
   }
 }
