@@ -1,0 +1,32 @@
+.content-grid {
+  $content-max-width: 1280px;
+  $breakout-max-width: 1400px;
+
+  $gutter-width: minmax(var(--gutter), 1fr);
+  $content-width: min(100% - var(--gutter) * 2, $content-max-width);
+  $breakout-width: calc(($breakout-max-width - $content-max-width) / 2);
+
+  display: grid;
+  grid-template-columns:
+    [full-width-start] $gutter-width
+    [breakout-start] minmax(0, $breakout-width)
+    [content-start] $content-width [content-end]
+    minmax(0, $breakout-width) [breakout-end]
+    $gutter-width [full-width-start];
+}
+
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
+}
+
+.content-grid > .breakout {
+  grid-column: breakout;
+}
+
+.content-grid > .full-width {
+  grid-column: full-width;
+
+  display: grid;
+  grid-template-columns: inherit;
+}

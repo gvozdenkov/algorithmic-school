@@ -1,0 +1,47 @@
+.menuCard {
+  background-color: var(--color-background-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--border-radius);
+  position: relative;
+  transition: var(--common-transition);
+
+  &__title {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    translate: -50%;
+    z-index: 1;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    z-index: 2;
+  }
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(transparent 50%, rgba(0 0 0/ 0.25));
+    transition: var(--common-transition);
+    opacity: 0;
+  }
+
+  &:hover {
+    border-color: var(--color-text-gradient-a);
+  }
+
+  &:hover &__title {
+    color: var(--color-text-gradient-a);
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}

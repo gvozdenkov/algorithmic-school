@@ -1,0 +1,75 @@
+@use '#shared/styles/media-bp-mixins.scss' as *;
+
+$verticalMargin: 36px;
+
+.page {
+  background-color: var(--color-background);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  padding-block: max(2vw, 32px);
+}
+
+.logo {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+
+  &__image {
+    width: 80px;
+  }
+}
+
+.main {
+  align-items: start;
+}
+
+.footer {
+  display: flex;
+  padding: 36px 0;
+  box-sizing: border-box;
+  align-items: center;
+
+  &__copyright {
+    margin-inline-start: auto;
+  }
+}
+
+@include tablet() {
+  .logo {
+    &__image {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+    &__title {
+      font-size: 30px;
+    }
+  }
+
+  .footer {
+    &__copyright {
+      margin-inline: auto;
+    }
+  }
+}
+
+@include mobile() {
+  .logo {
+    margin-bottom: 0;
+
+    &__image {
+      width: 50px;
+      margin-bottom: unset;
+    }
+
+    &__title {
+      font-size: 20px;
+      line-height: 1.4;
+    }
+  }
+}
