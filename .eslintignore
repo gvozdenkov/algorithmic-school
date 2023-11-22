@@ -1,2 +1,4 @@
 node_modules
 /tests
+jest.config.cts
+/config/
