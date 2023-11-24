@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button ui disabled 1`] = `
+<button
+  className="text_type_button button"
+  disabled={true}
+  type="button"
+>
+  <p
+    className="text"
+  >
+    Button
+  </p>
+</button>
+`;
+
+exports[`Button ui loading state 1`] = `
+<button
+  className="text_type_button button loader"
+  disabled={true}
+  type="button"
+>
+  <p
+    className="text hiddenText"
+  >
+    Button
+  </p>
+  <img
+    alt="Loading"
+    className="loader_icon"
+    height="50%"
+    src="loader.svg"
+  />
+</button>
+`;
+
+exports[`Button ui with text 1`] = `
+<button
+  className="text_type_button button"
+  type="button"
+>
+  <p
+    className="text"
+  >
+    Button
+  </p>
+</button>
+`;
+
+exports[`Button ui without text 1`] = `
+<button
+  className="text_type_button button"
+  type="button"
+>
+  <p
+    className="text"
+  />
+</button>
+`;

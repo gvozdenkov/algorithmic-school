@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './circle.module.scss';
 import { ElementState } from '#shared/types';
 
-interface CircleProps {
+type CircleProps = {
   state?: ElementState;
   letter?: string;
   head?: string | React.ReactElement | null | false;
@@ -11,7 +11,7 @@ interface CircleProps {
   tailType?: 'string' | 'element';
   extraClass?: string;
   isSmall?: boolean;
-}
+};
 
 export const Circle = ({
   state = 'default',

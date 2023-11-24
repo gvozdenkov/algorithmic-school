@@ -47,7 +47,7 @@ export const Button = ({
       <p className={clsx('text', { 'ml-5': sorting }, { [styles.hiddenText]: isLoader })}>{text}</p>
 
       {isLoader && (
-        <img className={styles.loader_icon} src={loaderIcon} height={'50%'} alt='Загрузка.' />
+        <img className={styles.loader_icon} src={loaderIcon} height={'50%'} alt='Loading' />
       )}
     </button>
   );
