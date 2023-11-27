@@ -1,23 +1,43 @@
+@use '#shared/styles/media-bp-mixins.scss' as *;
+
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  width: 50px;
+  width: max(4vw, 10px);
+  max-width: 50px;
 }
 
 .column {
   width: 100%;
+
+  &__state_default {
+    background-color: var(--default-color);
+  }
+
+  &__state_changing {
+    background-color: var(--changing-color);
+  }
+
+  &__state_modified {
+    background-color: var(--modified-color);
+  }
+
+  &__index {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+  }
 }
 
-.default {
-  background-color: var(--default-color);
-}
-
-.changing {
-  background-color: var(--changing-color);
-}
-
-.modified {
-  background-color: var(--modified-color);
+@include mobile() {
+  .column {
+    &__index {
+      font-weight: 400;
+      font-size: 12px;
+    }
+  }
 }
