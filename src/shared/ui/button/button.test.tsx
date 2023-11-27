@@ -1,5 +1,5 @@
 import { create } from 'react-test-renderer';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { Button } from './button';
@@ -24,12 +24,12 @@ describe('Button ui', () => {
   });
 });
 
-describe('actions', () => {
-  it('onClick', () => {
-    let newButtonText = 'new';
-    render(<Button text={buttonText} onClick={() => (newButtonText = buttonText)} />);
+test('onClick handler works', () => {
+  const handler = jest.fn();
 
-    fireEvent.click(screen.getByText(buttonText));
-    expect(buttonText).toEqual(newButtonText);
-  });
+  const { getByText } = render(<Button text='Button' onClick={handler} />);
+
+  const button = getByText('Button');
+  fireEvent.click(button);
+  expect(handler).toHaveBeenCalledTimes(1);
 });
