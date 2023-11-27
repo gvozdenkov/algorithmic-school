@@ -2,159 +2,159 @@
 
 exports[`Circle ui state: changing 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   changing"
+    className="circle__shape_state_changing"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui state: default 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui state: modified 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   modified"
+    className="circle__shape_state_modified"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui with element in head 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   >
     <div
-      className="content "
+      className="circle"
     >
       <div
-        className="text text_type_input text_color_input mb-4 absolute head element"
+        className="text mb-4 circle__head_type_element"
       />
       <div
-        className="circle   default"
+        className="circle__shape_state_default"
       >
         <p
-          className="text text_type_circle text_color_input letter"
+          className="text circle__text"
         >
           a
         </p>
       </div>
       <p
-        className="text text_type_input text_color_input mt-4 absolute index"
+        className="text mt-4 circle__index"
       />
       <div
-        className="text text_type_input text_color_input mt-4 absolute tail30 element"
+        className="text mt-4 circle__tail_type_element"
       />
     </div>
   </div>
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui with element in tail 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   >
     <div
-      className="content "
+      className="circle"
     >
       <div
-        className="text text_type_input text_color_input mb-4 absolute head element"
+        className="text mb-4 circle__head_type_element"
       />
       <div
-        className="circle   default"
+        className="circle__shape_state_default"
       >
         <p
-          className="text text_type_circle text_color_input letter"
+          className="text circle__text"
         >
           a
         </p>
       </div>
       <p
-        className="text text_type_input text_color_input mt-4 absolute index"
+        className="text mt-4 circle__index"
       />
       <div
-        className="text text_type_input text_color_input mt-4 absolute tail30 element"
+        className="text mt-4 circle__tail_type_element"
       />
     </div>
   </div>
@@ -163,96 +163,96 @@ exports[`Circle ui with element in tail 1`] = `
 
 exports[`Circle ui with head 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head string"
+    className="text mb-4 circle__head_type_string"
   >
     head
   </div>
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui with index 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   >
     1
   </p>
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail60 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui with isSmall prop 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle  small default"
+    className="circle__shape_state_default circle__shape_small"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui with tail 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 string"
+    className="text mt-4 circle__tail_type_string"
   >
     tail
   </div>
@@ -261,48 +261,48 @@ exports[`Circle ui with tail 1`] = `
 
 exports[`Circle ui with text 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     >
       a
     </p>
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;
 
 exports[`Circle ui without text 1`] = `
 <div
-  className="content "
+  className="circle"
 >
   <div
-    className="text text_type_input text_color_input mb-4 absolute head element"
+    className="text mb-4 circle__head_type_element"
   />
   <div
-    className="circle   default"
+    className="circle__shape_state_default"
   >
     <p
-      className="text text_type_circle text_color_input letter"
+      className="text circle__text"
     />
   </div>
   <p
-    className="text text_type_input text_color_input mt-4 absolute index"
+    className="text mt-4 circle__index"
   />
   <div
-    className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    className="text mt-4 circle__tail_type_element"
   />
 </div>
 `;

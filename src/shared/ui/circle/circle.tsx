@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './circle.module.scss';
+import s from './circle.module.scss';
 import { ElementState } from '#shared/types';
+import clsx from 'clsx';
 
 type CircleProps = {
   state?: ElementState;
@@ -23,24 +24,32 @@ export const Circle = ({
   isSmall,
 }: CircleProps) => {
   return (
-    <div className={`${styles.content} ${extraClass}`}>
+    <div className={clsx(s.circle, { [extraClass]: !!extraClass })}>
       <div
-        className={`text text_type_input text_color_input mb-4 ${styles.absolute} ${styles.head} ${
-          styles[typeof head === 'string' ? 'string' : 'element']
-        }`}>
+        className={clsx(
+          'text mb-4',
+          {
+            [s.circle__head_type_string]: typeof head === 'string',
+          },
+          {
+            [s.circle__head_type_element]: typeof head !== 'string',
+          },
+        )}>
         {head}
       </div>
-      <div className={`${styles.circle}  ${isSmall ? styles.small : ''} ${styles[state]}`}>
-        <p className={`text text_type_circle text_color_input ${styles.letter}`}>{letter}</p>
-      </div>
-      <p
-        className={`text text_type_input text_color_input mt-4 ${styles.absolute} ${styles.index}`}>
-        {index?.toString()}
-      </p>
       <div
-        className={`text text_type_input text_color_input mt-4 ${styles.absolute} ${
-          index?.toString() ? styles.tail60 : styles.tail30
-        } ${styles[typeof tail === 'string' ? 'string' : 'element']}`}>
+        className={clsx(s[`circle__shape_state_${state}`], {
+          [s.circle__shape_small]: isSmall,
+        })}>
+        <p className={clsx('text', s.circle__text)}>{letter}</p>
+      </div>
+      <p className={clsx('text mt-4', s.circle__index)}>{index?.toString()}</p>
+      <div
+        className={clsx(
+          'text mt-4',
+          { [s.circle__tail_type_string]: typeof tail === 'string' },
+          { [s.circle__tail_type_element]: typeof tail !== 'string' },
+        )}>
         {tail}
       </div>
     </div>
