@@ -1,4 +1,4 @@
 node_modules
 /tests
 jest.config.cts
-/config/
+cypress.config.ts

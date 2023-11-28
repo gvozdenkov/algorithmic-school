@@ -8,7 +8,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
@@ -16,6 +16,13 @@ module.exports = {
     "plugin:import/typescript",
     // prettier must be the last in extends
     "prettier",
+  ],
+  overrides: [
+    {
+      // disable type checking for configs and cypress
+      extends: ["plugin:@typescript-eslint/disable-type-checked"],
+      files: ["./cypress/**/*.ts", "./config/**/*.js", "./**/*.spec.ts", "./**/*.test.ts"],
+    },
   ],
   settings: {
     "import/parsers": {
@@ -49,7 +56,9 @@ module.exports = {
       jsx: true,
     },
     sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
+
+    // indicates to find the closest tsconfig.json for each source file
+    project: true,
     tsconfigRootDir: __dirname,
   },
   plugins: ["prettier", "react", "react-hooks", "react-refresh", "import", "@typescript-eslint"],

@@ -12,7 +12,7 @@ import { QueueClass, setHead, setState, setTail } from './lib';
 import s from './queue-page.module.scss';
 
 const maxQueueSize = 8;
-const initialQueue: string[] = [...Array(maxQueueSize)];
+const initialQueue: string[] = [...Array<string>(maxQueueSize)];
 
 export type ProcessingQueueAction = Extract<
   ProcessingAction,
@@ -51,7 +51,7 @@ export const QueuePage = () => {
     setInputFocus();
   };
 
-  const handlePush = async (e: FormEvent<HTMLFormElement>) => {
+  const handlePush = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setProcessingAction('addToTail');
 
@@ -81,7 +81,7 @@ export const QueuePage = () => {
 
   return (
     <SolutionLayout title='Очередь'>
-      <form className={s.form} onSubmit={handlePush}>
+      <form className={s.form} onSubmit={(e) => void handlePush(e)}>
         <Input
           value={inputValue}
           maxLength={4}
@@ -102,7 +102,7 @@ export const QueuePage = () => {
         />
         <Button
           text='Удалить'
-          onClick={handlePop}
+          onClick={() => void handlePop()}
           isLoader={processingAction === 'removeFromHead'}
           disabled={isButtonDeleteDisabled}
           type='button'

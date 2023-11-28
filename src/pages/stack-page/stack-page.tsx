@@ -93,7 +93,7 @@ export const StackPage = () => {
 
   return (
     <SolutionLayout title='Стек'>
-      <form className={s.form} onSubmit={handlePush}>
+      <form className={s.form} onSubmit={(e) => void handlePush(e)}>
         <Input
           value={inputValue}
           maxLength={4}
@@ -115,7 +115,7 @@ export const StackPage = () => {
         <Button
           text='Удалить'
           isLoader={processingAction === 'removeFromTail'}
-          onClick={handlePop}
+          onClick={() => void handlePop()}
           disabled={isButtonDeleteDisabled}
           type='button'
           extraClass='ml-6'

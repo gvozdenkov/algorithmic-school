@@ -10,7 +10,7 @@ export type Queue<T> = {
 };
 
 export function QueueFactory<T>(size: number): Queue<T> {
-  let queue: (T | undefined)[] = [...Array(size)];
+  let queue: (T | undefined)[] = [...Array<T | undefined>(size)];
   let head = 0;
   let tail = -1;
   let length = 0;
@@ -54,7 +54,7 @@ export function QueueFactory<T>(size: number): Queue<T> {
   const getQueue = (): (T | undefined)[] => queue;
 
   const clearQueue = (): void => {
-    queue = [...Array(size)];
+    queue = [...Array<T | undefined>(size)];
     head = 0;
     tail = -1;
     length = 0;

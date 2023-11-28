@@ -14,7 +14,7 @@ import s from './list-page.module.scss';
 const maxListLength = 8;
 const initialListLength = 4;
 
-const initialList: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
+const initialList: string[] = [...Array<string>(initialListLength)].map((_, i) => i.toString());
 
 export const ListPage = () => {
   const [inputValue, setInputValue] = useState('');
@@ -59,7 +59,7 @@ export const ListPage = () => {
     }
   };
 
-  const setFinalStageAnimation = async (stage: ProcessingAction | null): Promise<void> => {
+  const setFinalStageAnimation = (stage: ProcessingAction | null) => {
     setProcessingAction('final');
     setFinalStage(stage);
   };
@@ -86,7 +86,7 @@ export const ListPage = () => {
     LinkList.append(inputValue);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('addToTail');
+    setFinalStageAnimation('addToTail');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -101,7 +101,7 @@ export const ListPage = () => {
     LinkList.prepend(inputValue);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('addToHead');
+    setFinalStageAnimation('addToHead');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -116,7 +116,7 @@ export const ListPage = () => {
     LinkList.removeHead();
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('removeFromHead');
+    setFinalStageAnimation('removeFromHead');
 
     resetStates();
     setInputIndexFocus();
@@ -130,7 +130,7 @@ export const ListPage = () => {
     LinkList.removeTail();
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('removeFromTail');
+    setFinalStageAnimation('removeFromTail');
 
     resetStates();
     setInputIndexFocus();
@@ -149,7 +149,7 @@ export const ListPage = () => {
     LinkList.removeAt(inputIndex);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('removeByIndex');
+    setFinalStageAnimation('removeByIndex');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -164,7 +164,7 @@ export const ListPage = () => {
     LinkList.insertAt(inputIndex, inputValue);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('addByIndex');
+    setFinalStageAnimation('addByIndex');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -293,21 +293,21 @@ export const ListPage = () => {
             isLoader={processingAction === 'addToHead'}
             disabled={isAddButtonDisabled}
             type='button'
-            onClick={handlePrepend}
+            onClick={() => void handlePrepend()}
             extraClass={clsx(s.form__button)}
           />
           <Button
             text='Добавить в tail'
             isLoader={processingAction === 'addToTail'}
             disabled={isAddButtonDisabled}
-            onClick={handleAppend}
+            onClick={() => void handleAppend()}
             type='button'
             extraClass={clsx(s.form__button)}
           />
           <Button
             text='Удалить из head'
             isLoader={processingAction === 'removeFromHead'}
-            onClick={handleDeleteHead}
+            onClick={() => void handleDeleteHead()}
             disabled={isRemoveButtonDisabled}
             type='button'
             extraClass={clsx(s.form__button)}
@@ -315,7 +315,7 @@ export const ListPage = () => {
           <Button
             text='Удалить из tail'
             isLoader={processingAction === 'removeFromTail'}
-            onClick={handleDeleteTail}
+            onClick={() => void handleDeleteTail()}
             disabled={isRemoveButtonDisabled}
             type='button'
             extraClass={clsx(s.form__button)}
@@ -341,14 +341,14 @@ export const ListPage = () => {
             text='Добавить по индексу'
             isLoader={processingAction === 'addByIndex'}
             disabled={isAddByIndexButtonDisabled}
-            onClick={handleInsertAt}
+            onClick={() => void handleInsertAt()}
             type='submit'
             extraClass={clsx(s.form__button)}
           />
           <Button
             text='Удалить по индексу'
             isLoader={processingAction === 'removeByIndex'}
-            onClick={handleRemoveAt}
+            onClick={() => void handleRemoveAt()}
             disabled={isRemoveByIndexButtonDisabled}
             type='button'
             extraClass={clsx(s.form__button)}

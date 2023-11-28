@@ -102,7 +102,7 @@ export const SortingPage = () => {
           text='По возрастанию'
           sorting='asc'
           value='asc'
-          onClick={handleSorting}
+          onClick={(e) => void handleSorting(e)}
           type='button'
           isLoader={isProcessing && sortDirection === 'asc'}
           disabled={isProcessing}
@@ -112,7 +112,7 @@ export const SortingPage = () => {
           text='По убыванию'
           sorting='desc'
           value='desc'
-          onClick={handleSorting}
+          onClick={(e) => void handleSorting(e)}
           type='button'
           isLoader={isProcessing && sortDirection === 'desc'}
           disabled={isProcessing}

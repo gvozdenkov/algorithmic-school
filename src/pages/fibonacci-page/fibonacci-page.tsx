@@ -45,7 +45,7 @@ export const FibonacciPage = () => {
 
   return (
     <SolutionLayout title='Последовательность Фибоначчи'>
-      <form className={s.form} onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={(e) => void handleSubmit(e)}>
         <Input
           type='number'
           placeholder='Введите число'

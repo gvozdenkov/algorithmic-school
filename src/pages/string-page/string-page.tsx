@@ -47,7 +47,7 @@ export const StringComponent = () => {
 
   return (
     <SolutionLayout title='Строка'>
-      <form className={s.form} onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={(e) => void handleSubmit(e)}>
         <Input
           value={inputValue}
           maxLength={11}

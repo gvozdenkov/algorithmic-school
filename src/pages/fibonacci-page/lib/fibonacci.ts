@@ -2,7 +2,7 @@ const getFibonacciValue = (n: number): number =>
   n < 2 ? 1 : getFibonacciValue(n - 2) + getFibonacciValue(n - 1);
 
 const getFibonacciArray = (n: number): number[] =>
-  [...Array(n)].map((_, i) => getFibonacciValue(i));
+  [...Array<number>(n)].map((_, i) => getFibonacciValue(i));
 
 /**
  * Generator. Return array of fib numbers form 0 to n-th index
