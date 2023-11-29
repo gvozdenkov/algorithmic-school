@@ -10,7 +10,6 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-coverage
 *.local
 *.ai
 
@@ -24,3 +23,9 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.env
+
+# Testing
+coverage
+/cypress/videos
+/cypress/downloads

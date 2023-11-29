@@ -25,12 +25,19 @@
     "react-router-dom": "^6.18.0"
   },
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
+    "dev": "start-test http://localhost:5173 cy:open",
     "build": "tsc -p tsconfig.prod.json && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prettier": "prettier --write src .eslintrc.cjs .lintstagedrc.cjs",
-    "test": "cross-env NODE_ENV=test jest",
+    "prettier": "prettier --write src .eslintrc.cjs .lintstagedrc.cjs cypress",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:record": "cypress run --record",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:record:chrome": "cypress run --record --browser chrome",
+    "test:cy": "start-test http://localhost:5173 cy:run",
+    "test:jest": "cross-env NODE_ENV=test jest",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist"
   },
@@ -52,6 +59,8 @@
     "@vitejs/plugin-react": "^4.2.0",
     "camelcase": "^6.3.0",
     "cross-env": "^7.0.3",
+    "cypress": "^13.6.0",
+    "cypress-vite": "^1.5.0",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -69,7 +78,8 @@
     "prettier": "2.8.7",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.69.5",
-    "typescript": "5.0.2",
+    "start-server-and-test": "^2.0.3",
+    "typescript": "5.3.2",
     "vite": "^4.5.0"
   }
 }
