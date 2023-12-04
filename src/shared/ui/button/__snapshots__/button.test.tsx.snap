@@ -28,6 +28,7 @@ exports[`Button ui loading state 1`] = `
   <img
     alt="Loading"
     className="loader_icon"
+    data-test="loader"
     height="50%"
     src="loader.svg"
   />

@@ -9,9 +9,11 @@ exports[`Circle ui state: changing 1`] = `
   />
   <div
     className="circle__shape_state_changing"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -32,9 +34,11 @@ exports[`Circle ui state: default 1`] = `
   />
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -55,9 +59,11 @@ exports[`Circle ui state: modified 1`] = `
   />
   <div
     className="circle__shape_state_modified"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -84,9 +90,11 @@ exports[`Circle ui with element in head 1`] = `
       />
       <div
         className="circle__shape_state_default"
+        data-test="circleShape"
       >
         <p
           className="text circle__text"
+          data-test="circleText"
         >
           a
         </p>
@@ -101,9 +109,11 @@ exports[`Circle ui with element in head 1`] = `
   </div>
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -124,9 +134,11 @@ exports[`Circle ui with element in tail 1`] = `
   />
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -143,9 +155,11 @@ exports[`Circle ui with element in tail 1`] = `
       />
       <div
         className="circle__shape_state_default"
+        data-test="circleShape"
       >
         <p
           className="text circle__text"
+          data-test="circleText"
         >
           a
         </p>
@@ -172,9 +186,11 @@ exports[`Circle ui with head 1`] = `
   </div>
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -195,9 +211,11 @@ exports[`Circle ui with index 1`] = `
   />
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -220,9 +238,11 @@ exports[`Circle ui with isSmall prop 1`] = `
   />
   <div
     className="circle__shape_state_default circle__shape_small"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -243,9 +263,11 @@ exports[`Circle ui with tail 1`] = `
   />
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
@@ -268,9 +290,11 @@ exports[`Circle ui with text 1`] = `
   />
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     >
       a
     </p>
@@ -293,9 +317,11 @@ exports[`Circle ui without text 1`] = `
   />
   <div
     className="circle__shape_state_default"
+    data-test="circleShape"
   >
     <p
       className="text circle__text"
+      data-test="circleText"
     />
   </div>
   <p
