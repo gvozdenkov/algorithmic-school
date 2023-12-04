@@ -14,6 +14,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:cypress/recommended",
     // prettier must be the last in extends
     "prettier",
   ],
@@ -21,7 +22,7 @@ module.exports = {
     {
       // disable type checking for configs and cypress
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
-      files: ["./cypress/**/*.ts", "./config/**/*.js", "./**/*.spec.ts", "./**/*.test.ts"],
+      files: ["./jest/**/*.js", "./cypress/**/*.ts", "./**/*.spec.ts", "./**/*.test.ts"],
     },
   ],
   settings: {
