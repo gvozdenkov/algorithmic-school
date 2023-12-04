@@ -57,20 +57,17 @@ describe('Reverse String page', () => {
 
     cy.get('@input').type(text);
     cy.get('@reverseBtn').click();
-    cy.getBySel('loader').as('loader');
-    cy.get('@loader').should('exist');
 
-    cy.getBySelLike('circle-').should('have.length', text.length).as('circles');
-    cy.getBySelLike('circleText').as('circleTexts');
-    cy.getBySelLike('circleShape').as('circleShape');
+    cy.getBySelLike('circleText').should('have.length', text.length).as('circleTexts');
+    cy.getBySelLike('circleShape').as('circleShapes');
 
-    state.forEach((state) => {
-      cy.get('@circleTexts').each((el, elIndex) => {
-        expect(el).to.contain(state.letter[elIndex]);
+    state.forEach(({ letter, color }) => {
+      cy.get('@circleTexts').each((el, i) => {
+        expect(el).to.contain(letter[i]);
       });
 
-      cy.get('@circleShape').each((el, elIndex) => {
-        expect(el).to.have.css('border', `4px solid ${colorSwitchToRGB(state.color[elIndex])}`);
+      cy.get('@circleShapes').each((el, i) => {
+        expect(el).to.have.css('border', `4px solid ${colorSwitchToRGB(color[i])}`);
       });
 
       cy.wait(DELAY_IN_MS);

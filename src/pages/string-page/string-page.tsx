@@ -71,7 +71,7 @@ export const StringComponent = () => {
         <ul className={clsx(s.result__list, 'mt-24')}>
           {stringArr.map((letter, i) => (
             <li className={s.result__listItem} key={i}>
-              <Circle state={state[i]} letter={letter} data-test={`circle-${i}`} />
+              <Circle state={state[i]} letter={letter} />
             </li>
           ))}
         </ul>

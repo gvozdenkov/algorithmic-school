@@ -57,12 +57,14 @@ export const FibonacciPage = () => {
           disabled={isProcessing}
           ref={inputValueRef}
           autoFocus
+          data-test='input'
         />
         <Button
           text='Рассчитать'
           type='submit'
           isLoader={isProcessing}
           disabled={isButtonDisabled}
+          data-test='button'
         />
       </form>
       {showResult && (
