@@ -104,6 +104,7 @@ export const StackPage = () => {
           autoComplete='off'
           ref={inputRef}
           autoFocus
+          data-test='input'
         />
         <Button
           text='Добавить'
@@ -111,6 +112,7 @@ export const StackPage = () => {
           disabled={isButtonAddDisabled}
           type='submit'
           extraClass='ml-6'
+          data-test='add-btn'
         />
         <Button
           text='Удалить'
@@ -119,6 +121,7 @@ export const StackPage = () => {
           disabled={isButtonDeleteDisabled}
           type='button'
           extraClass='ml-6'
+          data-test='remove-btn'
         />
         <Button
           text='Очистить'
@@ -126,13 +129,20 @@ export const StackPage = () => {
           onClick={handleClear}
           disabled={isButtonDeleteDisabled}
           extraClass='ml-auto'
+          data-test='clear-btn'
         />
       </form>
       {showResult && (
         <ul className={clsx(s.resultList, 'mt-24')}>
           {stack.map((elem, i) => (
             <li className={s.resultList__item} key={i}>
-              <Circle letter={elem} index={i} state={stackState[i]} head={head(i)} />
+              <Circle
+                letter={elem}
+                index={i}
+                state={stackState[i]}
+                head={head(i)}
+                data-test={`circle-${i}`}
+              />
             </li>
           ))}
         </ul>

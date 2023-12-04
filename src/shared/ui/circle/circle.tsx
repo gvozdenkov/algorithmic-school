@@ -37,7 +37,8 @@ export const Circle = ({
           {
             [s.circle__head_type_element]: typeof head !== 'string',
           },
-        )}>
+        )}
+        data-test='circleHead'>
         {head}
       </div>
       <div
@@ -49,7 +50,9 @@ export const Circle = ({
           {letter}
         </p>
       </div>
-      <p className={clsx('text mt-4', s.circle__index)}>{index?.toString()}</p>
+      <p className={clsx('text mt-4', s.circle__index)} data-test='circleIndex'>
+        {index?.toString()}
+      </p>
       <div
         className={clsx(
           'text mt-4',

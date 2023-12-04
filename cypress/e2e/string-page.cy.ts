@@ -1,11 +1,6 @@
 import { DELAY_IN_MS } from '#shared/constants';
 import { colorSwitchToRGB } from '#shared/lib';
-import { ElementState } from '#shared/types';
-
-interface State {
-  color: ElementState[];
-  letter: string[];
-}
+import { State } from 'cypress/support/types';
 
 const state: State[] = [
   {

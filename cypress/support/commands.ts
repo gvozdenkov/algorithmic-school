@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+
+import { colorSwitchToRGB } from '#shared/lib';
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -8,33 +11,6 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
   return cy.get(`[data-test=${selector}]`, ...args);
@@ -42,4 +18,30 @@ Cypress.Commands.add('getBySel', (selector, ...args) => {
 
 Cypress.Commands.add('getBySelLike', (selector, ...args) => {
   return cy.get(`[data-test*=${selector}]`, ...args);
+});
+
+Cypress.Commands.add('checkCircle', ({ color, letter, head, index }, circle) => {
+  cy.get(`@${circle}`)
+    .getBySel('circleShape')
+    .each((el, i) => {
+      expect(el).to.have.css('border', `4px solid ${colorSwitchToRGB(color[i])}`);
+    });
+
+  cy.get(`@${circle}`)
+    .getBySel('circleText')
+    .each((el, i) => {
+      expect(el).to.contain(letter[i]);
+    });
+
+  cy.get(`@${circle}`)
+    .getBySel('circleHead')
+    .each((el, i) => {
+      expect(el).to.contain(head[i]);
+    });
+
+  cy.get(`@${circle}`)
+    .getBySel('circleIndex')
+    .each((el, i) => {
+      expect(el).to.contain(index[i]);
+    });
 });
