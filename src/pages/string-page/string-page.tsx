@@ -57,19 +57,21 @@ export const StringComponent = () => {
           disabled={isProcessing}
           autoFocus
           ref={inputRef}
+          data-test='input'
         />
         <Button
           text='Развернуть'
           type='submit'
           isLoader={isProcessing}
           disabled={isProcessing || !inputValue}
+          data-test='reverse-btn'
         />
       </form>
       {showResult && (
         <ul className={clsx(s.result__list, 'mt-24')}>
           {stringArr.map((letter, i) => (
             <li className={s.result__listItem} key={i}>
-              <Circle state={state[i]} letter={letter} />
+              <Circle state={state[i]} letter={letter} data-test={`circle-${i}`} />
             </li>
           ))}
         </ul>

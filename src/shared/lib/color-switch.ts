@@ -15,3 +15,19 @@ export const colorSwitch = (color: ElementState): ColorValueHex => {
     }
   }
 };
+
+export const colorSwitchToRGB = (color: ElementState): string => {
+  switch (color) {
+    case 'default': {
+      return 'rgb(122, 122, 122)';
+    }
+
+    case 'changing': {
+      return 'rgb(224, 188, 114)';
+    }
+
+    case 'modified': {
+      return 'rgb(124, 190, 93)';
+    }
+  }
+};

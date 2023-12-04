@@ -1,14 +1,16 @@
-import React from 'react';
-import s from './circle.module.scss';
-import { ElementState } from '#shared/types';
+import { HTMLProps, ReactElement } from 'react';
 import clsx from 'clsx';
 
-type CircleProps = {
+import { ElementState } from '#shared/types';
+
+import s from './circle.module.scss';
+
+type CircleProps = HTMLProps<HTMLDivElement> & {
   state?: ElementState;
   letter?: string;
-  head?: string | React.ReactElement | null | false;
+  head?: string | ReactElement | null | false;
   index?: number;
-  tail?: string | React.ReactElement | null | false;
+  tail?: string | ReactElement | null | false;
   tailType?: 'string' | 'element';
   extraClass?: string;
   isSmall?: boolean;
@@ -22,9 +24,10 @@ export const Circle = ({
   tail,
   extraClass = '',
   isSmall,
+  ...rest
 }: CircleProps) => {
   return (
-    <div className={clsx(s.circle, { [extraClass]: !!extraClass })}>
+    <div className={clsx(s.circle, { [extraClass]: !!extraClass })} {...rest}>
       <div
         className={clsx(
           'text mb-4',
@@ -40,8 +43,11 @@ export const Circle = ({
       <div
         className={clsx(s[`circle__shape_state_${state}`], {
           [s.circle__shape_small]: isSmall,
-        })}>
-        <p className={clsx('text', s.circle__text)}>{letter}</p>
+        })}
+        data-test='circleShape'>
+        <p className={clsx('text', s.circle__text)} data-test='circleText'>
+          {letter}
+        </p>
       </div>
       <p className={clsx('text mt-4', s.circle__index)}>{index?.toString()}</p>
       <div

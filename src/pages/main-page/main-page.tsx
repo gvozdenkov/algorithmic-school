@@ -13,7 +13,7 @@ export const MainPage = () => {
       <ul className={clsx(s.cardList)}>
         {menuList.map((item, i) => (
           <li key={i}>
-            <Link className={s.cardList__link} to={item.route}>
+            <Link className={s.cardList__link} to={item.route} data-test={`menu-link-${i}`}>
               <MenuCard title={item.title} image={item.image} />
             </Link>
           </li>

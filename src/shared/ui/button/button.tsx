@@ -6,7 +6,7 @@ import { AscendingIcon } from '../icons/ascending-icon';
 import { DescendingIcon } from '../icons/descending-icon';
 import { SortDirection } from '#shared/types';
 
-import styles from './button.module.scss';
+import s from './button.module.scss';
 
 type ButtonProps = HTMLProps<HTMLButtonElement> & {
   text?: string;
@@ -35,19 +35,25 @@ export const Button = ({
     <button
       className={clsx(
         'text_type_button',
-        styles.button,
-        { [styles.linkedList]: linkedList },
-        { [styles.loader]: isLoader },
+        s.button,
+        { [s.linkedList]: linkedList },
+        { [s.loader]: isLoader },
         { [extraClass]: !!extraClass },
       )}
       type={type}
       disabled={isLoader || disabled}
       {...rest}>
       {sorting && currentIcon}
-      <p className={clsx('text', { 'ml-5': sorting }, { [styles.hiddenText]: isLoader })}>{text}</p>
+      <p className={clsx('text', { 'ml-5': sorting }, { [s.hiddenText]: isLoader })}>{text}</p>
 
       {isLoader && (
-        <img className={styles.loader_icon} src={loaderIcon} height={'50%'} alt='Loading' />
+        <img
+          className={s.loader_icon}
+          src={loaderIcon}
+          height={'50%'}
+          alt='Loading'
+          data-test='loader'
+        />
       )}
     </button>
   );
