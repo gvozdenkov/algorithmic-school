@@ -32,35 +32,42 @@ Cypress.Commands.add('checkCircle', (state, circle) => {
       expect(el).to.have.css('border', `4px solid ${colorSwitchToRGB(state.color[i])}`);
     });
 
-  if (state.value) {
-    cy.get(`@${circle}`)
+  state.value &&
+    cy
+      .get(`@${circle}`)
       .getBySel('circleText')
       .each((el, i) => {
         expect(el).to.contain(state.value[i]);
       });
-  }
 
-  if (state.head) {
-    cy.get(`@${circle}`)
+  state.head &&
+    cy
+      .get(`@${circle}`)
       .getBySel('circleHead')
       .each((el, i) => {
         expect(el).to.contain(state.head[i]);
       });
-  }
 
-  if (state.tail) {
-    cy.get(`@${circle}`)
+  state.tail &&
+    cy
+      .get(`@${circle}`)
       .getBySel('circleTail')
       .each((el, i) => {
         expect(el).to.contain(state.tail[i]);
       });
-  }
 
-  if (state.index) {
-    cy.get(`@${circle}`)
+  state.index &&
+    cy
+      .get(`@${circle}`)
       .getBySel('circleIndex')
       .each((el, i) => {
         expect(el).to.contain(state.index[i].toString());
       });
-  }
+});
+
+Cypress.Commands.add('checkAllCircls', (states, circle, delay = 0) => {
+  states.forEach((state) => {
+    cy.checkCircle(state, circle);
+    delay && cy.wait(delay);
+  });
 });
