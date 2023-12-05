@@ -59,59 +59,73 @@ const removeState: CircleState[] = [
   },
 ];
 
-describe('Stack page', () => {
-  beforeEach(() => {
-    cy.visit('/#/stack');
-    cy.getBySel('add-btn').should('be.disabled').as('addBtn');
-    cy.getBySel('remove-btn').should('be.disabled').as('removeBtn');
-    cy.getBySel('clear-btn').should('be.disabled').as('clearBtn');
-    cy.getBySel('input').should('be.empty').as('input');
+beforeEach(() => {
+  cy.visit('/#/stack');
+  cy.getBySel('add-btn').should('be.disabled').as('addBtn');
+  cy.getBySel('remove-btn').should('be.disabled').as('removeBtn');
+  cy.getBySel('clear-btn').should('be.disabled').as('clearBtn');
+  cy.getBySel('input').should('be.empty').as('input');
+});
+
+afterEach(() => {
+  cy.get('@input').clear();
+  cy.get('@input').should('be.empty');
+});
+
+it('Button disabled w/ empty input & vice versa', () => {
+  cy.checkButtonState({
+    button: 'addBtn',
+    inputs: [
+      {
+        inputName: 'input',
+        inputValue: 'a',
+      },
+    ],
+    expectedState: { chainers: 'to.be.not.disabled' },
   });
 
-  afterEach(() => {
-    cy.get('@input').clear();
-    cy.get('@input').should('be.empty');
+  cy.get('@input').clear();
+
+  cy.checkButtonState({
+    button: 'addBtn',
+    expectedState: { chainers: 'be.disabled' },
   });
+});
 
-  it('button disabled w/ empty input & vice versa', () => {
-    cy.checkButton({ button: 'addBtn', input: 'input', inputValue: 'a' });
-  });
+it('Push to stack', () => {
+  cy.get('@input').type('a');
+  cy.get('@addBtn').click();
+  cy.getBySelLike('circle-').as('circles');
+  cy.checkAllCircls(addOneState, 'circles', SHORT_DELAY_IN_MS);
 
-  it('push to stack', () => {
-    cy.get('@input').type('a');
-    cy.get('@addBtn').click();
-    cy.getBySelLike('circle-').as('circles');
-    cy.checkAllCircls(addOneState, 'circles', SHORT_DELAY_IN_MS);
+  cy.get('@input').type('b');
+  cy.get('@addBtn').click();
+  cy.checkAllCircls(addTwoState, 'circles', SHORT_DELAY_IN_MS);
 
-    cy.get('@input').type('b');
-    cy.get('@addBtn').click();
-    cy.checkAllCircls(addTwoState, 'circles', SHORT_DELAY_IN_MS);
+  cy.get('@input').type('c');
+  cy.get('@addBtn').click();
+  cy.checkAllCircls(addThreeState, 'circles', SHORT_DELAY_IN_MS);
+});
 
-    cy.get('@input').type('c');
-    cy.get('@addBtn').click();
-    cy.checkAllCircls(addThreeState, 'circles', SHORT_DELAY_IN_MS);
-  });
+it('Pop from stack', () => {
+  cy.get('@input').type('a');
+  cy.get('@addBtn').click();
+  cy.get('@input').type('b');
+  cy.get('@addBtn').click();
+  cy.get('@input').type('c');
+  cy.get('@addBtn').click();
+  cy.getBySelLike('circle-').as('circles');
 
-  it('pop from stack', () => {
-    cy.get('@input').type('a');
-    cy.get('@addBtn').click();
-    cy.get('@input').type('b');
-    cy.get('@addBtn').click();
-    cy.get('@input').type('c');
-    cy.get('@addBtn').click();
+  cy.get('@removeBtn').click();
+  cy.checkAllCircls(removeState, 'circles', SHORT_DELAY_IN_MS);
+});
 
-    cy.get('@removeBtn').click();
-    cy.getBySelLike('circle-').as('circles');
-    cy.checkAllCircls(removeState, 'circles', SHORT_DELAY_IN_MS);
-  });
+it('Clear stack', () => {
+  cy.get('@input').type('a');
+  cy.get('@addBtn').click();
+  cy.get('@input').type('b');
+  cy.get('@addBtn').click();
 
-  it('clear stack', () => {
-    cy.get('@input').type('a');
-    cy.get('@addBtn').click();
-    cy.get('@input').type('b');
-    cy.get('@addBtn').click();
-
-    cy.get('@clearBtn').click();
-    cy.get('circle-').should('have.length', 0);
-  });
+  cy.get('@clearBtn').click();
+  cy.get('circle-').should('have.length', 0);
 });

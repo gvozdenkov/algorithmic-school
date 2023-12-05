@@ -171,7 +171,9 @@ export const ListPage = () => {
     setInputValueFocus();
   };
 
-  const InsertedElement = (value: string) => <Circle letter={value} state='changing' isSmall />;
+  const InsertedElement = (value: string, testName?: string) => (
+    <Circle letter={value} state='changing' isSmall data-test={`circle-${testName}`} />
+  );
 
   const colorState = (i: number): ElementState => {
     // add to tail
@@ -243,7 +245,7 @@ export const ListPage = () => {
       processingIndex !== null &&
       i === processingIndex
     )
-      return InsertedElement(list[inputIndex]);
+      return InsertedElement(list[inputIndex], 'tail');
 
     if (i === listLength - 1) return TAIL;
 
@@ -266,7 +268,7 @@ export const ListPage = () => {
       processingIndex !== null &&
       i === processingIndex
     )
-      return InsertedElement(inputValue);
+      return InsertedElement(inputValue, 'head');
 
     if (finalStage === 'addByIndex' && processingAction === 'final' && i !== 0) return '';
 
@@ -287,38 +289,39 @@ export const ListPage = () => {
             autoComplete='off'
             autoFocus
             ref={inputValueRef}
+            data-test='inputValue'
           />
           <Button
             text='Добавить в head'
             isLoader={processingAction === 'addToHead'}
             disabled={isAddButtonDisabled}
-            type='button'
             onClick={() => void handlePrepend()}
             extraClass={clsx(s.form__button)}
+            data-test='addHeadBtn'
           />
           <Button
             text='Добавить в tail'
             isLoader={processingAction === 'addToTail'}
             disabled={isAddButtonDisabled}
             onClick={() => void handleAppend()}
-            type='button'
             extraClass={clsx(s.form__button)}
+            data-test='addTailBtn'
           />
           <Button
             text='Удалить из head'
             isLoader={processingAction === 'removeFromHead'}
             onClick={() => void handleDeleteHead()}
             disabled={isRemoveButtonDisabled}
-            type='button'
             extraClass={clsx(s.form__button)}
+            data-test='removeHeadBtn'
           />
           <Button
             text='Удалить из tail'
             isLoader={processingAction === 'removeFromTail'}
             onClick={() => void handleDeleteTail()}
             disabled={isRemoveButtonDisabled}
-            type='button'
             extraClass={clsx(s.form__button)}
+            data-test='removeTailBtn'
           />
         </fieldset>
         <fieldset className={s.form__fieldset} disabled={isProcessing}>
@@ -336,22 +339,23 @@ export const ListPage = () => {
             autoComplete='off'
             autoFocus
             ref={inputIndexRef}
+            data-test='inputIndex'
           />
           <Button
             text='Добавить по индексу'
             isLoader={processingAction === 'addByIndex'}
             disabled={isAddByIndexButtonDisabled}
             onClick={() => void handleInsertAt()}
-            type='submit'
             extraClass={clsx(s.form__button)}
+            data-test='addByIndexBtn'
           />
           <Button
             text='Удалить по индексу'
             isLoader={processingAction === 'removeByIndex'}
             onClick={() => void handleRemoveAt()}
             disabled={isRemoveByIndexButtonDisabled}
-            type='button'
             extraClass={clsx(s.form__button)}
+            data-test='removeByIndexBtn'
           />
         </fieldset>
       </form>
@@ -373,6 +377,7 @@ export const ListPage = () => {
                     { [s.circle_first]: i === 0 },
                     { [s.circle_last]: i === lastIndex },
                   )}
+                  data-test={`circle-${i}`}
                 />
                 {i < lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
               </li>

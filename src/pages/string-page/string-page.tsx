@@ -64,7 +64,7 @@ export const StringComponent = () => {
           type='submit'
           isLoader={isProcessing}
           disabled={isProcessing || !inputValue}
-          data-test='reverse-btn'
+          data-test='button'
         />
       </form>
       {showResult && (

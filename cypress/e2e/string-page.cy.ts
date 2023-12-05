@@ -24,32 +24,46 @@ const states: CircleState[] = [
   },
 ];
 
-describe('Reverse String page', () => {
-  const text = 'hello';
+beforeEach(() => {
+  cy.visit('/#/recursion');
+  cy.getBySel('button').as('button');
+  cy.getBySel('input').should('be.empty').as('input');
+});
 
-  beforeEach(() => {
-    cy.visit('/#/recursion');
-    cy.getBySel('reverse-btn').as('reverseBtn');
-    cy.getBySel('input').should('be.empty').as('input');
+afterEach(() => {
+  cy.get('@input').clear();
+  cy.get('@input').should('be.empty');
+});
+
+const text = 'hello';
+
+it('button disabled w/ empty input & vice versa', () => {
+  cy.checkButtonState({
+    button: 'button',
+    inputs: [
+      {
+        inputName: 'input',
+        inputValue: text,
+      },
+    ],
+    expectedState: { chainers: 'to.be.not.disabled' },
   });
 
-  afterEach(() => {
-    cy.get('@input').clear();
-    cy.get('@input').should('be.empty');
+  cy.get('@input').clear();
+
+  cy.checkButtonState({
+    button: 'button',
+    expectedState: { chainers: 'be.disabled' },
   });
+});
 
-  it('button disabled w/ empty input & vice versa', () => {
-    cy.checkButton({ button: 'reverseBtn', input: 'input', inputValue: text });
-  });
+it('animation correct', () => {
+  cy.get('@input').type(text);
+  cy.get('@button').click();
+  cy.getBySelLike('circle-').should('have.length', text.length).as('circles');
 
-  it('animation correct', () => {
-    cy.get('@input').type(text);
-    cy.get('@reverseBtn').click();
-    cy.getBySelLike('circle-').should('have.length', text.length).as('circles');
-
-    states.forEach((state) => {
-      cy.checkCircle(state, 'circles');
-      cy.wait(DELAY_IN_MS);
-    });
+  states.forEach((state) => {
+    cy.checkCircle(state, 'circles');
+    cy.wait(DELAY_IN_MS);
   });
 });

@@ -1,6 +1,7 @@
 import { ComponentProps, forwardRef } from 'react';
-import styles from './input.module.scss';
 import clsx from 'clsx';
+
+import s from './input.module.scss';
 
 type InputProps = ComponentProps<'input'> & {
   placeholder?: string;
@@ -24,9 +25,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       type === 'text' ? `Максимум — ${maxLength} символа` : `Максимальное число — ${maxLength}`;
 
     return (
-      <div className={clsx(styles.content, { [extraClass]: !!extraClass })}>
+      <div className={clsx(s.content, { [extraClass]: !!extraClass })}>
         <input
-          className={`${styles.input} text text_type_input text_color_input`}
+          className={`${s.input} text text_type_input text_color_input`}
           placeholder={placeholder}
           type={type}
           maxLength={maxLength}
@@ -35,7 +36,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...rest}
         />
         {isLimitText && (
-          <span className={`text text_type_input-lim text_color_input mt-2 ml-8 ${styles.limit}`}>
+          <span className={`text text_type_input-lim text_color_input mt-2 ml-8 ${s.limit}`}>
             {limitText}
           </span>
         )}
