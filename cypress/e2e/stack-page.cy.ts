@@ -80,29 +80,16 @@ describe('Stack page', () => {
   it('push to stack', () => {
     cy.get('@input').type('a');
     cy.get('@addBtn').click();
-
     cy.getBySelLike('circle-').as('circles');
-
-    addOneState.forEach((state) => {
-      cy.checkCircle(state, 'circles');
-      cy.wait(SHORT_DELAY_IN_MS);
-    });
+    cy.checkAllCircls(addOneState, 'circles', SHORT_DELAY_IN_MS);
 
     cy.get('@input').type('b');
     cy.get('@addBtn').click();
-
-    addTwoState.forEach((state) => {
-      cy.checkCircle(state, 'circles');
-      cy.wait(SHORT_DELAY_IN_MS);
-    });
+    cy.checkAllCircls(addTwoState, 'circles', SHORT_DELAY_IN_MS);
 
     cy.get('@input').type('c');
     cy.get('@addBtn').click();
-
-    addThreeState.forEach((state) => {
-      cy.checkCircle(state, 'circles');
-      cy.wait(SHORT_DELAY_IN_MS);
-    });
+    cy.checkAllCircls(addThreeState, 'circles', SHORT_DELAY_IN_MS);
   });
 
   it('pop from stack', () => {
@@ -115,11 +102,7 @@ describe('Stack page', () => {
 
     cy.get('@removeBtn').click();
     cy.getBySelLike('circle-').as('circles');
-
-    removeState.forEach((state) => {
-      cy.checkCircle(state, 'circles');
-      cy.wait(SHORT_DELAY_IN_MS);
-    });
+    cy.checkAllCircls(removeState, 'circles', SHORT_DELAY_IN_MS);
   });
 
   it('clear stack', () => {
