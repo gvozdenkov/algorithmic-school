@@ -11,7 +11,7 @@ import { ProcessingAction } from '#shared/types';
 import { QueueClass, setHead, setState, setTail } from './lib';
 import s from './queue-page.module.scss';
 
-const maxQueueSize = 8;
+const maxQueueSize = 7;
 const initialQueue: string[] = [...Array<string>(maxQueueSize)];
 
 export type ProcessingQueueAction = Extract<
@@ -92,6 +92,7 @@ export const QueuePage = () => {
           autoComplete='off'
           ref={inputRef}
           autoFocus
+          data-test='input'
         />
         <Button
           text='Добавить'
@@ -99,6 +100,7 @@ export const QueuePage = () => {
           disabled={isButtonAddDisabled}
           type='submit'
           extraClass='ml-6'
+          data-test='add-btn'
         />
         <Button
           text='Удалить'
@@ -107,6 +109,7 @@ export const QueuePage = () => {
           disabled={isButtonDeleteDisabled}
           type='button'
           extraClass='ml-6'
+          data-test='remove-btn'
         />
         <Button
           text='Очистить'
@@ -114,6 +117,7 @@ export const QueuePage = () => {
           disabled={isButtonDeleteDisabled}
           type='button'
           extraClass='ml-auto'
+          data-test='clear-btn'
         />
       </form>
       {
@@ -126,6 +130,7 @@ export const QueuePage = () => {
                 state={setQueueState(processingAction, i)}
                 head={setQueueHead(i)}
                 tail={setQueueTail(i)}
+                data-test={`circle-${i}`}
               />
             </li>
           ))}
