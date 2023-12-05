@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import type Inputs from '../fixtures/inputs.json';
-import { DataCircleState } from './types';
+import { CircleState } from './types';
 
 interface FixtureTypes {
   inputs: typeof Inputs;
@@ -31,7 +31,13 @@ declare global {
        * Custom command to check circle element.
        * @example cy.getBySelLike('greeting')
        */
-      checkCircle(state: DataCircleState, circle: string): void
+      checkButton({button, input, inputValue}: {button: string, input: string, inputValue: string}): void
+
+      /**
+       * Custom command to check circle element.
+       * @example cy.getBySelLike('greeting')
+       */
+      checkCircle(state: CircleState, circle: string): void
     }
   }
 }

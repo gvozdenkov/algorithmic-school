@@ -1,36 +1,30 @@
 import { SHORT_DELAY_IN_MS } from '#shared/constants';
-import { colorSwitchToRGB } from '#shared/lib';
-import { ElementState } from '#shared/types';
+import { CircleState } from 'cypress/support/types';
 
-type State = {
-  color: ElementState[];
-  number: number[];
-};
-
-const state: State[] = [
+const states: CircleState[] = [
   {
     color: ['default'],
-    number: [1],
+    value: [1],
   },
   {
     color: ['default', 'default'],
-    number: [1, 1],
+    value: [1, 1],
   },
   {
     color: ['default', 'default', 'default'],
-    number: [1, 1, 2],
+    value: [1, 1, 2],
   },
   {
     color: ['default', 'default', 'default', 'default'],
-    number: [1, 1, 2, 3],
+    value: [1, 1, 2, 3],
   },
   {
     color: ['default', 'default', 'default', 'default', 'default'],
-    number: [1, 1, 2, 3, 5],
+    value: [1, 1, 2, 3, 5],
   },
   {
     color: ['default', 'default', 'default', 'default', 'default', 'default'],
-    number: [1, 1, 2, 3, 5, 8],
+    value: [1, 1, 2, 3, 5, 8],
   },
 ];
 
@@ -46,37 +40,22 @@ describe('Fibonacci sequence', () => {
     cy.get('@input').should('be.empty');
   });
 
-  it('button disabled with empty input', () => {
-    cy.get('@button').should('be.disabled');
-  });
-
-  it('button enabled with not empty input', () => {
-    cy.get('@input').type('5');
-    cy.get('@input').should('have.value', '5');
-    cy.get('@button').should('to.be.not.disabled');
+  it('button disabled w/ empty input & vice versa', () => {
+    cy.checkButton({ button: 'button', input: 'input', inputValue: '5' });
   });
 
   it('Visual correct', () => {
-    const text = '5';
+    const number = 5;
 
-    cy.get('@input').type(text);
+    cy.get('@input').type(number.toString());
     cy.get('@button').click();
+    cy.getBySelLike('circle-').as('circles');
 
-    cy.getBySelLike('circleText').as('circleTexts');
-    cy.getBySelLike('circleShape').as('circleShapes');
-
-    state.forEach(({ color, number }) => {
-      cy.get('@circleTexts').each((el, i) => {
-        expect(el).to.contain(number[i]);
-      });
-
-      cy.get('@circleShapes').each((el, i) => {
-        expect(el).to.have.css('border', `4px solid ${colorSwitchToRGB(color[i])}`);
-      });
-
+    states.forEach((state) => {
+      cy.checkCircle(state, 'circles');
       cy.wait(SHORT_DELAY_IN_MS);
     });
 
-    cy.get('@circleTexts').should('have.length', +text + 1);
+    cy.get('@circles').should('have.length', number + 1);
   });
 });

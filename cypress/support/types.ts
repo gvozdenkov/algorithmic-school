@@ -1,13 +1,10 @@
 import { HEAD, TAIL } from '#shared/constants';
 import { ElementState } from '#shared/types';
 
-export type State = {
+export type CircleState = {
   color: ElementState[];
-  letter: string[];
-};
-
-export type DataCircleState = State & {
+  value?: (string | number)[];
   head?: (typeof HEAD | '')[];
   tail?: (typeof TAIL | '')[];
-  index?: string[];
+  index?: number[];
 };

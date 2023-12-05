@@ -1,60 +1,60 @@
 import { HEAD, SHORT_DELAY_IN_MS } from '#shared/constants';
-import { DataCircleState } from 'cypress/support/types';
+import { CircleState } from 'cypress/support/types';
 
-const addOneState: DataCircleState[] = [
+const addOneState: CircleState[] = [
   {
     color: ['changing'],
-    letter: ['a'],
-    index: ['0'],
+    value: ['a'],
+    index: [0],
     head: [HEAD],
   },
   {
     color: ['default'],
-    letter: ['a'],
-    index: ['0'],
+    value: ['a'],
+    index: [0],
     head: [HEAD],
   },
 ];
-const addTwoState: DataCircleState[] = [
+const addTwoState: CircleState[] = [
   {
     color: ['default', 'changing'],
-    letter: ['a', 'b'],
-    index: ['0', '1'],
+    value: ['a', 'b'],
+    index: [0, 1],
     head: ['', HEAD],
   },
   {
     color: ['default', 'default'],
-    letter: ['a', 'b'],
-    index: ['0', '1'],
+    value: ['a', 'b'],
+    index: [0, 1],
     head: ['', HEAD],
   },
 ];
-const addThreeState: DataCircleState[] = [
+const addThreeState: CircleState[] = [
   {
     color: ['default', 'default', 'changing'],
-    letter: ['a', 'b', 'c'],
-    index: ['0', '1', '2'],
+    value: ['a', 'b', 'c'],
+    index: [0, 1, 2],
     head: ['', '', HEAD],
   },
   {
     color: ['default', 'default', 'default'],
-    letter: ['a', 'b', 'c'],
-    index: ['0', '1', '2'],
+    value: ['a', 'b', 'c'],
+    index: [0, 1, 2],
     head: ['', '', HEAD],
   },
 ];
 
-const removeState: DataCircleState[] = [
+const removeState: CircleState[] = [
   {
     color: ['default', 'default', 'changing'],
-    letter: ['a', 'b', 'c'],
-    index: ['0', '1', '2'],
+    value: ['a', 'b', 'c'],
+    index: [0, 1, 2],
     head: ['', '', HEAD],
   },
   {
     color: ['default', 'default'],
-    letter: ['a', 'b'],
-    index: ['0', '1'],
+    value: ['a', 'b'],
+    index: [0, 1],
     head: ['', HEAD],
   },
 ];
@@ -73,14 +73,8 @@ describe('Stack page', () => {
     cy.get('@input').should('be.empty');
   });
 
-  it('button disabled with empty input', () => {
-    cy.get('@addBtn').should('be.disabled');
-  });
-
-  it('button enabled with not empty input', () => {
-    cy.get('@input').type('a');
-    cy.get('@input').should('have.value', 'a');
-    cy.get('@addBtn').should('to.be.not.disabled');
+  it('button disabled w/ empty input & vice versa', () => {
+    cy.checkButton({ button: 'addBtn', input: 'input', inputValue: 'a' });
   });
 
   it('push to stack', () => {

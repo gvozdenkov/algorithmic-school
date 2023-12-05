@@ -1,31 +1,32 @@
 import { DELAY_IN_MS } from '#shared/constants';
-import { colorSwitchToRGB } from '#shared/lib';
-import { State } from 'cypress/support/types';
+import { CircleState } from 'cypress/support/types';
 
-const state: State[] = [
+const states: CircleState[] = [
   {
     color: ['default', 'default', 'default', 'default', 'default'],
-    letter: ['h', 'e', 'l', 'l', 'o'],
+    value: ['h', 'e', 'l', 'l', 'o'],
   },
   {
     color: ['changing', 'default', 'default', 'default', 'changing'],
-    letter: ['h', 'e', 'l', 'l', 'o'],
+    value: ['h', 'e', 'l', 'l', 'o'],
   },
   {
     color: ['modified', 'changing', 'default', 'changing', 'modified'],
-    letter: ['o', 'e', 'l', 'l', 'h'],
+    value: ['o', 'e', 'l', 'l', 'h'],
   },
   {
     color: ['modified', 'modified', 'changing', 'modified', 'modified'],
-    letter: ['o', 'l', 'l', 'e', 'h'],
+    value: ['o', 'l', 'l', 'e', 'h'],
   },
   {
     color: ['modified', 'modified', 'modified', 'modified', 'modified'],
-    letter: ['o', 'l', 'l', 'e', 'h'],
+    value: ['o', 'l', 'l', 'e', 'h'],
   },
 ];
 
 describe('Reverse String page', () => {
+  const text = 'hello';
+
   beforeEach(() => {
     cy.visit('/#/recursion');
     cy.getBySel('reverse-btn').as('reverseBtn');
@@ -37,34 +38,17 @@ describe('Reverse String page', () => {
     cy.get('@input').should('be.empty');
   });
 
-  it('button disabled with empty input', () => {
-    cy.get('@reverseBtn').should('be.disabled');
-  });
-
-  it('button enabled with not empty input', () => {
-    cy.get('@input').type('hello');
-    cy.get('@input').should('have.value', 'hello');
-    cy.get('@reverseBtn').should('to.be.not.disabled');
+  it('button disabled w/ empty input & vice versa', () => {
+    cy.checkButton({ button: 'reverseBtn', input: 'input', inputValue: text });
   });
 
   it('animation correct', () => {
-    const text = 'hello';
-
     cy.get('@input').type(text);
     cy.get('@reverseBtn').click();
+    cy.getBySelLike('circle-').should('have.length', text.length).as('circles');
 
-    cy.getBySelLike('circleText').should('have.length', text.length).as('circleTexts');
-    cy.getBySelLike('circleShape').as('circleShapes');
-
-    state.forEach(({ letter, color }) => {
-      cy.get('@circleTexts').each((el, i) => {
-        expect(el).to.contain(letter[i]);
-      });
-
-      cy.get('@circleShapes').each((el, i) => {
-        expect(el).to.have.css('border', `4px solid ${colorSwitchToRGB(color[i])}`);
-      });
-
+    states.forEach((state) => {
+      cy.checkCircle(state, 'circles');
       cy.wait(DELAY_IN_MS);
     });
   });

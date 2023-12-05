@@ -71,7 +71,12 @@ export const FibonacciPage = () => {
         <ul className={clsx(s.resultList, 'mt-24')}>
           {fibArray.map((letter, i) => (
             <li className={s.resultList__item} key={i}>
-              <Circle state='default' letter={letter.toString()} index={i} />
+              <Circle
+                state='default'
+                letter={letter.toString()}
+                index={i}
+                data-test={`circle-${i}`}
+              />
             </li>
           ))}
         </ul>

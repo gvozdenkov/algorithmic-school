@@ -58,7 +58,8 @@ export const Circle = ({
           'text mt-4',
           { [s.circle__tail_type_string]: typeof tail === 'string' },
           { [s.circle__tail_type_element]: typeof tail !== 'string' },
-        )}>
+        )}
+        data-test='circleTail'>
         {tail}
       </div>
     </div>
