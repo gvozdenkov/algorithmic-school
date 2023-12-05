@@ -16,13 +16,14 @@ Cypress.Commands.add('getBySelLike', (selector, ...args) => {
   return cy.get(`[data-test*=${selector}]`, ...args);
 });
 
-Cypress.Commands.add('checkButton', ({ button, input, inputValue }) => {
-  cy.get(`@${input}`).clear();
-  cy.get(`@${button}`).should('be.disabled');
+Cypress.Commands.add('checkButtonState', ({ button, inputs, expectedState }) => {
+  inputs &&
+    inputs.forEach((input) => {
+      cy.get(`@${input.inputName}`).clear();
+      cy.get(`@${input.inputName}`).type(input.inputValue);
+    });
 
-  cy.get(`@${input}`).type(inputValue);
-  cy.get(`@${input}`).should('have.value', inputValue);
-  cy.get(`@${button}`).should('to.be.not.disabled');
+  cy.get(`@${button}`).should(expectedState.chainers, expectedState.value);
 });
 
 Cypress.Commands.add('checkCircle', (state, circle) => {
@@ -53,7 +54,7 @@ Cypress.Commands.add('checkCircle', (state, circle) => {
       .get(`@${circle}`)
       .getBySel('circleTail')
       .each((el, i) => {
-        expect(el).to.contain(state.tail[i]);
+        expect(el).to.contain(state.tail[i] || '');
       });
 
   state.index &&
@@ -61,7 +62,7 @@ Cypress.Commands.add('checkCircle', (state, circle) => {
       .get(`@${circle}`)
       .getBySel('circleIndex')
       .each((el, i) => {
-        expect(el).to.contain(state.index[i].toString());
+        expect(el).to.contain(state.index[i] || '');
       });
 });
 

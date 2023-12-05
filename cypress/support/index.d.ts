@@ -8,6 +8,15 @@ interface FixtureTypes {
   // Add other fixtures here
 }
 
+type CheckButtonState = {
+  button: string,
+  inputs?: {
+    inputName: string,
+    inputValue: string,
+    }[],
+  expectedState: { chainers: string, value?: unknown }
+}
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -29,9 +38,9 @@ declare global {
 
       /**
        * Custom command to check button element disabled/enabled depend on input empty/filled.
-       * @example cy.checkButton({ button: 'addBtn', input: 'input', inputValue: 'a' })
+       * @example cy.checkButtonState({ button: 'addBtn', input: 'input', inputValue: 'a' })
        */
-      checkButton({button, input, inputValue}: {button: string, input: string, inputValue: string}): void
+      checkButtonState({ button, inputs, expectedState }: CheckButtonState): void
 
       /**
        * Custom command to check circle element against of state.
