@@ -2,9 +2,6 @@ name: Cypress Tests
 
 on: [push]
 
-env:
-  DOCKER_IMAGE: 'cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1'
-
 jobs:
   install:
     runs-on: ubuntu-latest
@@ -18,7 +15,7 @@ jobs:
       - name: Cypress install
         uses: cypress-io/github-action@v6
         with:
-          # Disable running of tests within install job
+          # Disable running of tests. Just perform install
           runTests: false
 
       - run: yarn types
@@ -39,13 +36,6 @@ jobs:
       image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
       options: --user 1001
     needs: install
-    # strategy:
-    #   # don't fail the entire matrix on failure
-    #   fail-fast: false
-    #   matrix:
-    #     # run copies of the current job in parallel
-    #     containers: [1, 2]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,9 +49,7 @@ jobs:
       - name: UI test Chrome
         uses: cypress-io/github-action@v6
         with:
-          # Records to Cypress Cloud
-          # record: true
-          # parallel: true
+          config-file: cypress.config.ci.ts
           start: yarn preview
           browser: chrome
           wait-on: 'http://localhost:8080/algososh/'
@@ -69,7 +57,6 @@ jobs:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN:
             ${{ secrets.GITHUB_TOKEN }}
             # pass the project ID from the secrets through environment variable
