@@ -9,8 +9,8 @@ export default defineConfig({
   viewportHeight: 800,
 
   e2e: {
-    baseUrl: 'http://localhost:5173',
-    setupNodeEvents(on, config) {
+    baseUrl: 'http://localhost:8080/algososh/',
+    setupNodeEvents(on) {
       on('file:preprocessor', vitePreprocessor());
     },
   },

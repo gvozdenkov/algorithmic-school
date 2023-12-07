@@ -9,4 +9,10 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
+  preview: {
+    port: 8080,
+  },
+  build: {
+    outDir: 'build',
+  },
 });

@@ -1,11 +1,7 @@
-[shields-fsd-white]:
-  https://img.shields.io/badge/Feature--Sliced-Design?style=for-the-badge&labelColor=262224&color=F2F2F2&logoWidth=10&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAACXBIWXMAAALFAAACxQGJ1n/vAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAA/SURBVHgB7dKxCgAgCIThs/d/51JoNQIdDrxvqMXlR4FmFs92KDIX/wI7JSdDN+eHtkxIycnQvMNW8hN/crsDc5QgGX9NvT0AAAAASUVORK5CYII=
-
-<div align="right">
-
-<a href="">[![Feature-Sliced Design][shields-fsd-white]](https://feature-sliced.design/)</a>
-<a href="">[![algososh](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/19ebuv/month-13%2Fstep-1&style=flat-square&logo=cypress)](https://cloud.cypress.io/projects/19ebuv/runs)</a>
-
+<div align="center">
+  <a href="https://cloud.cypress.io/projects/19ebuv/runs">
+    <img src="https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/19ebuv/develop&style=flat&logo=cypress" />
+  </a>
 </div>
 
 <br />
@@ -40,7 +36,7 @@ your phone and from your TV. The project is written entirely in TypeScript.
 
 ## Tech stack
 
-FSD used - Architectural methodology for frontend projects
+[FSD](https://feature-sliced.design/) used - Architectural methodology for frontend projects
 
 - React with TS
 - SCSS
