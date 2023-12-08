@@ -1,3 +1,4 @@
+import { ROUTE } from '#shared/config';
 import { DELAY_IN_MS, HEAD, TAIL } from '#shared/constants';
 import { CircleState } from 'cypress/support/types';
 
@@ -130,7 +131,7 @@ const removeByIndexState: CircleState[] = [
 ];
 
 beforeEach(() => {
-  cy.visit('/#/list');
+  cy.visit(`/#/${ROUTE.LIST}`);
   cy.getBySel('addHeadBtn').should('be.disabled').as('addHeadBtn');
   cy.getBySel('addTailBtn').should('be.disabled').as('addTailBtn');
   cy.getBySel('removeHeadBtn').should('not.be.disabled').as('removeHeadBtn');
@@ -141,124 +142,168 @@ beforeEach(() => {
   cy.getBySel('inputIndex').should('be.empty').as('inputIndex');
 });
 
-afterEach(() => {
-  cy.get('@inputIndex').clear();
-  cy.get('@inputValue').clear();
-});
+describe('button states', () => {
+  beforeEach(() => {
+    cy.get('@inputValue').clear();
+    cy.get('@inputIndex').clear();
+  });
 
-describe('Buttons disabled & enabled', () => {
-  it('button "Add to Head" enabled w/ input filled', () => {
-    cy.checkButtonState({
-      button: 'addHeadBtn',
-      inputs: [
-        {
-          inputName: 'inputValue',
-          inputValue: 'x',
-        },
-      ],
-      expectedState: { chainers: 'to.be.not.disabled' },
+  describe('button "Add to Head" states', () => {
+    it('disabled when value input is empty', () => {
+      cy.checkButtonState({
+        button: 'addHeadBtn',
+        expectedState: { chainers: 'be.disabled' },
+      });
+    });
+
+    it('enabled when input filled', () => {
+      cy.checkButtonState({
+        button: 'addHeadBtn',
+        inputs: [
+          {
+            inputName: 'inputValue',
+            inputValue: 'x',
+          },
+        ],
+        expectedState: { chainers: 'to.be.not.disabled' },
+      });
     });
   });
 
-  it('button "Add to Tail" enabled w/ input filled', () => {
-    cy.checkButtonState({
-      button: 'addTailBtn',
-      inputs: [
-        {
-          inputName: 'inputValue',
-          inputValue: 'x',
-        },
-      ],
-      expectedState: { chainers: 'to.be.not.disabled' },
+  describe('button "Add to Tail" states', () => {
+    it('disabled when value input is empty', () => {
+      cy.checkButtonState({
+        button: 'addTailBtn',
+        expectedState: { chainers: 'be.disabled' },
+      });
+    });
+
+    it('enabled when input filled', () => {
+      cy.checkButtonState({
+        button: 'addTailBtn',
+        inputs: [
+          {
+            inputName: 'inputValue',
+            inputValue: 'x',
+          },
+        ],
+        expectedState: { chainers: 'to.be.not.disabled' },
+      });
     });
   });
 
-  it('button "Add by Index" enabled w/ input filled', () => {
-    cy.checkButtonState({
-      button: 'addByIndexBtn',
-      inputs: [
-        {
-          inputName: 'inputValue',
-          inputValue: 'x',
-        },
-        {
-          inputName: 'inputIndex',
-          inputValue: '1',
-        },
-      ],
-      expectedState: { chainers: 'to.be.not.disabled' },
+  describe('button "Add by index" states', () => {
+    it('disabled when index input is empty', () => {
+      cy.checkButtonState({
+        button: 'addByIndexBtn',
+        inputs: [
+          {
+            inputName: 'inputValue',
+            inputValue: 'x',
+          },
+        ],
+        expectedState: { chainers: 'be.disabled' },
+      });
+    });
+
+    it('enabled when input filled', () => {
+      cy.checkButtonState({
+        button: 'addByIndexBtn',
+        inputs: [
+          {
+            inputName: 'inputValue',
+            inputValue: 'x',
+          },
+          {
+            inputName: 'inputIndex',
+            inputValue: '1',
+          },
+        ],
+        expectedState: { chainers: 'to.be.not.disabled' },
+      });
     });
   });
 
-  it('button "Remove by Index" enabled w/ input filled', () => {
-    cy.checkButtonState({
-      button: 'removeByIndexBtn',
-      inputs: [
-        {
-          inputName: 'inputIndex',
-          inputValue: '1',
-        },
-      ],
-      expectedState: { chainers: 'to.be.not.disabled' },
+  describe('button "Remove by index" states', () => {
+    it('disabled when index input is empty', () => {
+      cy.checkButtonState({
+        button: 'removeByIndexBtn',
+        expectedState: { chainers: 'be.disabled' },
+      });
+    });
+
+    it('enabled when index input is set', () => {
+      cy.checkButtonState({
+        button: 'removeByIndexBtn',
+        inputs: [
+          {
+            inputName: 'inputIndex',
+            inputValue: '1',
+          },
+        ],
+        expectedState: { chainers: 'to.be.not.disabled' },
+      });
     });
   });
 });
 
-it('Circle initial state', () => {
-  cy.getBySelLike('circle-').as('circles');
-
-  initialState.forEach((state) => {
-    cy.checkCircle(state, 'circles');
-  });
-});
-
-describe('Add to list', () => {
-  it('Add to Head', () => {
+describe('visualization of linked list operations', () => {
+  it('should show default list', () => {
     cy.getBySelLike('circle-').as('circles');
 
-    cy.get('@inputValue').should('be.empty').type('x');
-    cy.get('@addHeadBtn').click();
-    cy.checkAllCircls(addToHeadState, 'circles', DELAY_IN_MS);
+    initialState.forEach((state) => {
+      cy.checkCircle(state, 'circles');
+    });
   });
 
-  it('Add to Tail', () => {
-    cy.getBySelLike('circle-').as('circles');
+  describe('add to list', () => {
+    it('should add to Head w/ animation', () => {
+      cy.getBySelLike('circle-').as('circles');
 
-    cy.get('@inputValue').should('be.empty').type('x');
-    cy.get('@addTailBtn').click();
-    cy.checkAllCircls(addToTailState, 'circles', DELAY_IN_MS);
+      cy.get('@inputValue').should('be.empty').type('x');
+      cy.get('@addHeadBtn').click();
+      cy.checkAllCircls(addToHeadState, 'circles', DELAY_IN_MS);
+    });
+
+    it('should add to Tail w/ animation', () => {
+      cy.getBySelLike('circle-').as('circles');
+
+      cy.get('@inputValue').should('be.empty').type('x');
+      cy.get('@addTailBtn').click();
+      cy.checkAllCircls(addToTailState, 'circles', DELAY_IN_MS);
+    });
+
+    it('sould add by Index w/ animation', () => {
+      cy.getBySelLike('circle-').as('circles');
+
+      cy.get('@inputValue').should('be.empty').type('x');
+      cy.get('@inputIndex').should('be.empty').type('1');
+      cy.get('@addByIndexBtn').click();
+      cy.checkAllCircls(addByIndexState, 'circles', DELAY_IN_MS);
+    });
   });
 
-  it('Add by Index', () => {
-    cy.getBySelLike('circle-').as('circles');
+  describe('remove from list', () => {
+    it('sould remove from Head w/ animation', () => {
+      cy.getBySelLike('circle-').as('circles');
 
-    cy.get('@inputValue').should('be.empty').type('x');
-    cy.get('@inputIndex').should('be.empty').type('1');
-    cy.get('@addByIndexBtn').click();
-    cy.checkAllCircls(addByIndexState, 'circles', DELAY_IN_MS);
-  });
-});
+      cy.get('@removeHeadBtn').click();
+      cy.checkAllCircls(removeFromHeadState, 'circles', DELAY_IN_MS);
+    });
 
-describe('Remove from list', () => {
-  it('Remove from Head', () => {
-    cy.getBySelLike('circle-').as('circles');
+    it('should remove from Tail w/ animation', () => {
+      cy.getBySelLike('circle-').as('circles');
 
-    cy.get('@removeHeadBtn').click();
-    cy.checkAllCircls(removeFromHeadState, 'circles', DELAY_IN_MS);
-  });
+      cy.get('@removeTailBtn').click();
+      cy.checkAllCircls(removeFromTailState, 'circles', DELAY_IN_MS);
+    });
 
-  it('Remove from Tail', () => {
-    cy.getBySelLike('circle-').as('circles');
+    it('should remove by Index w/ animation', () => {
+      cy.getBySelLike('circle-').as('circles');
 
-    cy.get('@removeTailBtn').click();
-    cy.checkAllCircls(removeFromTailState, 'circles', DELAY_IN_MS);
-  });
-
-  it('Remove by Index', () => {
-    cy.getBySelLike('circle-').as('circles');
-
-    cy.get('@inputIndex').should('be.empty').type(byIndex.toString());
-    cy.get('@removeByIndexBtn').click();
-    cy.checkAllCircls(removeByIndexState, 'circles', DELAY_IN_MS);
+      cy.get('@inputIndex').should('be.empty').type(byIndex.toString());
+      cy.get('@removeByIndexBtn').click();
+      cy.checkAllCircls(removeByIndexState, 'circles', DELAY_IN_MS);
+    });
   });
 });

@@ -37,7 +37,13 @@ declare global {
       getBySelLike(value: string): Chainable<JQuery<HTMLElement>>;
 
       /**
-       * Custom command to check button element disabled/enabled depend on input empty/filled.
+       * Custom command to check button element disabled/enabled depend on array of inputs empty/filled.
+       * @param {Object} config - config to test button acording inputs content
+       * @param {string} iconfig.button - button alias without @
+       * @param {Object[]} iconfig.inputs - an optional array of objects describing the state of inputs
+       * @param {string} iconfig.inputs.inputName - input alias without @
+       * @param {string} iconfig.inputs.inputValue - the value that will be typed in the input
+       * @param {string} iconfig.expectedState - exprected state of the button in format of cypress `.should()` method
        * @example cy.checkButtonState({ button: 'addBtn', input: 'input', inputValue: 'a' })
        */
       checkButtonState({ button, inputs, expectedState }: CheckButtonState): void

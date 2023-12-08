@@ -1,3 +1,4 @@
+import { ROUTE } from '#shared/config';
 import { SHORT_DELAY_IN_MS } from '#shared/constants';
 import { CircleState } from 'cypress/support/types';
 
@@ -29,40 +30,50 @@ const states: CircleState[] = [
 ];
 
 beforeEach(() => {
-  cy.visit('/#/fibonacci');
+  cy.visit(`/#/${ROUTE.FIBONACCI}`);
   cy.getBySel('button').as('button');
   cy.getBySel('input').should('be.empty').as('input');
 });
 
-afterEach(() => {
-  cy.get('@input').clear();
-  cy.get('@input').should('be.empty');
-});
+describe('button state', () => {
+  beforeEach(() => {
+    cy.get('@input').clear();
+  });
 
-it('Button disabled w/ empty input & vice versa', () => {
-  cy.checkButtonState({
-    button: 'button',
-    inputs: [
-      {
-        inputName: 'input',
-        inputValue: '5',
-      },
-    ],
-    expectedState: { chainers: 'to.be.not.disabled' },
+  it('should be disabled for empty input', () => {
+    cy.checkButtonState({
+      button: 'button',
+      expectedState: { chainers: 'be.disabled' },
+    });
+  });
+
+  it('should be enabled if the input not empty', () => {
+    cy.checkButtonState({
+      button: 'button',
+      inputs: [
+        {
+          inputName: 'input',
+          inputValue: '5',
+        },
+      ],
+      expectedState: { chainers: 'to.be.not.disabled' },
+    });
   });
 });
 
-it('Visual correct', () => {
-  const number = 5;
+describe('visualization of the algorithm', () => {
+  it('should display correct circles and color states', () => {
+    const number = 4;
 
-  cy.get('@input').type(number.toString());
-  cy.get('@button').click();
-  cy.getBySelLike('circle-').as('circles');
+    cy.get('@input').type(number.toString());
+    cy.get('@button').click();
+    cy.getBySelLike('circle-').as('circles');
 
-  states.forEach((state) => {
-    cy.checkCircle(state, 'circles');
-    cy.wait(SHORT_DELAY_IN_MS);
+    states.forEach((state) => {
+      cy.checkCircle(state, 'circles');
+      cy.wait(SHORT_DELAY_IN_MS);
+    });
+
+    cy.get('@circles').should('have.length', number + 1);
   });
-
-  cy.get('@circles').should('have.length', number + 1);
 });
