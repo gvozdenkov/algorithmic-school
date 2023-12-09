@@ -11,8 +11,8 @@ import { ProcessingAction } from '#shared/types';
 import { QueueClass, setHead, setState, setTail } from './lib';
 import s from './queue-page.module.scss';
 
-const maxQueueSize = 8;
-const initialQueue: string[] = [...Array(maxQueueSize)];
+const maxQueueSize = 7;
+const initialQueue: string[] = [...Array<string>(maxQueueSize)];
 
 export type ProcessingQueueAction = Extract<
   ProcessingAction,
@@ -51,7 +51,7 @@ export const QueuePage = () => {
     setInputFocus();
   };
 
-  const handlePush = async (e: FormEvent<HTMLFormElement>) => {
+  const handlePush = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setProcessingAction('addToTail');
 
@@ -81,7 +81,7 @@ export const QueuePage = () => {
 
   return (
     <SolutionLayout title='Очередь'>
-      <form className={s.form} onSubmit={handlePush}>
+      <form className={s.form} onSubmit={(e) => void handlePush(e)}>
         <Input
           value={inputValue}
           maxLength={4}
@@ -92,40 +92,43 @@ export const QueuePage = () => {
           autoComplete='off'
           ref={inputRef}
           autoFocus
+          data-test='input'
         />
         <Button
+          type='submit'
           text='Добавить'
           isLoader={processingAction === 'addToTail'}
           disabled={isButtonAddDisabled}
-          type='submit'
-          extraClass='ml-6'
+          extraClass={s.addBtn}
+          data-test='add-btn'
         />
         <Button
           text='Удалить'
-          onClick={handlePop}
+          onClick={() => void handlePop()}
           isLoader={processingAction === 'removeFromHead'}
           disabled={isButtonDeleteDisabled}
-          type='button'
-          extraClass='ml-6'
+          extraClass={s.deleteBtn}
+          data-test='remove-btn'
         />
         <Button
           text='Очистить'
           onClick={handleClear}
           disabled={isButtonDeleteDisabled}
-          type='button'
-          extraClass='ml-auto'
+          extraClass={s.clearBtn}
+          data-test='clear-btn'
         />
       </form>
       {
-        <ul className={clsx(s.resultList, 'mt-24')}>
+        <ul className={clsx(s.resultList)}>
           {queue.map((elem, i) => (
-            <li className={s.resultList__item} key={i}>
+            <li key={i}>
               <Circle
                 letter={elem}
                 index={i}
                 state={setQueueState(processingAction, i)}
                 head={setQueueHead(i)}
                 tail={setQueueTail(i)}
+                data-test={`circle-${i}`}
               />
             </li>
           ))}

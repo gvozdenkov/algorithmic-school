@@ -1,17 +1,20 @@
-import React from 'react';
-import styles from './circle.module.scss';
+import { HTMLProps, ReactElement } from 'react';
+import clsx from 'clsx';
+
 import { ElementState } from '#shared/types';
 
-interface CircleProps {
+import s from './circle.module.scss';
+
+type CircleProps = HTMLProps<HTMLDivElement> & {
   state?: ElementState;
   letter?: string;
-  head?: string | React.ReactElement | null | false;
+  head?: string | ReactElement | null | false;
   index?: number;
-  tail?: string | React.ReactElement | null | false;
+  tail?: string | ReactElement | null | false;
   tailType?: 'string' | 'element';
   extraClass?: string;
   isSmall?: boolean;
-}
+};
 
 export const Circle = ({
   state = 'default',
@@ -21,26 +24,42 @@ export const Circle = ({
   tail,
   extraClass = '',
   isSmall,
+  ...rest
 }: CircleProps) => {
   return (
-    <div className={`${styles.content} ${extraClass}`}>
+    <div className={clsx(s.circle, { [extraClass]: !!extraClass })} {...rest}>
       <div
-        className={`text text_type_input text_color_input mb-4 ${styles.absolute} ${styles.head} ${
-          styles[typeof head === 'string' ? 'string' : 'element']
-        }`}>
+        className={clsx(
+          'text mb-4',
+          {
+            [s.circle__head_type_string]: typeof head === 'string',
+          },
+          {
+            [s.circle__head_type_element]: typeof head !== 'string',
+          },
+        )}
+        data-test='circleHead'>
         {head}
       </div>
-      <div className={`${styles.circle}  ${isSmall ? styles.small : ''} ${styles[state]}`}>
-        <p className={`text text_type_circle text_color_input ${styles.letter}`}>{letter}</p>
+      <div
+        className={clsx(s[`circle__shape_state_${state}`], {
+          [s.circle__shape_small]: isSmall,
+        })}
+        data-test='circleShape'>
+        <p className={clsx('text', s.circle__text)} data-test='circleText'>
+          {letter}
+        </p>
       </div>
-      <p
-        className={`text text_type_input text_color_input mt-4 ${styles.absolute} ${styles.index}`}>
+      <p className={clsx('text mt-4', s.circle__index)} data-test='circleIndex'>
         {index?.toString()}
       </p>
       <div
-        className={`text text_type_input text_color_input mt-4 ${styles.absolute} ${
-          index?.toString() ? styles.tail60 : styles.tail30
-        } ${styles[typeof tail === 'string' ? 'string' : 'element']}`}>
+        className={clsx(
+          'text mt-4',
+          { [s.circle__tail_type_string]: typeof tail === 'string' },
+          { [s.circle__tail_type_element]: typeof tail !== 'string' },
+        )}
+        data-test='circleTail'>
         {tail}
       </div>
     </div>

@@ -41,7 +41,7 @@ export function LinkedList<T>(): LinkedListReturn<T> {
   const findNodeByIndex = (index: number): Node<T> | undefined => {
     if (!head || !tail || index < 0 || index > size) return undefined;
 
-    let findNode: Node<T> = head!;
+    let findNode: Node<T> = head;
     let findIndex = 0;
 
     while (findIndex < index) {

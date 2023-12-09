@@ -1,0 +1,20 @@
+{
+  "roots": ["<rootDir>/src"],
+  "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts", "!src/mocks/**"],
+  "coveragePathIgnorePatterns": [],
+  "setupFilesAfterEnv": ["./jest/setupTests.js"],
+  "testEnvironment": "jsdom",
+  "modulePaths": ["<rootDir>/src"],
+  "transform": {
+    "^.+\\.(ts|js|tsx|jsx)$": "@swc/jest",
+    "^.+\\.css$": "<rootDir>/jest/cssTransform.js",
+    "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/jest/fileTransform.js"
+  },
+  "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$"],
+  "moduleNameMapper": {
+    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+  },
+  "moduleFileExtensions": ["tsx", "ts", "js", "json", "jsx"],
+  "watchPlugins": ["jest-watch-typeahead/filename", "jest-watch-typeahead/testname"],
+  "resetMocks": true
+}

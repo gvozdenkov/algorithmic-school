@@ -45,7 +45,7 @@ export const FibonacciPage = () => {
 
   return (
     <SolutionLayout title='Последовательность Фибоначчи'>
-      <form className={s.form} onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={(e) => void handleSubmit(e)}>
         <Input
           type='number'
           placeholder='Введите число'
@@ -57,19 +57,26 @@ export const FibonacciPage = () => {
           disabled={isProcessing}
           ref={inputValueRef}
           autoFocus
+          data-test='input'
         />
         <Button
           text='Рассчитать'
           type='submit'
           isLoader={isProcessing}
           disabled={isButtonDisabled}
+          data-test='button'
         />
       </form>
       {showResult && (
         <ul className={clsx(s.resultList, 'mt-24')}>
           {fibArray.map((letter, i) => (
             <li className={s.resultList__item} key={i}>
-              <Circle state='default' letter={letter.toString()} index={i} />
+              <Circle
+                state='default'
+                letter={letter.toString()}
+                index={i}
+                data-test={`circle-${i}`}
+              />
             </li>
           ))}
         </ul>

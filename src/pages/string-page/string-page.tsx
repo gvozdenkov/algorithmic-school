@@ -47,7 +47,7 @@ export const StringComponent = () => {
 
   return (
     <SolutionLayout title='Строка'>
-      <form className={s.form} onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={(e) => void handleSubmit(e)}>
         <Input
           value={inputValue}
           maxLength={11}
@@ -57,19 +57,21 @@ export const StringComponent = () => {
           disabled={isProcessing}
           autoFocus
           ref={inputRef}
+          data-test='input'
         />
         <Button
           text='Развернуть'
           type='submit'
           isLoader={isProcessing}
           disabled={isProcessing || !inputValue}
+          data-test='button'
         />
       </form>
       {showResult && (
-        <ul className={clsx(s.result__list, 'mt-24')}>
+        <ul className={clsx(s.resultList, 'mt-24')}>
           {stringArr.map((letter, i) => (
-            <li className={s.result__listItem} key={i}>
-              <Circle state={state[i]} letter={letter} />
+            <li className={s.resultList__item} key={i} role='presentation'>
+              <Circle state={state[i]} letter={letter} data-test={`circle-${i}`} />
             </li>
           ))}
         </ul>

@@ -5,4 +5,14 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/algososh/',
+  server: {
+    host: true,
+    port: 5173,
+  },
+  preview: {
+    port: 8080,
+  },
+  build: {
+    outDir: 'build',
+  },
 });

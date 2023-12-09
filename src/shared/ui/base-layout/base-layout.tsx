@@ -10,7 +10,9 @@ export const BaseLayout = () => {
       <header className={s.header}>
         <div className={s.logo}>
           <img className={s.logo__image} src={logo} />
-          <h1 className={clsx(`text text_type_md text_color_gradient`, s.logo__title)}>
+          <h1
+            className={clsx(`text text_type_md text_color_gradient`, s.logo__title)}
+            data-test='h1-title'>
             Fibonacci Algorithmic School
           </h1>
         </div>

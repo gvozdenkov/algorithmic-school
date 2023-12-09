@@ -55,6 +55,9 @@
   --gutter: 20px;
 
   --border-radius: 20px;
+
+  --circle-radius: 80px;
+  --circle-border: 4px;
 }
 
 @include laptop {
@@ -68,6 +71,16 @@
   :root {
     --gutter: 10px;
     --border-radius: 10px;
+    --common-border-radius: 8px;
+  }
+}
+
+@include mobile {
+  :root {
+    --circle-radius: 55px;
+    --circle-border: 3px;
+
+     --common-border-radius: 6px;
   }
 }
 
@@ -96,6 +109,19 @@ li {
 
 a {
   text-decoration: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 /* Typography classes */
@@ -219,22 +245,6 @@ a {
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
-}
-
-.text_type_circle {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-}
-
-.text_type_column {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 16px;
 }
 
 .text_type_fibonacci {

@@ -12,32 +12,32 @@ export type MenuCard = {
 export const menuList: MenuCard[] = [
   {
     image: 'string',
-    route: '/recursion',
+    route: 'recursion',
     title: 'String',
   },
   {
     image: 'fibonacci',
-    route: '/fibonacci',
+    route: 'fibonacci',
     title: 'Fibonacci',
   },
   {
     image: 'sorting',
-    route: '/sorting',
+    route: 'sorting',
     title: 'Array sorting',
   },
   {
     image: 'stack',
-    route: '/stack',
+    route: 'stack',
     title: 'Stack',
   },
   {
     image: 'queue',
-    route: '/queue',
+    route: 'queue',
     title: 'Queue',
   },
   {
     image: 'linked-list',
-    route: '/list',
+    route: 'list',
     title: 'Linked list',
   },
 ];

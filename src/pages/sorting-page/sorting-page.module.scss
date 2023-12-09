@@ -1,30 +1,73 @@
 .form {
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
   align-items: center;
-  margin: 0 auto;
-  // max-width: 924px;
-  // width: 100%;
-
-  &__button {
-    // flex: 1 1 204px;
-  }
+  justify-content: center;
+  grid-template:
+    'selection . bubble . asc . desc . newArr'
+    / auto minmax(12px, 40px) auto minmax(12px, 1fr) max-content minmax(8px, 12px) max-content minmax(
+      12px,
+      1fr
+    )
+    max-content;
+  margin-inline: auto;
+  max-width: 980px;
+  width: 100%;
 }
 
 .resultList {
-  display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 48px 16px;
+  display: grid;
+  align-items: end;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  gap: max(1vw, 4px);
+  width: 100%;
+  max-width: 980px;
   padding: 0;
   box-sizing: border-box;
   height: 340px;
-
-  &__item {
-    list-style-type: none;
-  }
 }
 
 .circle_invisible {
   opacity: 0;
+}
+
+.selectionRadio {
+  grid-area: selection;
+}
+
+.bubbleRadio {
+  grid-area: bubble;
+}
+
+.ascBtn {
+  grid-area: asc;
+}
+
+.descBtn {
+  grid-area: desc;
+}
+
+.newArrBtn {
+  grid-area: newArr;
+}
+
+@media (max-width: 840px) {
+  .form {
+    gap: max(5vw, 8px);
+    grid-template:
+      'selection asc'
+      'bubble desc'
+      'newArr newArr'
+      / max-content auto max-content;
+  }
+}
+
+@media (max-width: 400px) {
+  .form {
+    grid-template:
+      'selection bubble'
+      'asc asc'
+      'desc desc'
+      'newArr newArr'
+      / 1fr;
+  }
 }

@@ -1,18 +1,19 @@
 import { ElementState } from '#shared/types';
-import styles from './column.module.scss';
+import clsx from 'clsx';
+import s from './column.module.scss';
 
-interface ColumnProps {
+type ColumnProps = {
   index: number;
   state?: ElementState;
   extraClass?: string;
-}
+};
 
 export const Column = ({ index, state = 'default', extraClass = '' }: ColumnProps) => (
-  <div className={`${styles.content} ${extraClass}`}>
+  <div className={clsx(s.content, { [extraClass]: !!extraClass })}>
     <div
-      className={`${styles.column} ${styles[state]}`}
+      className={clsx(s.column, s[`column__state_${state}`])}
       style={{ height: (320 * index) / 100 || 1 }}
     />
-    <p className={`text text_type_column text_color_input mt-3`}>{index}</p>
+    <p className={clsx('text text_color_input mt-3', s.column__index)}>{index}</p>
   </div>
 );

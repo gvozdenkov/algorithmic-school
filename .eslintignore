@@ -1,2 +1,5 @@
 node_modules
 /tests
+jest.config.cts
+cypress.config.ts
+cypress.config.ci.ts

@@ -14,7 +14,7 @@ import s from './list-page.module.scss';
 const maxListLength = 8;
 const initialListLength = 4;
 
-const initialList: string[] = [...Array(initialListLength)].map((_, i) => i.toString());
+const initialList: string[] = [...Array<string>(initialListLength)].map((_, i) => i.toString());
 
 export const ListPage = () => {
   const [inputValue, setInputValue] = useState('');
@@ -59,7 +59,7 @@ export const ListPage = () => {
     }
   };
 
-  const setFinalStageAnimation = async (stage: ProcessingAction | null): Promise<void> => {
+  const setFinalStageAnimation = (stage: ProcessingAction | null) => {
     setProcessingAction('final');
     setFinalStage(stage);
   };
@@ -86,7 +86,7 @@ export const ListPage = () => {
     LinkList.append(inputValue);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('addToTail');
+    setFinalStageAnimation('addToTail');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -101,7 +101,7 @@ export const ListPage = () => {
     LinkList.prepend(inputValue);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('addToHead');
+    setFinalStageAnimation('addToHead');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -116,7 +116,7 @@ export const ListPage = () => {
     LinkList.removeHead();
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('removeFromHead');
+    setFinalStageAnimation('removeFromHead');
 
     resetStates();
     setInputIndexFocus();
@@ -130,7 +130,7 @@ export const ListPage = () => {
     LinkList.removeTail();
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('removeFromTail');
+    setFinalStageAnimation('removeFromTail');
 
     resetStates();
     setInputIndexFocus();
@@ -149,7 +149,7 @@ export const ListPage = () => {
     LinkList.removeAt(inputIndex);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('removeByIndex');
+    setFinalStageAnimation('removeByIndex');
     await sleep(DELAY_IN_MS);
 
     resetStates();
@@ -164,14 +164,16 @@ export const ListPage = () => {
     LinkList.insertAt(inputIndex, inputValue);
     setList(LinkList.toArray());
 
-    await setFinalStageAnimation('addByIndex');
+    setFinalStageAnimation('addByIndex');
     await sleep(DELAY_IN_MS);
 
     resetStates();
     setInputValueFocus();
   };
 
-  const InsertedElement = (value: string) => <Circle letter={value} state='changing' isSmall />;
+  const InsertedElement = (value: string, testName?: string) => (
+    <Circle letter={value} state='changing' isSmall data-test={`circle-${testName}`} />
+  );
 
   const colorState = (i: number): ElementState => {
     // add to tail
@@ -243,7 +245,7 @@ export const ListPage = () => {
       processingIndex !== null &&
       i === processingIndex
     )
-      return InsertedElement(list[inputIndex]);
+      return InsertedElement(list[inputIndex], 'tail');
 
     if (i === listLength - 1) return TAIL;
 
@@ -266,7 +268,7 @@ export const ListPage = () => {
       processingIndex !== null &&
       i === processingIndex
     )
-      return InsertedElement(inputValue);
+      return InsertedElement(inputValue, 'head');
 
     if (finalStage === 'addByIndex' && processingAction === 'final' && i !== 0) return '';
 
@@ -276,52 +278,57 @@ export const ListPage = () => {
   return (
     <SolutionLayout title='Связный список'>
       <form className={s.form}>
-        <fieldset className={s.form__fieldset} disabled={isProcessing}>
+        <fieldset
+          className={clsx(s.form__fieldset, s.form__fieldset_type_byValue)}
+          disabled={isProcessing}>
           <Input
             value={inputValue}
             maxLength={4}
             isLimitText
             onChange={handleChangeValue}
             disabled={processingAction !== 'idle'}
-            extraClass={s.form__input}
+            extraClass={clsx(s.form__input, s.inputValue)}
             autoComplete='off'
             autoFocus
             ref={inputValueRef}
+            data-test='inputValue'
           />
           <Button
             text='Добавить в head'
             isLoader={processingAction === 'addToHead'}
             disabled={isAddButtonDisabled}
-            type='button'
-            onClick={handlePrepend}
-            extraClass={clsx(s.form__button)}
+            onClick={() => void handlePrepend()}
+            extraClass={clsx(s.addToHead)}
+            data-test='addHeadBtn'
           />
           <Button
             text='Добавить в tail'
             isLoader={processingAction === 'addToTail'}
             disabled={isAddButtonDisabled}
-            onClick={handleAppend}
-            type='button'
-            extraClass={clsx(s.form__button)}
+            onClick={() => void handleAppend()}
+            extraClass={clsx(s.addToTail)}
+            data-test='addTailBtn'
           />
           <Button
             text='Удалить из head'
             isLoader={processingAction === 'removeFromHead'}
-            onClick={handleDeleteHead}
+            onClick={() => void handleDeleteHead()}
             disabled={isRemoveButtonDisabled}
-            type='button'
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.removeFromHead)}
+            data-test='removeHeadBtn'
           />
           <Button
             text='Удалить из tail'
             isLoader={processingAction === 'removeFromTail'}
-            onClick={handleDeleteTail}
+            onClick={() => void handleDeleteTail()}
             disabled={isRemoveButtonDisabled}
-            type='button'
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.removeFromTail)}
+            data-test='removeTailBtn'
           />
         </fieldset>
-        <fieldset className={s.form__fieldset} disabled={isProcessing}>
+        <fieldset
+          className={clsx(s.form__fieldset, s.form__fieldset_type_byIndex)}
+          disabled={isProcessing}>
           <Input
             type='number'
             placeholder='Введите индекс'
@@ -332,26 +339,27 @@ export const ListPage = () => {
             isLimitText
             onChange={handleChangeIndex}
             disabled={processingAction !== 'idle'}
-            extraClass={s.form__input}
+            extraClass={clsx(s.form__input, s.inputIndex)}
             autoComplete='off'
             autoFocus
             ref={inputIndexRef}
+            data-test='inputIndex'
           />
           <Button
             text='Добавить по индексу'
             isLoader={processingAction === 'addByIndex'}
             disabled={isAddByIndexButtonDisabled}
-            onClick={handleInsertAt}
-            type='submit'
-            extraClass={clsx(s.form__button)}
+            onClick={() => void handleInsertAt()}
+            extraClass={clsx(s.addByIndex)}
+            data-test='addByIndexBtn'
           />
           <Button
             text='Удалить по индексу'
             isLoader={processingAction === 'removeByIndex'}
-            onClick={handleRemoveAt}
+            onClick={() => void handleRemoveAt()}
             disabled={isRemoveByIndexButtonDisabled}
-            type='button'
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.removeByIndex)}
+            data-test='removeByIndexBtn'
           />
         </fieldset>
       </form>
@@ -373,6 +381,7 @@ export const ListPage = () => {
                     { [s.circle_first]: i === 0 },
                     { [s.circle_last]: i === lastIndex },
                   )}
+                  data-test={`circle-${i}`}
                 />
                 {i < lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
               </li>

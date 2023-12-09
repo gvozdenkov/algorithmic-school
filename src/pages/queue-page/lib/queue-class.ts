@@ -3,7 +3,7 @@ import { Queue as QueueClass } from '.';
 export class Queue<T> implements QueueClass<T> {
   constructor(size: number) {
     this.size = size;
-    this.queue = [...Array(size)];
+    this.queue = [...Array<undefined>(size)];
   }
 
   private head = 0;
@@ -52,7 +52,7 @@ export class Queue<T> implements QueueClass<T> {
   getQueue = (): (T | undefined)[] => this.queue;
 
   clearQueue = (): void => {
-    this.queue = [...Array(this.size)];
+    this.queue = [...Array<undefined>(this.size)];
     this.head = 0;
     this.tail = -1;
     this.length = 0;

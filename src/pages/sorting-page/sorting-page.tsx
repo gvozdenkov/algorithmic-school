@@ -13,9 +13,9 @@ import s from './sorting-page.module.scss';
 type SortMethod = 'selectionSort' | 'bubbleSort';
 type SortingState = 'idle' | 'processing' | 'finished';
 
-const minArrLen = 5;
+const minArrLen = 17;
 const maxArrLen = 17;
-const maxValue = 60;
+const maxValue = 100;
 
 const randomArr = () => {
   const arrLength = randomIntFromInterval(minArrLen, maxArrLen);
@@ -87,6 +87,7 @@ export const SortingPage = () => {
           checked={sortMethod === 'selectionSort'}
           onChange={handleSetSortMethod}
           disabled={isProcessing}
+          extraClass={s.selectionRadio}
         />
         <RadioInput
           label='Пузырёк'
@@ -94,35 +95,35 @@ export const SortingPage = () => {
           value='bubbleSort'
           checked={sortMethod === 'bubbleSort'}
           onChange={handleSetSortMethod}
-          extraClass='ml-20'
           disabled={isProcessing}
+          extraClass={s.bubbleRadio}
         />
         <Button
           text='По возрастанию'
           sorting='asc'
           value='asc'
-          onClick={handleSorting}
+          onClick={(e) => void handleSorting(e)}
           type='button'
           isLoader={isProcessing && sortDirection === 'asc'}
           disabled={isProcessing}
-          extraClass={clsx('ml-40', s.form__button)}
+          extraClass={clsx(s.ascBtn, s.form__button)}
         />
         <Button
           text='По убыванию'
           sorting='desc'
           value='desc'
-          onClick={handleSorting}
+          onClick={(e) => void handleSorting(e)}
           type='button'
           isLoader={isProcessing && sortDirection === 'desc'}
           disabled={isProcessing}
-          extraClass={clsx('ml-6', s.form__button)}
+          extraClass={clsx(s.descBtn, s.form__button)}
         />
         <Button
           text='Новый массив'
           type='button'
           onClick={handleNewRandomArr}
           disabled={isProcessing}
-          extraClass={clsx('ml-40', s.form__button)}
+          extraClass={clsx(s.newArrBtn, s.form__button)}
         />
       </form>
       <ul className={clsx(s.resultList, 'mt-24')}>

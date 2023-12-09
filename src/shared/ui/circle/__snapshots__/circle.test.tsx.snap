@@ -1,0 +1,373 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Circle ui state: changing 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_changing"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui state: default 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui state: modified 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_modified"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui with element in head 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  >
+    <div
+      className="circle"
+    >
+      <div
+        className="text mb-4 circle__head_type_element"
+        data-test="circleHead"
+      />
+      <div
+        className="circle__shape_state_default"
+        data-test="circleShape"
+      >
+        <p
+          className="text circle__text"
+          data-test="circleText"
+        >
+          a
+        </p>
+      </div>
+      <p
+        className="text mt-4 circle__index"
+        data-test="circleIndex"
+      />
+      <div
+        className="text mt-4 circle__tail_type_element"
+        data-test="circleTail"
+      />
+    </div>
+  </div>
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui with element in tail 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  >
+    <div
+      className="circle"
+    >
+      <div
+        className="text mb-4 circle__head_type_element"
+        data-test="circleHead"
+      />
+      <div
+        className="circle__shape_state_default"
+        data-test="circleShape"
+      >
+        <p
+          className="text circle__text"
+          data-test="circleText"
+        >
+          a
+        </p>
+      </div>
+      <p
+        className="text mt-4 circle__index"
+        data-test="circleIndex"
+      />
+      <div
+        className="text mt-4 circle__tail_type_element"
+        data-test="circleTail"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Circle ui with head 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_string"
+    data-test="circleHead"
+  >
+    head
+  </div>
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui with index 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  >
+    1
+  </p>
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui with isSmall prop 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default circle__shape_small"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui with tail 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_string"
+    data-test="circleTail"
+  >
+    tail
+  </div>
+</div>
+`;
+
+exports[`Circle ui with text 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    >
+      a
+    </p>
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
+
+exports[`Circle ui without text 1`] = `
+<div
+  className="circle"
+>
+  <div
+    className="text mb-4 circle__head_type_element"
+    data-test="circleHead"
+  />
+  <div
+    className="circle__shape_state_default"
+    data-test="circleShape"
+  >
+    <p
+      className="text circle__text"
+      data-test="circleText"
+    />
+  </div>
+  <p
+    className="text mt-4 circle__index"
+    data-test="circleIndex"
+  />
+  <div
+    className="text mt-4 circle__tail_type_element"
+    data-test="circleTail"
+  />
+</div>
+`;
