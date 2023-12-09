@@ -1,3 +1,5 @@
+@use '#shared/styles/media-bp-mixins.scss' as *;
+
 .form {
   display: flex;
   flex-flow: column nowrap;
@@ -8,20 +10,37 @@
   width: 100%;
 
   &__fieldset {
-    display: flex;
-    flex-flow: row wrap;
-    gap: 12px;
     border: none;
     margin: 0;
     padding: 0;
+
+    &_type {
+      &_byValue {
+        display: grid;
+        align-items: start;
+        justify-content: center;
+        grid-template:
+          'inputValue . addToHead . addToTail . removeFromHead . removeFromTail'
+          / auto minmax(8px, 1fr) max-content minmax(8px, 1fr) max-content minmax(8px, 1fr) max-content minmax(
+            8px,
+            1fr
+          )
+          max-content;
+      }
+
+      &_byIndex {
+        display: grid;
+        align-items: start;
+        justify-content: center;
+        grid-template:
+          'inputIndex . addByIndex . removeByIndex'
+          / auto 8px minmax(200px, 1fr) 8px minmax(200px, 1fr);
+      }
+    }
   }
 
   &__input {
-    flex: 1 1 204px;
-  }
-
-  &__button {
-    flex: 1 0 auto;
+    width: 100%;
   }
 }
 
@@ -45,10 +64,126 @@
   padding: 0;
   margin: 0;
   margin-top: 90px;
+
+  &__item {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+  }
 }
 
-.resultList__item {
-  list-style-type: none;
-  display: flex;
-  align-items: center;
+.inputValue {
+  grid-area: inputValue;
+}
+
+.inputIndex {
+  grid-area: inputIndex;
+}
+
+.addToHead {
+  grid-area: addToHead;
+}
+
+.addToTail {
+  grid-area: addToTail;
+}
+
+.removeFromHead {
+  grid-area: removeFromHead;
+}
+
+.removeFromTail {
+  grid-area: removeFromTail;
+}
+
+.addByIndex {
+  grid-area: addByIndex;
+}
+
+.removeByIndex {
+  grid-area: removeByIndex;
+}
+
+@include laptop() {
+  .form {
+    gap: 36px;
+
+    &__fieldset {
+      &_type {
+        &_byValue {
+          display: grid;
+          justify-content: center;
+          grid-template:
+            'inputValue inputValue inputValue'
+            '. . .' 16px
+            'addToHead . addToTail'
+            '. . .' 8px
+            'removeFromHead . removeFromTail'
+            / 1fr 8px 1fr;
+        }
+
+        &_byIndex {
+          display: grid;
+          justify-content: center;
+          grid-template:
+            'inputIndex . addByIndex . removeByIndex'
+            / auto 8px minmax(200px, 1fr) 8px minmax(200px, 1fr);
+        }
+      }
+    }
+  }
+}
+
+@include tablet() {
+  .form {
+    gap: 26px;
+
+    &__fieldset {
+      &_type {
+        &_byValue {
+          display: grid;
+          justify-content: center;
+          grid-template:
+            'inputValue inputValue inputValue'
+            '. . .' 8px
+            'addToHead . addToTail'
+            '. . .' 8px
+            'removeFromHead . removeFromTail'
+            / 1fr 8px 1fr;
+        }
+
+        &_byIndex {
+          display: grid;
+          justify-content: center;
+          grid-template:
+            'inputIndex inputIndex inputIndex'
+            '. . .' 8px
+            'addByIndex . removeByIndex'
+            / 1fr 8px 1fr;
+        }
+      }
+    }
+  }
+}
+
+@include mobile() {
+  .form {
+    gap: 26px;
+
+    &__fieldset {
+      &_type {
+        &_byValue {
+          align-items: unset;
+        }
+
+        &_byIndex {
+          align-items: unset;
+        }
+      }
+    }
+  }
+
+  .resultList {
+    margin-block-end: 60px;
+  }
 }

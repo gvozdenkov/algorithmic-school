@@ -1,3 +1,5 @@
+@use '#shared/styles/media-bp-mixins.scss' as *;
+
 .form {
   display: flex;
   gap: 12px;
@@ -8,7 +10,7 @@
 .resultList {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  margin-inline: auto;
   gap: 48px 16px;
   padding: 0;
 
@@ -20,4 +22,11 @@
 
 .circle_invisible {
   opacity: 0;
+}
+
+@include mobile() {
+  .form {
+    flex-flow: column;
+    min-width: 100%;
+  }
 }

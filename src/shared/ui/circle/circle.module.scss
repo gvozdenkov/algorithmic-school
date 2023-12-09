@@ -1,4 +1,4 @@
-$circleDiametr: 80px;
+@use '#shared/styles/media-bp-mixins.scss' as *;
 
 .circle {
   position: relative;
@@ -18,7 +18,7 @@ $circleDiametr: 80px;
 
   &__shape {
     aspect-ratio: 1;
-    width: $circleDiametr;
+    width: var(--circle-radius);
     border-radius: 50%;
     box-sizing: border-box;
     display: flex;
@@ -27,22 +27,22 @@ $circleDiametr: 80px;
 
     &_small {
       @extend .circle__shape;
-      width: calc($circleDiametr * 0.7);
+      width: calc(var(--circle-radius) * 0.7);
     }
 
     &_state_default {
       @extend .circle__shape;
-      border: 4px solid var(--default-color);
+      border: var(--circle-border) solid var(--default-color);
     }
 
     &_state_changing {
       @extend .circle__shape;
-      border: 4px solid var(--changing-color);
+      border: var(--circle-border) solid var(--changing-color);
     }
 
     &_state_modified {
       @extend .circle__shape;
-      border: 4px solid var(--modified-color);
+      border: var(--circle-border) solid var(--modified-color);
     }
   }
 
@@ -89,4 +89,15 @@ $circleDiametr: 80px;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
+}
+
+@include mobile() {
+  .circle {
+    &__text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      text-transform: uppercase;
+    }
+  }
 }

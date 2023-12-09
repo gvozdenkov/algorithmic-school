@@ -95,11 +95,11 @@ export const QueuePage = () => {
           data-test='input'
         />
         <Button
+          type='submit'
           text='Добавить'
           isLoader={processingAction === 'addToTail'}
           disabled={isButtonAddDisabled}
-          type='submit'
-          extraClass='ml-6'
+          extraClass={s.addBtn}
           data-test='add-btn'
         />
         <Button
@@ -107,23 +107,21 @@ export const QueuePage = () => {
           onClick={() => void handlePop()}
           isLoader={processingAction === 'removeFromHead'}
           disabled={isButtonDeleteDisabled}
-          type='button'
-          extraClass='ml-6'
+          extraClass={s.deleteBtn}
           data-test='remove-btn'
         />
         <Button
           text='Очистить'
           onClick={handleClear}
           disabled={isButtonDeleteDisabled}
-          type='button'
-          extraClass='ml-auto'
+          extraClass={s.clearBtn}
           data-test='clear-btn'
         />
       </form>
       {
-        <ul className={clsx(s.resultList, 'mt-24')}>
+        <ul className={clsx(s.resultList)}>
           {queue.map((elem, i) => (
-            <li className={s.resultList__item} key={i}>
+            <li key={i}>
               <Circle
                 letter={elem}
                 index={i}

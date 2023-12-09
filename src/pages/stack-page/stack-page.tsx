@@ -96,7 +96,7 @@ export const StackPage = () => {
       <form className={s.form} onSubmit={(e) => void handlePush(e)}>
         <Input
           value={inputValue}
-          maxLength={4}
+          maxLength={3}
           isLimitText
           onChange={handleChange}
           disabled={isProcessing}
@@ -111,7 +111,7 @@ export const StackPage = () => {
           isLoader={processingAction === 'addToHead'}
           disabled={isButtonAddDisabled}
           type='submit'
-          extraClass='ml-6'
+          extraClass={s.addBtn}
           data-test='add-btn'
         />
         <Button
@@ -120,7 +120,7 @@ export const StackPage = () => {
           onClick={() => void handlePop()}
           disabled={isButtonDeleteDisabled}
           type='button'
-          extraClass='ml-6'
+          extraClass={s.deleteBtn}
           data-test='remove-btn'
         />
         <Button
@@ -128,14 +128,14 @@ export const StackPage = () => {
           type='button'
           onClick={handleClear}
           disabled={isButtonDeleteDisabled}
-          extraClass='ml-auto'
+          extraClass={s.clearBtn}
           data-test='clear-btn'
         />
       </form>
       {showResult && (
-        <ul className={clsx(s.resultList, 'mt-24')}>
+        <ul className={clsx(s.resultList)}>
           {stack.map((elem, i) => (
-            <li className={s.resultList__item} key={i}>
+            <li key={i}>
               <Circle
                 letter={elem}
                 index={i}

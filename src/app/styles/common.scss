@@ -55,6 +55,9 @@
   --gutter: 20px;
 
   --border-radius: 20px;
+
+  --circle-radius: 80px;
+  --circle-border: 4px;
 }
 
 @include laptop {
@@ -68,6 +71,16 @@
   :root {
     --gutter: 10px;
     --border-radius: 10px;
+    --common-border-radius: 8px;
+  }
+}
+
+@include mobile {
+  :root {
+    --circle-radius: 55px;
+    --circle-border: 3px;
+
+     --common-border-radius: 6px;
   }
 }
 

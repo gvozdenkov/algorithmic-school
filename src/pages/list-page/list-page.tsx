@@ -278,14 +278,16 @@ export const ListPage = () => {
   return (
     <SolutionLayout title='Связный список'>
       <form className={s.form}>
-        <fieldset className={s.form__fieldset} disabled={isProcessing}>
+        <fieldset
+          className={clsx(s.form__fieldset, s.form__fieldset_type_byValue)}
+          disabled={isProcessing}>
           <Input
             value={inputValue}
             maxLength={4}
             isLimitText
             onChange={handleChangeValue}
             disabled={processingAction !== 'idle'}
-            extraClass={s.form__input}
+            extraClass={clsx(s.form__input, s.inputValue)}
             autoComplete='off'
             autoFocus
             ref={inputValueRef}
@@ -296,7 +298,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'addToHead'}
             disabled={isAddButtonDisabled}
             onClick={() => void handlePrepend()}
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.addToHead)}
             data-test='addHeadBtn'
           />
           <Button
@@ -304,7 +306,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'addToTail'}
             disabled={isAddButtonDisabled}
             onClick={() => void handleAppend()}
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.addToTail)}
             data-test='addTailBtn'
           />
           <Button
@@ -312,7 +314,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'removeFromHead'}
             onClick={() => void handleDeleteHead()}
             disabled={isRemoveButtonDisabled}
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.removeFromHead)}
             data-test='removeHeadBtn'
           />
           <Button
@@ -320,11 +322,13 @@ export const ListPage = () => {
             isLoader={processingAction === 'removeFromTail'}
             onClick={() => void handleDeleteTail()}
             disabled={isRemoveButtonDisabled}
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.removeFromTail)}
             data-test='removeTailBtn'
           />
         </fieldset>
-        <fieldset className={s.form__fieldset} disabled={isProcessing}>
+        <fieldset
+          className={clsx(s.form__fieldset, s.form__fieldset_type_byIndex)}
+          disabled={isProcessing}>
           <Input
             type='number'
             placeholder='Введите индекс'
@@ -335,7 +339,7 @@ export const ListPage = () => {
             isLimitText
             onChange={handleChangeIndex}
             disabled={processingAction !== 'idle'}
-            extraClass={s.form__input}
+            extraClass={clsx(s.form__input, s.inputIndex)}
             autoComplete='off'
             autoFocus
             ref={inputIndexRef}
@@ -346,7 +350,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'addByIndex'}
             disabled={isAddByIndexButtonDisabled}
             onClick={() => void handleInsertAt()}
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.addByIndex)}
             data-test='addByIndexBtn'
           />
           <Button
@@ -354,7 +358,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'removeByIndex'}
             onClick={() => void handleRemoveAt()}
             disabled={isRemoveByIndexButtonDisabled}
-            extraClass={clsx(s.form__button)}
+            extraClass={clsx(s.removeByIndex)}
             data-test='removeByIndexBtn'
           />
         </fieldset>

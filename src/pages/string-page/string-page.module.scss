@@ -1,3 +1,5 @@
+@use '#shared/styles/media-bp-mixins.scss' as *;
+
 .form {
   display: flex;
   gap: 12px;
@@ -5,12 +7,21 @@
   margin: 0 auto;
 }
 
-.result__list {
+.resultList {
   display: flex;
+  flex-flow: row wrap;
   gap: 16px;
   padding: 0;
+  margin-inline: auto;
+
+  &resultList__item {
+    list-style-type: none;
+  }
 }
 
-.result__listItem {
-  list-style-type: none;
+@include mobile() {
+  .form {
+    flex-flow: column;
+    min-width: 100%;
+  }
 }
