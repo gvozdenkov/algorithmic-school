@@ -3,3 +3,4 @@ node_modules
 jest.config.cts
 cypress.config.ts
 cypress.config.ci.ts
+commitlint.config.ts

@@ -1,0 +1,4 @@
+{
+  "*.(js|ts|jsx|tsx)": ["yarn prettier:write", "yarn lint"],
+  "*.md": "yarn prettier:write"
+}

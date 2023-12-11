@@ -20,6 +20,7 @@ jobs:
 
       - run: yarn types
       - run: yarn lint
+      - run: yarn prettier:check
       - run: yarn test:jest
       - run: yarn build
 

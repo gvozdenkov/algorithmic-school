@@ -1,6 +1,9 @@
 <div align="center">
-  <a href="https://cloud.cypress.io/projects/19ebuv/runs">
-    <img src="https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/19ebuv/develop&style=flat&logo=cypress" />
+  <a href="https://github.com/gvozdenkov/algososh/actions/workflows/cypress.yml">
+    <img src="https://github.com/gvozdenkov/algososh/actions/workflows/cypress.yml/badge.svg?event=push" />
+  </a>
+  <a href="http://commitizen.github.io/cz-cli/">
+    <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" />
   </a>
 </div>
 
@@ -56,24 +59,97 @@ yarn dev
 
 use Node v18 and above
 
-| script     | Description                                                   |
-| ---------- | ------------------------------------------------------------- |
-| `dev`      | Will start vite dev server and run `cypress open` for testing |
-| `build`    | Compile TS to js and run `vite build`                         |
-| `lint`     | Check codebase with eslint                                    |
-| `prettier` | Check codebase style with prettier                            |
-| `cy:run`   | Run Cypress all tests                                         |
-| `deploy`   | Build and deploy to GH Pages                                  |
+| script           | Description                                                                         |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| `dev`            | Will start vite dev server and run `cypress open` for testing                       |
+| `build`          | Compile TS to js and run `vite build`                                               |
+| `lint`           | Check codebase with eslint                                                          |
+| `prettier:write` | prettier fix problems, -l flag to show only different from origin                   |
+| `prettier:check` | prettier check problems (used in CI to ckeck code formatted localy in cypress.yaml) |
+| `cy:run`         | Run Cypress all tests                                                               |
+| `deploy`         | Build and deploy to GH Pages                                                        |
 
 ## Implementation comments
 
 ### Workflow
 
+#### Pre-commit actions
+
+<details>
+<summary>1. Lint staged files</summary>
+<br/>
+Used `husky` & `lint-staged` packages to lint & format staged files only
+
+```sh
+# .husky/_/pre-commit
+yarn lint-staged && yarn test:jest -o
+
+```
+
+`.lintstagedrc.json` setup sequential running commands for .js|ts|jsx|tsx files in order of array
+items
+
+```json
+{
+  "*.(js|ts|jsx|tsx)": ["yarn prettier:write", "yarn lint"],
+  "*.md": "yarn prettier:write"
+}
+```
+
+</details>
+
+<details>
+<summary>2. Commit messages</summary>
+<br/>
+This project is [Commitizen](https://www.npmjs.com/package/commitizen?activeTab=readme) friendly. So
+you can easy create commits in a step by step guide by run:
+
+```bash
+yarn cz
+# or
+npm run cz
+```
+
+If you are mannually create commit message it will be linted with `commitlint` to lint commit
+messages acording with [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+Commitizen & commitlint setup:
+
+1. Used ligthweight `cz-git` adapter for `commitizen` to generate cli interface for `yarn cz`
+2. Setup `cz-git` with `.czrc` file
+3. Setup `commitlint` with `commitlint.config.ts`
+
+```json
+"devDependencies": {
+  "@commitlint/cli": "^18.4.3",
+  "@commitlint/config-conventional": "^18.4.3",
+  "@commitlint/format": "^18.4.3",
+
+  "commitizen": "^4.3.0",
+  "cz-git": "^1.8.0",
+}
+```
+
+</details>
+
 #### Code formating
 
-1. Prettier for formatting, Eslint for linting
+<details>
+<summary>1. Prettier for formatting</summary>
+<br/>
 
-Settup prettier for eslint to highlight style errors when linting
+Used Prettier (exact 2.8.7 version) for formatting and Eslint for linting only. So setup
+
+```json
+"devDependencies": {
+  "eslint": "^8.53.0",
+  "prettier": "2.8.7",
+  "eslint-plugin-prettier": "4.2.1",
+  "eslint-config-prettier": "^9.0.0",
+}
+```
+
+Settup eslint to highlight style errors with prettier:
 
 ```cjs
 // .eslintrc.cjs
@@ -95,9 +171,23 @@ module.exports = {
 };
 ```
 
-2. Import sorting
+Setup CI to check code formating
 
-Used `prettier-plugin-sort-imports` package for prettier format order of imports
+```yaml
+# cypress.yaml
+
+- run: yarn lint
+
+# only check format, not write
+- run: yarn prettier:check
+```
+
+</details>
+
+<details>
+<summary>2. Import order sorting</summary>
+<br/>
+Used `prettier-plugin-sort-imports` package for prettier to format order of imports
 
 ```js
 //https://chriscoyier.net/2022/08/09/javascript-import-sorting/
@@ -117,3 +207,5 @@ Used `prettier-plugin-sort-imports` package for prettier format order of imports
   "importOrderSortSpecifiers": true,
   "importOrderCaseInsensitive": true,
 ```
+
+</details>
