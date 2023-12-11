@@ -1,5 +1,6 @@
-import { StateGenerator } from '#shared/types';
 import { bubbleSortGen } from '.';
+
+import { StateGenerator } from '#shared/types';
 
 type Res = StateGenerator<number>;
 const array = [2, 5, 1];

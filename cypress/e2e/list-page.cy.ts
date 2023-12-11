@@ -1,6 +1,7 @@
+import { CircleState } from 'cypress/support/types';
+
 import { ROUTE } from '#shared/config';
 import { DELAY_IN_MS, HEAD, TAIL } from '#shared/constants';
-import { CircleState } from 'cypress/support/types';
 
 const byIndex = 1;
 

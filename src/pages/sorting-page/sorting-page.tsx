@@ -1,11 +1,13 @@
 import { FormEvent, MouseEvent, useEffect, useState } from 'react';
+
 import clsx from 'clsx';
+
+import { SHORT_DELAY_IN_MS } from '#shared/constants';
+import { generateRandomArray, randomIntFromInterval, sleep } from '#shared/lib';
+import { ElementState, SortDirection } from '#shared/types';
 
 import { Button, Column, RadioInput, SolutionLayout } from '#shared/ui';
 
-import { generateRandomArray, randomIntFromInterval, sleep } from '#shared/lib';
-import { ElementState, SortDirection } from '#shared/types';
-import { SHORT_DELAY_IN_MS } from '#shared/constants';
 import { bubbleSortGen, selectionSortGen } from './lib';
 
 import s from './sorting-page.module.scss';

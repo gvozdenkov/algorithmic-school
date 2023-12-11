@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 import { MenuItem } from '#shared/config';
+
 import s from './menu-card.module.scss';
 
 type MenuCardProps = {

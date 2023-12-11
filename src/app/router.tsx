@@ -1,6 +1,7 @@
 import { createHashRouter } from 'react-router-dom';
 
 import { ROUTE } from '#shared/config';
+
 import { BaseLayout } from '#shared/ui';
 
 export const router = createHashRouter([

@@ -1,10 +1,12 @@
 import { HTMLProps } from 'react';
+
 import clsx from 'clsx';
+
+import { SortDirection } from '#shared/types';
 
 import loaderIcon from '../../../images/icons/loader.svg';
 import { AscendingIcon } from '../icons/ascending-icon';
 import { DescendingIcon } from '../icons/descending-icon';
-import { SortDirection } from '#shared/types';
 
 import s from './button.module.scss';
 

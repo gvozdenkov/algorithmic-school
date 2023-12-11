@@ -1,4 +1,5 @@
 import { ComponentProps, useId } from 'react';
+
 import styles from './radio-input.module.scss';
 
 type RadioProps = ComponentProps<'input'> & {

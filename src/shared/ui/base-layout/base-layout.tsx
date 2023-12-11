@@ -1,7 +1,9 @@
 import { Outlet } from 'react-router-dom';
+
 import clsx from 'clsx';
 
 import logo from '../../../images/logo.svg';
+
 import s from './base-layout.module.scss';
 
 export const BaseLayout = () => {

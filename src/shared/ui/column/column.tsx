@@ -1,5 +1,7 @@
-import { ElementState } from '#shared/types';
 import clsx from 'clsx';
+
+import { ElementState } from '#shared/types';
+
 import s from './column.module.scss';
 
 type ColumnProps = {

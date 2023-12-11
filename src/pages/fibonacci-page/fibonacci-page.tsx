@@ -1,13 +1,16 @@
 import { FormEvent, useState } from 'react';
+
 import clsx from 'clsx';
 
-import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
 import { SHORT_DELAY_IN_MS } from '#shared/constants';
-import { sleep } from '#shared/lib';
 import { useFocus } from '#shared/hooks';
+import { sleep } from '#shared/lib';
+
+import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
+
+import { fibonacci } from './lib';
 
 import s from './fibonacci-page.module.scss';
-import { fibonacci } from './lib';
 
 export const FibonacciPage = () => {
   const [inputValue, setInputValue] = useState('');

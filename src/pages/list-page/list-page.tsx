@@ -1,14 +1,16 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
+
 import clsx from 'clsx';
+
+import { DELAY_IN_MS, HEAD, TAIL } from '#shared/constants';
+import { useFocus } from '#shared/hooks';
+import { colorSwitch, sleep } from '#shared/lib';
+import { ElementState, ProcessingAction } from '#shared/types';
 
 import { ArrowIcon, Button, Circle, Input, SolutionLayout } from '#shared/ui';
 
-import { colorSwitch, sleep } from '#shared/lib';
-import { DELAY_IN_MS, HEAD, TAIL } from '#shared/constants';
-import { useFocus } from '#shared/hooks';
-import { ElementState, ProcessingAction } from '#shared/types';
-
 import { LinkedListClass } from './lib';
+
 import s from './list-page.module.scss';
 
 const maxListLength = 8;

@@ -1,8 +1,9 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
+
+import { ReturnIcon } from '..';
 import clsx from 'clsx';
 
-import styles from './return-button.module.scss';
-import { ReturnIcon } from '..';
+import s from './return-button.module.scss';
 
 type ButtonProps = PropsWithChildren<ComponentPropsWithoutRef<'button'>> & {
   htmlType?: 'button' | 'submit' | 'reset';
@@ -19,7 +20,7 @@ export const ReturnButton = ({
 }: ButtonProps) => {
   return (
     <button
-      className={clsx('text text_type_button text_color_primary', styles.button, {
+      className={clsx('text text_type_button text_color_primary', s.button, {
         [extraClass]: !!extraClass,
       })}
       style={{ color }}

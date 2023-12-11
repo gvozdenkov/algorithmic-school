@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import './index.scss';
-
 import { Providers } from '#app/providers';
+
+import './index.scss';
 
 const container = document.getElementById('root');
 const root = container && createRoot(container);
