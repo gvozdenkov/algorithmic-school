@@ -1,9 +1,11 @@
 import Marquee from 'react-fast-marquee';
 import { Link } from 'react-router-dom';
+
 import clsx from 'clsx';
 
-import { MenuCard } from '#shared/ui';
 import { menuList } from '#shared/config';
+
+import { MenuCard } from '#shared/ui';
 
 import s from './main-page.module.scss';
 

@@ -1,5 +1,6 @@
 import { getStateArray, swap } from '#shared/lib';
 import { ElementState, StateGenerator } from '#shared/types';
+
 import { SortProps } from './types';
 
 export function* bubbleSortGen<T extends string | number>({

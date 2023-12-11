@@ -1,5 +1,6 @@
-import { ValueOf } from '#shared/types';
 import { ROUTE } from '.';
+
+import { ValueOf } from '#shared/types';
 
 export type MenuItem = 'string' | 'fibonacci' | 'sorting' | 'stack' | 'queue' | 'linked-list';
 

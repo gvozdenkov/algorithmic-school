@@ -1,9 +1,10 @@
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
+
+import { ReturnButton } from '..';
 import clsx from 'clsx';
 
 import { ROUTE } from '#shared/config';
-import { ReturnButton } from '..';
 
 import styles from './solution-layout.module.scss';
 

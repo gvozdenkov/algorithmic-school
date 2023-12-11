@@ -13,6 +13,17 @@
   "arrowParens": "always",
   "proseWrap": "always",
   "useTabs": false,
+  "importOrder": [
+    "react",
+    "<THIRD_PARTY_MODULES>",
+    "^(#shared/(config|constants|types|hooks|lib)).*$",
+    "^(#shared/ui).*$",
+    "^(\\.|\\.\\.)/(.(?!.(css|scss)))*$",
+    ".(css|scss)$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
   "overrides": [
     {
       "files": ["**/*.cjs"],

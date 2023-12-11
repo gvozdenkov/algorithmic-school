@@ -1,5 +1,6 @@
-import { StateGenerator } from '#shared/types';
 import { reversArrayGen } from '.';
+
+import { StateGenerator } from '#shared/types';
 
 type Res = StateGenerator<string>;
 const reverseEvenGen = reversArrayGen(['a', 'b', 'c', 'd']);

@@ -1,14 +1,16 @@
 import { FormEvent, useRef, useState } from 'react';
+
 import clsx from 'clsx';
+
+import { SHORT_DELAY_IN_MS } from '#shared/constants';
+import { useFocus } from '#shared/hooks';
+import { sleep } from '#shared/lib';
+import { ProcessingAction } from '#shared/types';
 
 import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
 
-import { sleep } from '#shared/lib';
-import { SHORT_DELAY_IN_MS } from '#shared/constants';
-import { useFocus } from '#shared/hooks';
-import { ProcessingAction } from '#shared/types';
-
 import { QueueClass, setHead, setState, setTail } from './lib';
+
 import s from './queue-page.module.scss';
 
 const maxQueueSize = 7;

@@ -1,13 +1,17 @@
 import { FormEvent, useState } from 'react';
+
 import clsx from 'clsx';
-import s from './string-page.module.scss';
+
+import { DELAY_IN_MS } from '#shared/constants';
+import { useFocus } from '#shared/hooks';
+import { sleep } from '#shared/lib';
+import { ElementState } from '#shared/types';
 
 import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
-import { DELAY_IN_MS } from '#shared/constants';
+
 import { reversArrayGen } from './lib';
-import { ElementState } from '#shared/types';
-import { sleep } from '#shared/lib';
-import { useFocus } from '#shared/hooks';
+
+import s from './string-page.module.scss';
 
 export const StringComponent = () => {
   const [inputValue, setInputValue] = useState('');

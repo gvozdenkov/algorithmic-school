@@ -1,14 +1,16 @@
 import { FormEvent, useRef, useState } from 'react';
+
 import clsx from 'clsx';
 
 import { HEAD, SHORT_DELAY_IN_MS } from '#shared/constants';
-import { sleep } from '#shared/lib';
-import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
-
 import { useFocus } from '#shared/hooks';
+import { sleep } from '#shared/lib';
 import { ElementState, ProcessingAction } from '#shared/types';
 
+import { Button, Circle, Input, SolutionLayout } from '#shared/ui';
+
 import { Stack as StackClass } from './lib';
+
 import s from './stack-page.module.scss';
 
 const maxStackSize = 10;

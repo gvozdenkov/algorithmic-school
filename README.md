@@ -64,3 +64,56 @@ use Node v18 and above
 | `prettier` | Check codebase style with prettier                            |
 | `cy:run`   | Run Cypress all tests                                         |
 | `deploy`   | Build and deploy to GH Pages                                  |
+
+## Implementation comments
+
+### Workflow
+
+#### Code formating
+
+1. Prettier for formatting, Eslint for linting
+
+Settup prettier for eslint to highlight style errors when linting
+
+```cjs
+// .eslintrc.cjs
+module.exports = {
+  // ...
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended-type-checked',
+    // ...
+    // prettier must be the last in extends
+    'prettier',
+  ],
+  // ...
+  plugins: ['prettier'],
+  rules: {
+    'prettier/prettier': ['error'],
+    // ...
+  },
+};
+```
+
+2. Import sorting
+
+Used `prettier-plugin-sort-imports` package for prettier format order of imports
+
+```js
+//https://chriscoyier.net/2022/08/09/javascript-import-sorting/
+
+// .prettierrc
+"importOrder": [
+    "react",
+    "<THIRD_PARTY_MODULES>",
+    "^(#shared/(config|constants|types|hooks|lib)).*$",
+    "^(#shared/ui).*$",
+    // Any local imports that AREN'T styles.
+    "^(\\.|\\.\\.)/(.(?!.(css|scss)))*$",
+    // Styles
+    ".(css|scss)$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
+```

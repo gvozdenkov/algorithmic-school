@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 import { colorSwitchToRGB } from '#shared/lib';
 
 // ***********************************************

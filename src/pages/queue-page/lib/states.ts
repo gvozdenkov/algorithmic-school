@@ -1,6 +1,8 @@
+import { Queue as QueueType } from '.';
+
 import { HEAD, TAIL } from '#shared/constants';
 import { ElementState } from '#shared/types';
-import { Queue as QueueType } from '.';
+
 import { ProcessingQueueAction } from '../queue-page';
 
 export const setState =
