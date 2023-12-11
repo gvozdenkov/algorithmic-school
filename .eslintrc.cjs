@@ -65,10 +65,10 @@ module.exports = {
   plugins: ["prettier", "react", "react-hooks", "react-refresh", "import", "@typescript-eslint"],
   rules: {
     "prettier/prettier": ["error"],
+    camelcase: ["error"],
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "no-var": "error",
     "no-console": ["error", { allow: ["warn", "error"] }],
     semi: "error",
     "no-multi-spaces": "error",
