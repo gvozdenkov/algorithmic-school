@@ -74,7 +74,7 @@ export const StringComponent = () => {
       {showResult && (
         <ul className={clsx(s.resultList, 'mt-24')}>
           {stringArr.map((letter, i) => (
-            <li className={s.resultList__item} key={i} role='presentation'>
+            <li key={i} role='presentation'>
               <Circle state={state[i]} letter={letter} data-test={`circle-${i}`} />
             </li>
           ))}

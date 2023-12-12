@@ -1,5 +1,7 @@
 @use '#shared/styles/media-bp-mixins.scss' as *;
 
+$verticalGep: 80px;
+
 .form {
   margin: 0 auto;
   max-width: 829px;
@@ -22,9 +24,10 @@
   display: flex;
   flex-flow: row wrap;
   align-items: flex-end;
-  gap: 80px 16px;
+  gap: $verticalGep 16px;
   padding: 0;
   margin-block-start: 86px;
+  margin-block-end: 48px;
 }
 
 .circle_invisible {
@@ -53,7 +56,7 @@
   }
 
   .resultList {
-    gap: 65px 10px;
+    gap: $verticalGep 10px;
   }
 }
 
@@ -68,9 +71,5 @@
       '. . .' minmax(2px, 6px)
       'clearBtn clearBtn clearBtn'
       / 1fr minmax(2px, 6px) 1fr;
-  }
-
-  .resultList {
-    gap: 65px 10px;
   }
 }

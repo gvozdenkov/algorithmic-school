@@ -38,6 +38,9 @@ $verticalMargin: 36px;
   &__title {
     grid-area: title;
     justify-self: center;
+    min-width: 0;
+    word-wrap: break-word;
+    word-break: break-all;
   }
 
   &__backBtn {
@@ -152,7 +155,7 @@ $verticalMargin: 36px;
       'title . back'
       '. . .' 36px
       'result result result'
-      / 1fr auto 1fr;
+      / 1fr auto max-content;
 
     &__title {
       font-size: 18px;
