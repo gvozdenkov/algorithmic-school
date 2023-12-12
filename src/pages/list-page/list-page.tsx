@@ -372,6 +372,7 @@ export const ListPage = () => {
 
             return (
               <li className={s.resultList__item} key={i}>
+                {i > 0 && i <= lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
                 <Circle
                   letter={letterState(i)}
                   index={i}
@@ -385,7 +386,6 @@ export const ListPage = () => {
                   )}
                   data-test={`circle-${i}`}
                 />
-                {i < lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
               </li>
             );
           })}

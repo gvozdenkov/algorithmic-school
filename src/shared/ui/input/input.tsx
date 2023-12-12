@@ -28,7 +28,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={clsx(s.content, { [extraClass]: !!extraClass })}>
         <input
-          className={`${s.input} text text_type_input text_color_input`}
+          className={`${s.input} text_type_input text_color_input`}
           placeholder={placeholder}
           type={type}
           maxLength={maxLength}

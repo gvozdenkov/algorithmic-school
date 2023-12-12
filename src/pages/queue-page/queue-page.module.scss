@@ -20,12 +20,14 @@
 }
 
 .resultList {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-end;
-  gap: 80px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  justify-items: center;
+  width: 100%;
+  max-width: 70%;
   padding: 0;
   margin-block-start: 86px;
+  margin-block-end: 48px;
 }
 
 .clearBtn {
@@ -38,6 +40,13 @@
 
 .deleteBtn {
   grid-area: deleteBtn;
+}
+
+@include laptop() {
+  .resultList {
+    max-width: unset;
+    max-width: 100%;
+  }
 }
 
 @include tablet() {

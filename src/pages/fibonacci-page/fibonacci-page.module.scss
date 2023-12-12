@@ -2,31 +2,46 @@
 
 .form {
   display: flex;
+  align-items: flex-start;
   gap: 12px;
   max-width: 522px;
   margin: 0 auto;
 }
 
 .resultList {
-  display: flex;
-  flex-flow: row wrap;
-  margin-inline: auto;
-  gap: 48px 16px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(80px, 1fr));
+  justify-items: center;
+  gap: 56px 8px;
+  width: 100%;
+  max-width: 70%;
   padding: 0;
-
-  &__item {
-    list-style-type: none;
-    // flex: 0 0 80px;
-  }
+  margin-block-end: 48px;
 }
 
 .circle_invisible {
   opacity: 0;
 }
 
+@include laptop() {
+  .resultList {
+    max-width: 100%;
+  }
+}
+
+@include tablet() {
+  .resultList {
+    grid-template-columns: repeat(5, minmax(80px, 1fr));
+  }
+}
+
 @include mobile() {
+  .resultList {
+    grid-template-columns: repeat(3, minmax(80px, 1fr));
+  }
   .form {
     flex-flow: column;
+    align-items: stretch;
     min-width: 100%;
   }
 }
