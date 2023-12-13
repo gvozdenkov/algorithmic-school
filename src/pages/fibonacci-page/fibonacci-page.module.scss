@@ -2,43 +2,42 @@
 
 .form {
   display: flex;
-  align-items: flex-start;
   gap: 12px;
+  align-items: flex-start;
+
   max-width: 522px;
   margin: 0 auto;
 }
 
-.resultList {
+.result-list {
   display: grid;
   grid-template-columns: repeat(6, minmax(80px, 1fr));
-  justify-items: center;
   gap: 56px 8px;
+  justify-items: center;
+
   width: 100%;
   max-width: 70%;
-  padding: 0;
   margin-block-end: 48px;
+  padding: 0;
 }
 
-.circle_invisible {
-  opacity: 0;
-}
-
-@include laptop() {
-  .resultList {
+@include laptop {
+  .result-list {
     max-width: 100%;
   }
 }
 
-@include tablet() {
-  .resultList {
+@include tablet {
+  .result-list {
     grid-template-columns: repeat(5, minmax(80px, 1fr));
   }
 }
 
-@include mobile() {
-  .resultList {
+@include mobile {
+  .result-list {
     grid-template-columns: repeat(3, minmax(80px, 1fr));
   }
+
   .form {
     flex-flow: column;
     align-items: stretch;

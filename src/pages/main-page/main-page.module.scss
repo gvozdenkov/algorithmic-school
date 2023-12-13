@@ -1,11 +1,12 @@
 @use '#shared/styles/media-bp-mixins.scss' as *;
 
-.cardList {
+.card-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: max(1.3vw, 8px);
   align-content: center;
   align-items: start;
-  gap: max(1.3vw, 8px);
+
   width: 100%;
   padding-bottom: 36px;
 
@@ -15,10 +16,10 @@
 }
 
 .ticker {
-  background-image: var(--linear-gradient);
-  height: 60px;
   overflow: hidden;
   align-self: end;
+  height: 60px;
+  background-image: var(--linear-gradient);
 }
 
 .dot_box {
@@ -29,18 +30,18 @@
 .dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
   background-color: var(--text-color-secondary);
+  border-radius: 50%;
 }
 
-@include laptop() {
-  .cardList {
+@include laptop {
+  .card-list {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 }
 
-@include mobile() {
-  .cardList {
+@include mobile {
+  .card-list {
     grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
   }
 }

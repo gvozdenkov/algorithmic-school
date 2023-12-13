@@ -5,20 +5,19 @@
   flex-flow: column nowrap;
   gap: 12px;
   justify-content: space-between;
-  margin: 0 auto;
-  max-width: 952px;
+
   width: 100%;
+  max-width: 952px;
+  margin: 0 auto;
 
   &__fieldset {
-    border: none;
     margin: 0;
     padding: 0;
+    border: none;
 
     &_type {
       &_byValue {
         display: grid;
-        align-items: start;
-        justify-content: center;
         grid-template:
           'inputValue . addToHead . addToTail . removeFromHead . removeFromTail'
           / auto minmax(8px, 1fr) max-content minmax(8px, 1fr) max-content minmax(8px, 1fr) max-content minmax(
@@ -26,21 +25,57 @@
             1fr
           )
           max-content;
+        align-items: start;
+        justify-content: center;
       }
 
       &_byIndex {
         display: grid;
-        align-items: start;
-        justify-content: center;
         grid-template:
           'inputIndex . addByIndex . removeByIndex'
           / auto 8px minmax(200px, 1fr) 8px minmax(200px, 1fr);
+        align-items: start;
+        justify-content: center;
       }
     }
   }
 
   &__input {
     width: 100%;
+
+    &_type_value {
+      grid-area: inputValue;
+    }
+
+    &_type_index {
+      grid-area: inputIndex;
+    }
+  }
+
+  &__button {
+    &_type_add-to-head {
+      grid-area: addToHead;
+    }
+
+    &_type_add-to-tail {
+      grid-area: addToTail;
+    }
+
+    &_type_remove-from-tail {
+      grid-area: removeFromTail;
+    }
+
+    &_type_remove-from-head {
+      grid-area: removeFromHead;
+    }
+
+    &_type_add-by-index {
+      grid-area: addByIndex;
+    }
+
+    &_type_remove-by-index {
+      grid-area: removeByIndex;
+    }
   }
 }
 
@@ -56,56 +91,25 @@
   }
 }
 
-.resultList {
+.result-list {
   display: flex;
-  justify-content: flex-start;
-  gap: 80px 0;
   flex-wrap: wrap;
-  padding: 0;
+  gap: 80px 0;
+  justify-content: flex-start;
+
   margin: 0;
   margin-top: 90px;
   margin-block-end: 48px;
+  padding: 0;
 
   &__item {
-    list-style-type: none;
     display: flex;
     align-items: center;
+    list-style-type: none;
   }
 }
 
-.inputValue {
-  grid-area: inputValue;
-}
-
-.inputIndex {
-  grid-area: inputIndex;
-}
-
-.addToHead {
-  grid-area: addToHead;
-}
-
-.addToTail {
-  grid-area: addToTail;
-}
-
-.removeFromHead {
-  grid-area: removeFromHead;
-}
-
-.removeFromTail {
-  grid-area: removeFromTail;
-}
-
-.addByIndex {
-  grid-area: addByIndex;
-}
-
-.removeByIndex {
-  grid-area: removeByIndex;
-}
-
-@include laptop() {
+@include laptop {
   .form {
     gap: 36px;
 
@@ -113,7 +117,6 @@
       &_type {
         &_byValue {
           display: grid;
-          justify-content: center;
           grid-template:
             'inputValue inputValue inputValue'
             '. . .' 16px
@@ -121,21 +124,22 @@
             '. . .' 8px
             'removeFromHead . removeFromTail'
             / 1fr 8px 1fr;
+          justify-content: center;
         }
 
         &_byIndex {
           display: grid;
-          justify-content: center;
           grid-template:
             'inputIndex . addByIndex . removeByIndex'
             / auto 8px minmax(200px, 1fr) 8px minmax(200px, 1fr);
+          justify-content: center;
         }
       }
     }
   }
 }
 
-@include tablet() {
+@include tablet {
   .form {
     gap: 26px;
 
@@ -143,7 +147,6 @@
       &_type {
         &_byValue {
           display: grid;
-          justify-content: center;
           grid-template:
             'inputValue inputValue inputValue'
             '. . .' 8px
@@ -151,23 +154,24 @@
             '. . .' 8px
             'removeFromHead . removeFromTail'
             / 1fr 8px 1fr;
+          justify-content: center;
         }
 
         &_byIndex {
           display: grid;
-          justify-content: center;
           grid-template:
             'inputIndex inputIndex inputIndex'
             '. . .' 8px
             'addByIndex . removeByIndex'
             / 1fr 8px 1fr;
+          justify-content: center;
         }
       }
     }
   }
 }
 
-@include mobile() {
+@include mobile {
   .form {
     gap: 26px;
 
@@ -184,7 +188,7 @@
     }
   }
 
-  .resultList {
+  .result-list {
     margin-block-end: 60px;
   }
 }

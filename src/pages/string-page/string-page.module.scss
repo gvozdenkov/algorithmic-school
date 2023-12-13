@@ -2,21 +2,23 @@
 
 .form {
   display: flex;
-  align-items: flex-start;
   gap: 12px;
+  align-items: flex-start;
+
   max-width: 522px;
   margin: 0 auto;
-} 
+}
 
-.resultList {
+.result-list {
   display: flex;
   flex-flow: row wrap;
   gap: 16px;
-  padding: 0;
+
   margin-inline: auto;
+  padding: 0;
 }
 
-@include mobile() {
+@include mobile {
   .form {
     flex-flow: column;
     align-items: stretch;

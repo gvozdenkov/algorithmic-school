@@ -1,44 +1,49 @@
 @use '#shared/styles/media-bp-mixins.scss' as *;
 
 .button {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  min-width: 130px;
+  min-height: 60px;
+  padding: 18px 24px;
+
+  color: var(--text-color-primary);
+
+  background-color: var(--bg-button-default);
   border: none;
-  outline: none;
   border: 1px solid var(--color-border-button-default);
   border-radius: var(--common-border-radius);
-  background-color: var(--bg-button-default);
-  padding: 18px 24px;
+  outline: none;
+
   transition: var(--common-transition);
-  min-height: 60px;
-  min-width: 130px;
-  position: relative;
-  color: var(--text-color-primary);
-}
 
-.button:hover:enabled {
-  background-color: var(--bg-button-hover);
-  border-color: var(--color-border-button-hover);
-  cursor: pointer;
-}
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--color-text-button-disabled);
+    background-color: var(--bg-button-disabled);
+    border-color: var(--color-border-button-disabled);
+  }
 
-.button:focus:enabled {
-  background-color: var(--bg-button-active);
-}
+  &:hover:enabled {
+    cursor: pointer;
+    background-color: var(--bg-button-hover);
+    border-color: var(--color-border-button-hover);
+  }
 
-.button:active:enabled {
-  background-color: var(--bg-button-active);
-  border-color: var(--color-border-button-active);
-  cursor: pointer;
-  fill: var(--text-color-secondary);
-}
+  &:focus:enabled {
+    background-color: var(--bg-button-active);
+  }
 
-.button:disabled {
-  background-color: var(--bg-button-disabled);
-  border-color: var(--color-border-button-disabled);
-  color: var(--color-text-button-disabled);
-  cursor: not-allowed;
+  &:active:enabled {
+    cursor: pointer;
+    background-color: var(--bg-button-active);
+    border-color: var(--color-border-button-active);
+    fill: var(--text-color-secondary);
+  }
 }
 
 .big {
@@ -58,10 +63,11 @@
   top: 50%;
   left: 50%;
   translate: -50% -50%;
+
   animation: rotation 1s linear infinite normal forwards running;
 }
 
-.hiddenText {
+.hidden-text {
   color: transparent;
 }
 
@@ -69,12 +75,13 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-@include mobile() {
+@include mobile {
   .button {
     min-height: 44px;
     padding: 8px 12px;

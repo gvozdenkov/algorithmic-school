@@ -1,13 +1,49 @@
+.label {
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-left: 30px;
+
+  transition: var(--common-transition);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    margin: 0;
+    transition: color, background-color 0.3s linear;
+  }
+
+  &::before {
+    left: -30px;
+
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid var(--text-color-primary);
+    border-radius: 50%;
+  }
+}
+
 .input {
   display: none;
   transition: var(--common-transition);
 
   &:checked + .label::after {
+    left: -22px;
+
     width: 8px;
     height: 8px;
-    border-radius: 50%;
+
     background-color: var(--text-color-primary);
-    left: -22px;
+    border-radius: 50%;
   }
 
   &:hover + .label::before {
@@ -33,33 +69,5 @@
 
   &:disabled + .label {
     cursor: not-allowed;
-  }
-}
-
-.label {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  user-select: none;
-  cursor: pointer;
-  margin-left: 30px;
-  transition: var(--common-transition);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    transition: color, background-color 0.3s linear;
-    margin: 0;
-  }
-
-  &::before {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid var(--text-color-primary);
-    left: -30px;
   }
 }

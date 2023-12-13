@@ -21,7 +21,7 @@ exports[`Button ui loading state 1`] = `
   type="button"
 >
   <p
-    className="text hiddenText"
+    className="text hidden-text"
   >
     Button
   </p>

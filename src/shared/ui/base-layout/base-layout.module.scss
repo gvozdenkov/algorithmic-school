@@ -1,13 +1,15 @@
 @use '#shared/styles/media-bp-mixins.scss' as *;
 
-$verticalMargin: 36px;
+$vertical-margin: 36px;
 
 .page {
-  background-color: var(--color-background);
-  min-height: 100vh;
   display: grid;
   grid-template-rows: max-content 1fr max-content;
+
   box-sizing: border-box;
+  min-height: 100vh;
+
+  background-color: var(--color-background);
 }
 
 .header {
@@ -31,21 +33,22 @@ $verticalMargin: 36px;
 
 .footer {
   display: flex;
-  padding: 36px 0;
-  box-sizing: border-box;
   align-items: center;
+  box-sizing: border-box;
+  padding: 36px 0;
 
   &__copyright {
     margin-inline-start: auto;
   }
 }
 
-@include tablet() {
+@include tablet {
   .logo {
     &__image {
       width: 60px;
       margin-bottom: 10px;
     }
+
     &__title {
       font-size: 30px;
     }
@@ -58,7 +61,7 @@ $verticalMargin: 36px;
   }
 }
 
-@include mobile() {
+@include mobile {
   .logo {
     margin-bottom: 0;
 

@@ -71,7 +71,7 @@ export const FibonacciPage = () => {
         />
       </form>
       {showResult && (
-        <ul className={clsx(s.resultList, 'mt-24')}>
+        <ul className={clsx(s['result-list'], 'mt-24')}>
           {fibArray.map((letter, i) => (
             <li key={i}>
               <Circle

@@ -69,16 +69,17 @@ use Node v18 and above
 | `cy:run`         | Run Cypress all tests                                                               |
 | `deploy`         | Build and deploy to GH Pages                                                        |
 
-## Implementation comments
+## Workflow setup
 
-### Workflow
+### Pre-commit actions
 
-#### Pre-commit actions
+#### Lint staged files
+
+Used `husky` & `lint-staged` packages to lint & format staged files only
 
 <details>
-<summary>1. Lint staged files</summary>
+<summary>How to setup</summary>
 <br/>
-Used `husky` & `lint-staged` packages to lint & format staged files only
 
 ```sh
 # .husky/_/pre-commit
@@ -98,20 +99,23 @@ items
 
 </details>
 
-<details>
-<summary>2. Commit messages</summary>
-<br/>
+#### Commit messages
+
 This project is [Commitizen](https://www.npmjs.com/package/commitizen?activeTab=readme) friendly. So
 you can easy create commits in a step by step guide by run:
+
+If you are mannually create commit message it will be linted with `commitlint` to lint commit
+messages acording with [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+<details>
+<summary>How to setup</summary>
+<br/>
 
 ```bash
 yarn cz
 # or
 npm run cz
 ```
-
-If you are mannually create commit message it will be linted with `commitlint` to lint commit
-messages acording with [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
 Commitizen & commitlint setup:
 
@@ -132,13 +136,15 @@ Commitizen & commitlint setup:
 
 </details>
 
-#### Code formating
+### Code formating
 
-<details>
-<summary>1. Prettier for formatting</summary>
-<br/>
+#### Prettier for formatting
 
 Used Prettier (exact 2.8.7 version) for formatting and Eslint for linting only. So setup
+
+<details>
+<summary>How to setup</summary>
+<br/>
 
 ```json
 "devDependencies": {
@@ -209,3 +215,61 @@ Used `prettier-plugin-sort-imports` package for prettier to format order of impo
 ```
 
 </details>
+
+#### Stylelint `.scss`
+
+1. Install:
+
+```bash
+yarn add -D stylelint stylelint-config-standard-scss stylelint-config-prettier-scss stylelint-config-clean-order
+```
+
+2. Setup stylelint `.stylelintrc.json`:
+
+```json
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-clean-order/error",
+    "stylelint-config-prettier-scss"
+  ],
+  "rules": {
+    "selector-class-pattern": "^(?:[a-z][a-z0-9]*)(?:(__|_|-)[a-z0-9]+)*$",
+    "scss/at-extend-no-missing-placeholder": null
+  }
+}
+```
+
+`selector-class-pattern` to check BEM style names
+
+3. Add script in `package.json` to lint and autofix fixable issues
+
+```diff
++ "stylelint:fix": "stylelint '**/*.scss' --fix",
+```
+
+4. Edit `.lintstagedrc.json` to automatic fix all fixable style issues in pre-commit acion
+
+```diff
+{
+  "*.(js|ts|jsx|tsx)": ["yarn prettier:write", "yarn lint"],
+  "*.md": "yarn prettier:write"
+  # suddenly `yarn stylelint:fix` don't work:( it crash lint-staged with empty-commit error
++ "*.{css,scss}": "stylelint '**/*.scss' --fix",
+}
+```
+
+5. Setup VS Code `settings.json` to autofix stylelint issues on save
+
+Install official Stylelint extenstion!
+
+```diff
++  "editor.codeActionsOnSave": {
++     "source.fixAll.stylelint": true
++  },
++  "css.validate": false,
++  "scss.validate": false,
++  "less.validate": false,
++  "stylelint.validate": ["css", "less", "postcss", "scss"],
++  "stylelint.config": null, //use settings from .stylelintrc.json
+```

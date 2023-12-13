@@ -6,36 +6,27 @@
   --color-background-card-hover: #282e36;
   --color-border-default: #444c56;
   --color-border-default-hover: #4f5964;
-
-  --color-text-accent: rgb(95, 47, 207);
+  --color-text-accent: rgb(95 47 207);
   --color-text-gradient-a: #e0bc72;
   --color-text-gradient-b: #af4261;
   --color-text-mute: #768390;
-
   --linear-gradient: linear-gradient(
     45deg,
     var(--color-text-gradient-a),
     var(--color-text-gradient-b)
   );
-
   --color-link: #e0bc72;
-
   --background: #fff;
   --offset-base-size: 2px;
-
   --common-border-radius: 14px;
-
   --text-color-primary: #e4e4e4;
   --text-color-secondary: #fff;
-
   --text-color-h1: #141414;
   --text-color-black: #000;
   --text-color-input: #e0e0e0;
   --text-input-placeholder: #7a7a7a;
-
   --bg-input-hover: #fafafa00;
-  --bg-input-disabled: rgb(48, 54, 61);
-
+  --bg-input-disabled: rgb(48 54 61);
   --bg-button-default: #444c56;
   --bg-button-hover: #555f6b;
   --bg-button-active: #4a535e;
@@ -45,17 +36,12 @@
   --color-border-button-active: #6d7a8a;
   --color-border-button-disabled: #2a313b;
   --color-text-button-disabled: #7a7a7a;
-
   --default-color: #7a7a7a;
   --changing-color: #e0bc72;
   --modified-color: #7cbe5d;
-
   --common-transition: all 0.3s ease-out;
-
   --gutter: 20px;
-
   --border-radius: 20px;
-
   --circle-radius: 80px;
   --circle-border: 4px;
 }
@@ -79,21 +65,23 @@
   :root {
     --circle-radius: 55px;
     --circle-border: 3px;
-
      --common-border-radius: 6px;
   }
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
-    Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
-    Noto Color Emoji;
+  margin: 0;
+  padding: 0;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+  color: var(--text-color-primary);
+
+  background: var(--background);
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 0;
-  margin: 0;
-  color: var(--text-color-primary);
-  background: var(--background);
 }
 
 ul {
@@ -102,8 +90,8 @@ ul {
 }
 
 li {
-  padding: 0;
   margin: 0;
+  padding: 0;
   list-style-type: none;
 }
 
@@ -114,14 +102,13 @@ a {
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
   margin: 0;
+  appearance: none;
 }
 
 /* Firefox */
 input[type='number'] {
   appearance: textfield;
-  -moz-appearance: textfield;
 }
 
 /* Typography classes */
@@ -150,10 +137,9 @@ input[type='number'] {
 .text_color_gradient {
   background-color: #f3ec78;
   background-image: var(--linear-gradient);
-  background-size: 100%;
   background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
+  background-size: 100%;
+
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
@@ -175,92 +161,89 @@ input[type='number'] {
 }
 
 .text_type_paragraph {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  font-family: Montserrat, sans-serif;
   font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
   line-height: 16px;
 }
 
 .text_type_paragraph-m {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  font-family: Montserrat, sans-serif;
   font-size: 20px;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.4;
 }
 
 .text_type_xl {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 900;
+  font-family: Montserrat, sans-serif;
   font-size: 134px;
+  font-weight: 900;
+  font-style: normal;
   line-height: 163px;
 }
 
 .text_type_md {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 600;
+  font-family: Montserrat, sans-serif;
   font-size: 40px;
+  font-weight: 600;
+  font-style: normal;
   line-height: 49px;
 }
 
 .text_type_sm {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 600;
+  font-family: Montserrat, sans-serif;
   font-size: 32px;
+  font-weight: 600;
+  font-style: normal;
   line-height: 39px;
 }
 
 .text_type_ticker {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 900;
+  font-family: Montserrat, sans-serif;
   font-size: 44px;
+  font-weight: 900;
+  font-style: normal;
   line-height: 54px;
 }
 
 .text_type_button {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-style: normal;
-  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
+  font-weight: 600;
+  font-style: normal;
   line-height: 23px;
 }
 
 .text_type_input {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-style: normal;
-  font-weight: normal;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
   line-height: 22px;
 }
 
 .text_type_input-lim {
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
   line-height: 22px;
 }
 
 .text_type_fibonacci {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 600;
+  font-family: Montserrat, sans-serif;
   font-size: 11px;
+  font-weight: 600;
+  font-style: normal;
   line-height: 13px;
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+
+  -webkit-touch-callout: none; /* iOS Safari */ /* Safari */ /* Konqueror HTML */ /* Old versions of Firefox */ /* Internet Explorer/Edge */
 }

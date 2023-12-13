@@ -1,25 +1,25 @@
 @use './variables.scss' as *;
 
 @mixin desktop() {
-  @media (max-width: $bp_xxl) {
+  @media (max-width: $bp-xxl) {
     @content;
   }
 }
 
 @mixin laptop() {
-  @media (max-width: $bp_xl) {
+  @media (max-width: $bp-xl) {
     @content;
   }
 }
 
 @mixin tablet() {
-  @media (max-width: $bp_md) {
+  @media (max-width: $bp-md) {
     @content;
   }
 }
 
 @mixin mobile() {
-  @media (max-width: $bp_sm) {
+  @media (max-width: $bp-sm) {
     @content;
   }
 }
