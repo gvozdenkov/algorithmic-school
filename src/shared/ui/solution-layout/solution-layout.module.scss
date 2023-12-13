@@ -1,46 +1,50 @@
 @use '#shared/styles/media-bp-mixins.scss' as *;
 
-$verticalMargin: 36px;
+$vertical-margin: 36px;
 
 .page {
   background-color: var(--color-background);
 }
 
 .content {
-  background-color: var(--color-background);
-  max-width: 1200px;
-  min-height: 100vh;
-
   display: grid;
   grid-template-rows: max-content 15fr 1fr;
+
+  box-sizing: border-box;
+  max-width: 1200px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: var(--gutter);
-  box-sizing: border-box;
+
+  background-color: var(--color-background);
 }
 
 .main {
-  height: 100%;
-  background: var(--color-background-card);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--border-radius);
-  padding: 36px;
-  box-sizing: border-box;
-
   display: grid;
-  gap: 50px;
-  align-content: start;
   grid-template:
     'back'
     'title'
     'result'
     / 1fr;
+  gap: 50px;
+  align-content: start;
+
+  box-sizing: border-box;
+  height: 100%;
+  padding: 36px;
+
+  background: var(--color-background-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--border-radius);
 
   &__title {
     grid-area: title;
     justify-self: center;
+
     min-width: 0;
-    word-wrap: break-word;
+
     word-break: break-all;
+    word-wrap: break-word;
   }
 
   &__backBtn {
@@ -49,19 +53,19 @@ $verticalMargin: 36px;
   }
 
   &__result {
-    grid-area: result;
-    align-self: start;
     display: flex;
+    grid-area: result;
     flex-flow: column;
-    justify-content: center;
     align-items: center;
+    align-self: start;
+    justify-content: center;
   }
 }
 
 .header {
   display: flex;
-  margin-top: $verticalMargin;
-  margin-bottom: $verticalMargin;
+  margin-top: $vertical-margin;
+  margin-bottom: $vertical-margin;
 }
 
 .logo {
@@ -76,20 +80,20 @@ $verticalMargin: 36px;
 
 .footer {
   display: flex;
-  box-sizing: border-box;
-  justify-content: end;
   align-items: center;
+  justify-content: end;
+  box-sizing: border-box;
 }
 
-@include laptop() {
+@include laptop {
   .main {
-    padding: 20px;
-    gap: 0;
     grid-template:
       'title . back'
       '. . .' 36px
       'result result result'
       / auto auto auto;
+    gap: 0;
+    padding: 20px;
 
     &__title {
       place-self: center left;
@@ -102,12 +106,13 @@ $verticalMargin: 36px;
   }
 }
 
-@include tablet() {
+@include tablet {
   .logo {
     &__image {
       width: 60px;
       margin-bottom: 10px;
     }
+
     &__title {
       font-size: 30px;
     }
@@ -124,10 +129,10 @@ $verticalMargin: 36px;
   }
 }
 
-@include mobile() {
+@include mobile {
   .header {
-    margin-top: calc($verticalMargin / 3);
-    margin-bottom: calc($verticalMargin / 3);
+    margin-top: calc($vertical-margin / 3);
+    margin-bottom: calc($vertical-margin / 3);
   }
 
   .logo {
@@ -148,14 +153,13 @@ $verticalMargin: 36px;
   }
 
   .main {
-    padding: 15px;
-
-    gap: 0;
     grid-template:
       'title . back'
       '. . .' 36px
       'result result result'
       / 1fr auto max-content;
+    gap: 0;
+    padding: 15px;
 
     &__title {
       font-size: 18px;

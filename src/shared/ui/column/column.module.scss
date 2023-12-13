@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   box-sizing: border-box;
   width: max(4vw, 10px);
   max-width: 50px;
@@ -25,19 +26,19 @@
   }
 
   &__index {
-    font-family: 'Montserrat', sans-serif;
-    font-style: normal;
-    font-weight: 600;
+    font-family: Montserrat, sans-serif;
     font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
     line-height: 16px;
   }
 }
 
-@include mobile() {
+@include mobile {
   .column {
     &__index {
-      font-weight: 400;
       font-size: 12px;
+      font-weight: 400;
     }
   }
 }

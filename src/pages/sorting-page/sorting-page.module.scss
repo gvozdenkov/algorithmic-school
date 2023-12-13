@@ -1,7 +1,5 @@
 .form {
   display: grid;
-  align-items: center;
-  justify-content: center;
   grid-template:
     'selection . bubble . asc . desc . newArr'
     / auto minmax(12px, 40px) auto minmax(12px, 1fr) max-content minmax(8px, 12px) max-content minmax(
@@ -9,59 +7,59 @@
       1fr
     )
     max-content;
-  margin-inline: auto;
-  max-width: 980px;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
+  max-width: 880px;
+  margin-inline: auto;
 }
 
-.resultList {
+.result-list {
   display: grid;
-  align-items: end;
   grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
   gap: max(1vw, 4px);
+  align-items: end;
+
+  box-sizing: border-box;
   width: 100%;
   max-width: 980px;
-  padding: 0;
-  box-sizing: border-box;
   height: 340px;
+  padding: 0;
 }
 
-.circle_invisible {
-  opacity: 0;
-}
-
-.selectionRadio {
+.selection-radio {
   grid-area: selection;
 }
 
-.bubbleRadio {
+.bubble-radio {
   grid-area: bubble;
 }
 
-.ascBtn {
+.asc-btn {
   grid-area: asc;
 }
 
-.descBtn {
+.desc-btn {
   grid-area: desc;
 }
 
-.newArrBtn {
+.new-arr-btn {
   grid-area: newArr;
 }
 
-@media (max-width: 840px) {
+@media (width <= 840px) {
   .form {
-    gap: max(5vw, 8px);
     grid-template:
       'selection asc'
       'bubble desc'
       'newArr newArr'
       / max-content auto max-content;
+    gap: max(5vw, 8px);
   }
 }
 
-@media (max-width: 400px) {
+@media (width <= 400px) {
   .form {
     grid-template:
       'selection bubble'

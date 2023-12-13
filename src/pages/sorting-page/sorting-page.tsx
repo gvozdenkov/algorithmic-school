@@ -89,7 +89,7 @@ export const SortingPage = () => {
           checked={sortMethod === 'selectionSort'}
           onChange={handleSetSortMethod}
           disabled={isProcessing}
-          extraClass={s.selectionRadio}
+          extraClass={s['selection-radio']}
         />
         <RadioInput
           label='Пузырёк'
@@ -98,7 +98,7 @@ export const SortingPage = () => {
           checked={sortMethod === 'bubbleSort'}
           onChange={handleSetSortMethod}
           disabled={isProcessing}
-          extraClass={s.bubbleRadio}
+          extraClass={s['bubble-radio']}
         />
         <Button
           text='По возрастанию'
@@ -108,7 +108,7 @@ export const SortingPage = () => {
           type='button'
           isLoader={isProcessing && sortDirection === 'asc'}
           disabled={isProcessing}
-          extraClass={clsx(s.ascBtn, s.form__button)}
+          extraClass={clsx(s['asc-btn'], s.form__button)}
         />
         <Button
           text='По убыванию'
@@ -118,19 +118,19 @@ export const SortingPage = () => {
           type='button'
           isLoader={isProcessing && sortDirection === 'desc'}
           disabled={isProcessing}
-          extraClass={clsx(s.descBtn, s.form__button)}
+          extraClass={clsx(s['desc-btn'], s.form__button)}
         />
         <Button
           text='Новый массив'
           type='button'
           onClick={handleNewRandomArr}
           disabled={isProcessing}
-          extraClass={clsx(s.newArrBtn, s.form__button)}
+          extraClass={clsx(s['new-arr-btn'], s.form__button)}
         />
       </form>
-      <ul className={clsx(s.resultList, 'mt-24')}>
+      <ul className={clsx(s['result-list'], 'mt-24')}>
         {array.map((elem, i) => (
-          <li className={s.resultList__item} key={i}>
+          <li className={s['result-list__item']} key={i}>
             <Column index={elem} state={state[i]} />
           </li>
         ))}

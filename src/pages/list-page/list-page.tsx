@@ -289,7 +289,7 @@ export const ListPage = () => {
             isLimitText
             onChange={handleChangeValue}
             disabled={processingAction !== 'idle'}
-            extraClass={clsx(s.form__input, s.inputValue)}
+            extraClass={clsx(s.form__input, s.form__input_type_value)}
             autoComplete='off'
             autoFocus
             ref={inputValueRef}
@@ -300,7 +300,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'addToHead'}
             disabled={isAddButtonDisabled}
             onClick={() => void handlePrepend()}
-            extraClass={clsx(s.addToHead)}
+            extraClass={clsx(s.form__button, s['form__button_type_add-to-head'])}
             data-test='addHeadBtn'
           />
           <Button
@@ -308,7 +308,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'addToTail'}
             disabled={isAddButtonDisabled}
             onClick={() => void handleAppend()}
-            extraClass={clsx(s.addToTail)}
+            extraClass={clsx(s.form__button, s['form__button_type_add-to-tail'])}
             data-test='addTailBtn'
           />
           <Button
@@ -316,7 +316,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'removeFromHead'}
             onClick={() => void handleDeleteHead()}
             disabled={isRemoveButtonDisabled}
-            extraClass={clsx(s.removeFromHead)}
+            extraClass={clsx(s.form__button, s['form__button_type_remove-from-head'])}
             data-test='removeHeadBtn'
           />
           <Button
@@ -324,7 +324,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'removeFromTail'}
             onClick={() => void handleDeleteTail()}
             disabled={isRemoveButtonDisabled}
-            extraClass={clsx(s.removeFromTail)}
+            extraClass={clsx(s.form__button, s['form__button_type_remove-from-tail'])}
             data-test='removeTailBtn'
           />
         </fieldset>
@@ -341,7 +341,7 @@ export const ListPage = () => {
             isLimitText
             onChange={handleChangeIndex}
             disabled={processingAction !== 'idle'}
-            extraClass={clsx(s.form__input, s.inputIndex)}
+            extraClass={clsx(s.form__input, s.form__input_type_index)}
             autoComplete='off'
             autoFocus
             ref={inputIndexRef}
@@ -352,7 +352,7 @@ export const ListPage = () => {
             isLoader={processingAction === 'addByIndex'}
             disabled={isAddByIndexButtonDisabled}
             onClick={() => void handleInsertAt()}
-            extraClass={clsx(s.addByIndex)}
+            extraClass={clsx(s.form__button, s['form__button_type_add-by-index'])}
             data-test='addByIndexBtn'
           />
           <Button
@@ -360,18 +360,18 @@ export const ListPage = () => {
             isLoader={processingAction === 'removeByIndex'}
             onClick={() => void handleRemoveAt()}
             disabled={isRemoveByIndexButtonDisabled}
-            extraClass={clsx(s.removeByIndex)}
+            extraClass={clsx(s.form__button, s['form__button_type_remove-by-index'])}
             data-test='removeByIndexBtn'
           />
         </fieldset>
       </form>
       {
-        <ul className={clsx(s.resultList, 'mt-24')}>
+        <ul className={clsx(s['result-list'], 'mt-24')}>
           {list.map((_, i) => {
             const lastIndex = listLength - 1;
 
             return (
-              <li className={s.resultList__item} key={i}>
+              <li className={s['result-list__item']} key={i}>
                 {i > 0 && i <= lastIndex && <ArrowIcon fill={colorSwitch(colorState(i))} />}
                 <Circle
                   letter={letterState(i)}

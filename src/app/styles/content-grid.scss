@@ -1,7 +1,6 @@
 .content-grid {
   $content-max-width: 1280px;
   $breakout-max-width: 1400px;
-
   $gutter-width: minmax(var(--gutter), 1fr);
   $content-width: min(100% - var(--gutter) * 2, $content-max-width);
   $breakout-width: calc(($breakout-max-width - $content-max-width) / 2);
@@ -25,8 +24,7 @@
 }
 
 .content-grid > .full-width {
-  grid-column: full-width;
-
   display: grid;
+  grid-column: full-width;
   grid-template-columns: inherit;
 }

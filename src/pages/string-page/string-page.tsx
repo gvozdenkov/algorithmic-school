@@ -72,7 +72,7 @@ export const StringComponent = () => {
         />
       </form>
       {showResult && (
-        <ul className={clsx(s.resultList, 'mt-24')}>
+        <ul className={clsx(s['result-list'], 'mt-24')}>
           {stringArr.map((letter, i) => (
             <li key={i} role='presentation'>
               <Circle state={state[i]} letter={letter} data-test={`circle-${i}`} />

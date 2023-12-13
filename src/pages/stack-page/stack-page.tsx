@@ -113,7 +113,7 @@ export const StackPage = () => {
           isLoader={processingAction === 'addToHead'}
           disabled={isButtonAddDisabled}
           type='submit'
-          extraClass={s.addBtn}
+          extraClass={s['add-btn']}
           data-test='add-btn'
         />
         <Button
@@ -122,7 +122,7 @@ export const StackPage = () => {
           onClick={() => void handlePop()}
           disabled={isButtonDeleteDisabled}
           type='button'
-          extraClass={s.deleteBtn}
+          extraClass={s['delete-btn']}
           data-test='remove-btn'
         />
         <Button
@@ -130,12 +130,12 @@ export const StackPage = () => {
           type='button'
           onClick={handleClear}
           disabled={isButtonDeleteDisabled}
-          extraClass={s.clearBtn}
+          extraClass={s['clear-btn']}
           data-test='clear-btn'
         />
       </form>
       {showResult && (
-        <ul className={clsx(s.resultList)}>
+        <ul className={clsx(s['result-list'])}>
           {stack.map((elem, i) => (
             <li key={i}>
               <Circle

@@ -46,7 +46,7 @@ export const Button = ({
       disabled={isLoader || disabled}
       {...rest}>
       {sorting && currentIcon}
-      <p className={clsx('text', { 'ml-5': sorting }, { [s.hiddenText]: isLoader })}>{text}</p>
+      <p className={clsx('text', { 'ml-5': sorting }, { [s['hidden-text']]: isLoader })}>{text}</p>
 
       {isLoader && (
         <img

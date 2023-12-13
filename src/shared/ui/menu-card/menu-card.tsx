@@ -11,8 +11,8 @@ type MenuCardProps = {
 
 export const MenuCard = ({ title = '', image }: MenuCardProps) => {
   return (
-    <div className={s.menuCard}>
-      <h2 className={clsx('text text_color_primary text_type_paragraph-m', s.menuCard__title)}>
+    <div className={s['menu-card']}>
+      <h2 className={clsx('text text_color_primary text_type_paragraph-m', s['menu-card__title'])}>
         {title}
       </h2>
       <img src={`./images/menu/${image}.svg`} className={s.menuCard__image} />

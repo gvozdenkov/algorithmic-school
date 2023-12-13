@@ -8,38 +8,41 @@
 }
 
 .input {
-  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 18px 16px;
+
   color: var(--text-color-primary);
+
   background-color: var(--color-background);
   border: 1px solid var(--color-border-default);
   border-radius: var(--common-border-radius);
-  width: 100%;
-  padding: 18px 16px;
-  box-sizing: border-box;
+  outline: none;
+
   transition: var(--common-transition);
 
-  &:hover:enabled,
-  &:focus:enabled {
-    border: 1px solid var(--text-color-input);
-    background-color: var(--bg-input-hover);
-    cursor: pointer;
+  &::placeholder {
+    color: var(--text-input-placeholder);
   }
 
   &:disabled {
-    background-color: var(--bg-input-disabled);
     cursor: not-allowed;
+    background-color: var(--bg-input-disabled);
   }
 
   &:invalid {
     outline: 1px solid var(--red-bg-color);
   }
 
-  &::placeholder {
-    color: var(--text-input-placeholder);
+  &:hover:enabled,
+  &:focus:enabled {
+    cursor: pointer;
+    background-color: var(--bg-input-hover);
+    border: 1px solid var(--text-color-input);
   }
 }
 
-@include mobile() {
+@include mobile {
   .input {
     padding: 10px 12px;
   }

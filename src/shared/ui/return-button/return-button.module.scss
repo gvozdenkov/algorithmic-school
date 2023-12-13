@@ -1,12 +1,15 @@
 .button {
+  cursor: pointer;
+
   display: flex;
   gap: 8px;
   align-items: center;
+
+  background: none;
   border: none;
   outline: none;
-  background: none;
+
   transition: var(--common-transition);
-  cursor: pointer;
 
   &:hover {
     opacity: 0.8;
