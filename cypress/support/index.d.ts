@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { MountOptions, MountReturn } from 'cypress/react';
 import { CircleState } from './types';
 
 // import type Inputs from '../fixtures/inputs.json';
@@ -20,6 +21,11 @@ type CheckButtonState = {
 declare global {
   namespace Cypress {
     interface Chainable {
+       mount(
+        component: React.ReactNode,
+        options?: MountOptions,
+       ): Cypress.Chainable<MountReturn>
+
       fixture<K extends keyof FixtureTypes>(
         fixtureName: K,
       ): Chainable<FixtureTypes[K]>;

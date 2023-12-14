@@ -1,4 +1,4 @@
-@use '#shared/styles/media-bp-mixins.scss' as *;
+@use '#styles/media-bp-mixins.scss' as *;
 
 .circle {
   position: relative;
@@ -10,8 +10,8 @@
   box-sizing: border-box;
   width: fit-content;
 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;

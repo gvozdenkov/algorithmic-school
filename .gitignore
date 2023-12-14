@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 build
+*.css
+*.map
 dist-ssr
 *.local
 *.ai
