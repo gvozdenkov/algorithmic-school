@@ -11,5 +11,5 @@
       "#*": ["./src/*"]
     }
   },
-  "include": ["**/*.ts", "../src"]
+  "include": ["**/*.ts", "../src", "support/index.ts"]
 }

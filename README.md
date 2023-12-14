@@ -61,11 +61,14 @@ use Node v18 and above
 
 | script           | Description                                                                         |
 | ---------------- | ----------------------------------------------------------------------------------- |
-| `dev`            | Will start vite dev server and run `cypress open` for testing                       |
+| `dev`            | Will start vite dev server without cypress run                                      |
+| `dev-ct`         | Will start vite dev server and run `cypress open` for component testing             |
+| `dev-e2e`        | Will start vite dev server and run `cypress open` for e2e testing                   |
 | `build`          | Compile TS to js and run `vite build`                                               |
 | `lint`           | Check codebase with eslint                                                          |
 | `prettier:write` | prettier fix problems, -l flag to show only different from origin                   |
 | `prettier:check` | prettier check problems (used in CI to ckeck code formatted localy in cypress.yaml) |
+| `stylelint:fix`  | stylelint fix .scss style issues                                                    |
 | `cy:run`         | Run Cypress all tests                                                               |
 | `deploy`         | Build and deploy to GH Pages                                                        |
 

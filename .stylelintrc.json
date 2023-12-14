@@ -7,5 +7,6 @@
   "rules": {
     "selector-class-pattern": "^(?:[a-z][a-z0-9]*)(?:(__|_|-)[a-z0-9]+)*$",
     "scss/at-extend-no-missing-placeholder": null
-  }
+  },
+  "ignoreFiles": ["**/*.css"]
 }

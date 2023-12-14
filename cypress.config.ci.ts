@@ -13,4 +13,11 @@ export default defineConfig({
       on('file:preprocessor', vitePreprocessor());
     },
   },
+
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+    },
+  },
 });
