@@ -71,6 +71,7 @@ module.exports = {
     "react/jsx-uses-vars": "error",
     "no-console": ["error", { allow: ["warn", "error"] }],
     semi: "error",
+    "no-var": 0,
     "no-multi-spaces": "error",
     "space-in-parens": "error",
     "no-multiple-empty-lines": "error",

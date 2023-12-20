@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 import vitePreprocessor from 'cypress-vite';
 
 export default defineConfig({
-  video: true,
+  video: false,
   videoCompression: true,
   viewportWidth: 1300,
   viewportHeight: 800,
