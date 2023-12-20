@@ -19,7 +19,13 @@ jobs:
         with:
           node-version: '>=20.10.0'
 
-      - run: git config user.email "gvozdenkov@gmail.com"
-      - run: git config user.name "arty gvozdenkov"
-      - run: npm install
-      - run: npm run deploy
+        env:
+          MY_EMAIL: gvozdenkov@gmail.com
+          MY_NAME: arty gvozdenkov
+
+      - run: |
+          git config --global user.email $MY_EMAIL
+          git config --global user.name $MY_NAME
+          git remote set-url origin git@github.com:gvozdenkov/algososh.git
+          yarn install
+          yarn deploy
