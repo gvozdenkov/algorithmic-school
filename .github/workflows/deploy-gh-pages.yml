@@ -19,5 +19,7 @@ jobs:
         with:
           node-version: '>=20.10.0'
 
+      - run: git config user.email "gvozdenkov@gmail.com"
+      - run: git config user.name "arty gvozdenkov"
       - run: npm install
       - run: npm run deploy

@@ -3,9 +3,6 @@ name: Cypress Tests
 on:
   push:
     branches-ignore: -master
-  pull_request:
-    types: closed
-    branches: [master]
 
 jobs:
   install:
