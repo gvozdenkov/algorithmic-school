@@ -7,18 +7,67 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-build
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Generated test directories
+coverage
+*.lcov
+lib-cov
+/cypress/screenshots
+/cypress/videos
+/cypress/downloads
+
+# TypeScript
+typings/
+*.tsbuildinfo
+
+# Lint directories
+.eslintcache
+.stylelintcache
+
+# env & config
+*.env*
+config/local*
+*/config/local*
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# npm & yarn
+.npm
+npm-debug.log*
+package-lock.json
+
+.yarn-integrity
+yarn-debug.log*
+yarn-error.log*
+
+node_modules/
+
+# Bundles
+build/
+dist/
+dist-ssr
+.cache
+.parcel-cache
+
 *.css
 *.map
-dist-ssr
 *.local
-*.ai
 
-# Editor directories and files
+# Temporary folders
+tmp/
+temp/
+
+# IDE
+.idea
+.vscode-test
+.devcontainer
 .vscode/*
 !.vscode/extensions.json
-.idea
 .DS_Store
 *.suo
 *.ntvs*
@@ -27,8 +76,4 @@ dist-ssr
 *.sw?
 .env
 
-# Testing
-coverage
-/cypress/screenshots
-/cypress/videos
-/cypress/downloads
+*.ai
