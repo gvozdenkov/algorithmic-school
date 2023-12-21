@@ -1,26 +1,45 @@
 name: Deploy to GH pages
 
 on:
-  push:
-    branches: [master]
   pull_request:
     types: closed
     branches: [master]
 
 jobs:
-  deployment:
+  build:
     if: github.event.pull_request.merged == true
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '>=20.10.0'
+      - name: Fix permissions
+        run: |
+          chmod -c -R +rX "_site/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
 
-      - run: git config --global user.email gvozdenkov@gmail.com
-      - run: git config --global user.name "arty gvozdenkov"
-      - run: git remote set-url origin git@github.com:gvozdenkov/algososh.git
-      - run: yarn
-      - run: yarn deploy
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+
+  deploy:
+    if: github.event.pull_request.merged == true
+
+    needs: build
+
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
