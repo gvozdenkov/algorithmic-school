@@ -15,6 +15,7 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:cypress/recommended",
+    "plugin:storybook/recommended",
     // prettier must be the last in extends
     "prettier",
   ],
@@ -22,7 +23,14 @@ module.exports = {
     {
       // disable type checking for configs and cypress
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
-      files: ["./jest/**/*.js", "./cypress/**/*.ts", "./**/*.spec.ts", "./**/*.test.ts"],
+      files: [
+        "./jest/**/*.js",
+        "./cypress/**/*.ts",
+        "./**/*.spec.ts",
+        "./**/*.test.ts",
+        "./storybook/**/*.ts",
+        "./src/stories/**/*.{ts,tsx}",
+      ],
     },
   ],
   settings: {
