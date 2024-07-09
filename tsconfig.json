@@ -31,10 +31,6 @@
     "rootDir": "./"
   },
 
-  //
-  "ts-node": {
-    "swc": true
-  },
   "exclude": ["node_modules", "dist"],
   "include": ["src", "types/vite-env.d.ts", "./cypress.config.ts", "cypress/support/index.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
