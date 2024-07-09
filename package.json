@@ -42,8 +42,6 @@
     "cy:open-e2e": "cypress open --e2e --browser firefox",
     "test:cy": "start-test http://localhost:5173 cy:run",
     "test:jest": "cross-env NODE_ENV=test jest",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
     "preview": "vite preview --port 8080",
     "prepare": "husky install",
     "cz": "cz",
