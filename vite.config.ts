@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/algososh/',
+  base: '/algoschool/',
   server: {
     host: true,
     port: 5173,

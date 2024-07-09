@@ -55,7 +55,7 @@ jobs:
           config-file: cypress.config.ci.ts
           start: yarn preview
           browser: chrome
-          wait-on: 'http://localhost:8080/algososh/'
+          wait-on: 'http://localhost:8080/algoschool/'
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
@@ -88,7 +88,7 @@ jobs:
           config-file: cypress.config.ci.ts
           start: yarn preview
           browser: chrome
-          wait-on: 'http://localhost:8080/algososh/'
+          wait-on: 'http://localhost:8080/algoschool/'
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions

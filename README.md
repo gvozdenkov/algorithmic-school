@@ -1,6 +1,6 @@
 <div align="center">
-  <a href="https://github.com/gvozdenkov/algososh/actions/workflows/cypress.yml">
-    <img src="https://github.com/gvozdenkov/algososh/actions/workflows/cypress.yml/badge.svg?event=push" />
+  <a href="https://github.com/gvozdenkov/algoschool/actions/workflows/cypress.yml">
+    <img src="https://github.com/gvozdenkov/algoschool/actions/workflows/cypress.yml/badge.svg?event=push" />
   </a>
   <a href="http://commitizen.github.io/cz-cli/">
     <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" />
@@ -9,7 +9,7 @@
 
 <br />
 <div align="center">
-  <a href="https://gvozdenkov.github.io/algososh/">
+  <a href="https://gvozdenkov.github.io/algoschool/">
     <img src="README_static/logo_slogan.svg" alt="Fibonacci Algorithmic School logo" height="80">
   </a>
   <br/><br/>
@@ -20,7 +20,7 @@
 ---
 
 <div align="center">
-  <h4><a href="https://gvozdenkov.github.io/algososh/">Live demo</a></h4>
+  <h4><a href="https://gvozdenkov.github.io/algoschool/">Live demo</a></h4>
 </div>
 
 ![reverse string](README_static/main_screen.png)
@@ -48,8 +48,8 @@ your phone and from your TV. The project is written entirely in TypeScript.
 ## Local Development
 
 ```bash
-git clone git@github.com:gvozdenkov/algososh.git
-cd algososh
+git clone git@github.com:gvozdenkov/algoschool.git
+cd algoschool
 yarn
 
 # or npm install
