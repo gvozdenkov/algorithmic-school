@@ -16,32 +16,79 @@
 }
 
 .ticker {
-  overflow: hidden;
   align-self: end;
-  height: 60px;
   background-image: var(--linear-gradient);
-}
 
-.dot_box {
-  margin: 0 auto;
-  padding: 0 78px;
-}
+  &__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.dot {
-  width: 10px;
-  height: 10px;
-  background-color: var(--text-color-secondary);
-  border-radius: 50%;
+    font-family: Montserrat, sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    font-style: normal;
+    line-height: 54px;
+    text-align: center;
+
+    &::before,
+    &::after {
+      content: '';
+
+      width: 10px;
+      height: 10px;
+
+      background-color: var(--text-color-primary);
+      border-radius: 100%;
+    }
+
+    &::before {
+      margin-right: 20px;
+    }
+
+    &::after {
+      margin-left: 20px;
+    }
+  }
 }
 
 @include laptop {
   .card-list {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
+
+  .ticker {
+    &__text {
+      font-size: 20px;
+      line-height: 34px;
+    }
+  }
+}
+
+@include tablet {
+  .ticker {
+    &__text {
+      &::before,
+      &::after {
+        content: '';
+        width: 0;
+        height: 0;
+      }
+    }
+  }
 }
 
 @include mobile {
   .card-list {
     grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  }
+
+  .ticker {
+    padding-block: 4px;
+
+    &__text {
+      font-size: 16px;
+      line-height: 26px;
+    }
   }
 }
