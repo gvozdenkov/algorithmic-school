@@ -16,11 +16,9 @@ export const RadioInput = ({
   const id = useId();
 
   return (
-    <div className={`${s.content} ${extraClass}`}>
+    <label className={`text text_type_button ${s.label} ${extraClass}`}>
       <input className={s.input} type='radio' id={id} {...rest} disabled={disabled} />
-      <label className={`text text_type_button ${s.label}`} htmlFor={id}>
-        {label}
-      </label>
-    </div>
+      {label}
+    </label>
   );
 };
