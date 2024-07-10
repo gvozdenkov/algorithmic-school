@@ -1,0 +1,16 @@
+services:
+  frontend:
+    container_name: algo-school
+    image: alog-school:dev
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3010:5173
+    volumes:
+      - ./src:/app/src
+      - ./cypress:/app/cypress
+      - ./jest:/app/jest
+      - ./.storybook:/app/.storybook
+      - ./index.html:/app/index.html

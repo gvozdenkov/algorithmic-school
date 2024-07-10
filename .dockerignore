@@ -1,0 +1,11 @@
+*
+!index.html
+!src/
+!cypress
+!jest
+!.storybook
+!package.json
+!yarn.lock
+!types
+!public
+!vite.config.ts

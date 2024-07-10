@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "https://gvozdenkov.github.io/algoschool/",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0 <21.0.0"
+  },
   "imports": {
     "#*": [
       "./src/*",
