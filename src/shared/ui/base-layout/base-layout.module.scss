@@ -25,6 +25,12 @@ $vertical-margin: 36px;
   &__image {
     width: 80px;
   }
+
+  &__title {
+    font-family: Montserrat, sans-serif;
+    font-size: 40px;
+    line-height: 49px;
+  }
 }
 
 .main {
@@ -43,9 +49,14 @@ $vertical-margin: 36px;
 }
 
 @include tablet {
+  .header {
+    justify-content: center;
+    padding-block: 16px;
+  }
+
   .logo {
     &__image {
-      width: 60px;
+      width: 50px;
       margin-bottom: 10px;
     }
 
@@ -66,12 +77,12 @@ $vertical-margin: 36px;
     margin-bottom: 0;
 
     &__image {
-      width: 50px;
+      width: 30px;
       margin-bottom: unset;
     }
 
     &__title {
-      font-size: 20px;
+      font-size: 16px;
       line-height: 1.4;
     }
   }
