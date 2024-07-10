@@ -43,8 +43,8 @@ $vertical-margin: 36px;
 
     min-width: 0;
 
-    word-break: break-all;
-    word-wrap: break-word;
+    font-family: Montserrat, sans-serif;
+    font-size: 32px;
   }
 
   &__backBtn {
@@ -155,7 +155,7 @@ $vertical-margin: 36px;
   .main {
     grid-template:
       'title . back'
-      '. . .' 36px
+      '. . .' 24px
       'result result result'
       / 1fr auto max-content;
     gap: 0;
