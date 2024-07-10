@@ -1,4 +1,3 @@
-import Marquee from 'react-fast-marquee';
 import { Link } from 'react-router-dom';
 
 import clsx from 'clsx';
@@ -21,14 +20,11 @@ export const MainPage = () => {
           </li>
         ))}
       </ul>
-      <Marquee className={clsx('full-width', s.ticker)} gradient={false} speed={200}>
-        <p className={`text text_type_ticker text_color_secondary ${s.ticker_text}`}>
+      <div className={clsx('full-width', s.ticker)}>
+        <p className={clsx('text', s.ticker__text)}>
           Вдохновлено школами, в которых не учили алгоритмам
         </p>
-        <div className={s.dot_box}>
-          <p className={s.dot} />
-        </div>
-      </Marquee>
+      </div>
     </>
   );
 };
