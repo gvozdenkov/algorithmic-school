@@ -48,14 +48,14 @@
   grid-area: newArr;
 }
 
-@media (width <= 840px) {
+@media (width <= 1024px) {
   .form {
     grid-template:
       'selection asc'
       'bubble desc'
       'newArr newArr'
       / max-content auto max-content;
-    gap: max(5vw, 8px);
+    gap: max(2vw, 8px);
   }
 }
 
