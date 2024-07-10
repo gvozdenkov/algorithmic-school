@@ -1,73 +1,59 @@
 .label {
   cursor: pointer;
-  user-select: none;
-
-  position: relative;
-
   display: flex;
-  gap: 20px;
+  gap: 8px;
   align-items: center;
-  justify-content: space-between;
-
-  margin-left: 30px;
-
-  transition: var(--common-transition);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    margin: 0;
-    transition: color, background-color 0.3s linear;
-  }
-
-  &::before {
-    left: -30px;
-
-    width: 20px;
-    height: 20px;
-
-    border: 2px solid var(--text-color-primary);
-    border-radius: 50%;
-  }
 }
 
 .input {
-  display: none;
-  transition: var(--common-transition);
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  margin: 6px;
+  padding: 0;
 
-  &:checked + .label::after {
-    left: -22px;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid var(--radio-border-color);
+  border-radius: 50%;
+  outline: none;
 
-    width: 8px;
-    height: 8px;
-
-    background-color: var(--text-color-primary);
-    border-radius: 50%;
+  &:not(:disabled, :checked) {
+    border: 2px solid var(--text-color-primary);
   }
 
-  &:hover + .label::before {
+  &:disabled {
+    cursor: not-allowed;
     background-color: var(--bg-input-disabled);
   }
 
-  &:active + .label::before {
-    border: 2px solid var(--text-input-placeholder);
+  &:focus-visible {
+    transform: scale(1.05);
+    outline: 2px solid var(--text-color-primary);
   }
 
-  &:active + .label::after {
-    background-color: var(--text-input-placeholder);
+  &:not(:disabled):checked {
+    padding: 4px;
+
+    background-color: var(--text-color-primary);
+    background-image: radial-gradient(
+      circle,
+      var(--text-color-primary) 0%,
+      var(--text-color-primary) 50%,
+      transparent 60%,
+      transparent 100%
+    );
+    background-clip: content-box;
+    border: 2px solid var(--text-color-primary);
   }
 
-  &:disabled + .label::before {
-    background: var(--bg-input-disabled);
-    border: 2px solid var(--text-input-placeholder);
-  }
-
-  &:disabled + .label::after {
-    background: var(--text-input-placeholder);
-  }
-
-  &:disabled + .label {
-    cursor: not-allowed;
+  &:disabled:checked {
+    background-image: radial-gradient(
+      circle,
+      var(--bg-input-disabled) 0%,
+      var(--bg-input-disabled) 50%,
+      transparent 50%,
+      transparent 100%
+    );
   }
 }
