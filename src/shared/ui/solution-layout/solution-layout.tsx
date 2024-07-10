@@ -18,7 +18,7 @@ export const SolutionLayout = ({ title, children }: SolutionLayoutProps) => {
       <Link className={styles.main__backBtn} to={ROUTE.HOME}>
         <ReturnButton color='#cdd9e5'>Back</ReturnButton>
       </Link>
-      <h3 className={clsx('text text_type_sm', styles.main__title)}>{title}</h3>
+      <h3 className={clsx('text', styles.main__title)}>{title}</h3>
       <div className={styles.main__result}>{children}</div>
     </div>
   );
