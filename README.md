@@ -5,7 +5,7 @@
   <a href="http://commitizen.github.io/cz-cli/">
     <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat" />
   </a>
-  <a href="http://commitizen.github.io/cz-cli/">
+  <a href="https://feature-sliced.design/ru/docs/get-started/overview">
     <img src="https://img.shields.io/badge/Feature--Sliced-Design?style=flat&labelColor=262224&color=F2F2F2&logoWidth=18&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAACXBIWXMAAALFAAACxQGJ1n/vAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAA/SURBVHgB7dKxCgAgCIThs/d/51JoNQIdDrxvqMXlR4FmFs92KDIX/wI7JSdDN+eHtkxIycnQvMNW8hN/crsDc5QgGX9NvT0AAAAASUVORK5CYII=" />
   </a>
 </div>
